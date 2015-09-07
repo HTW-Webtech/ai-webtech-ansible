@@ -1,0 +1,8 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - basic-setup
+    - chruby
+    - nodejs
+    - passenger-nginx
