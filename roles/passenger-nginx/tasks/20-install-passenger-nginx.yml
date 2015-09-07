@@ -1,0 +1,10 @@
+---
+- name: Install the nginx and passenger packages
+  apt:
+    name={{ item }}
+    update_cache=yes
+  with_items:
+    - nginx
+    - nginx-common
+    - nginx-extras
+    - passenger

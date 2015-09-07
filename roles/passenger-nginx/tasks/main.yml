@@ -1,0 +1,6 @@
+---
+- include: 10-configure-apt.yml              tags=passenger
+- include: 20-install-passenger-nginx.yml    tags=passenger
+- include: 30-configure-passenger-nginx.yml  tags=passenger
+- include: 40-app-deploy-sample.yml
+

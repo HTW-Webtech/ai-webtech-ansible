@@ -1,0 +1,24 @@
+---
+- name: Create passenger-config
+  shell: passenger-config --root
+  register: registered_passenger_config_path
+
+- name: Write nginx config files (depends on passenger-config)
+  template:
+    src=nginx.conf.j2
+    dest=/etc/nginx/nginx.conf
+    mode=0644
+  notify: restart nginx
+
+- name: Create nginx sites-enabled folder
+  file:
+    path=/etc/nginx/sites-enabled
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: Remove system default server
+  file:
+    path=/etc/nginx/conf.d/default.conf
+    state=absent
