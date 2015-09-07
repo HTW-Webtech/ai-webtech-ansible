@@ -1,0 +1,12 @@
+---
+- name: Install nodejs for the rails asset pipeline
+  apt:
+    name=nodejs
+    state=present
+
+- name: Symlink nodejs binary to
+  file:
+    src=/usr/bin/nodejs
+    dest=/usr/local/bin/node
+    state=link
+
