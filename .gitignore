@@ -1,0 +1,5 @@
+# Ignore env conf file
+.envrc
+
+# Ignore all temp vagrant files
+.vagrant
