@@ -1,0 +1,1 @@
+ssh $ANSIBLE_REMOTE_USER@127.0.0.1 -p 2222 -o StrictHostKeyChecking=no
