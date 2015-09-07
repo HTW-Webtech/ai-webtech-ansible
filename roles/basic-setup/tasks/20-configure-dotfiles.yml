@@ -1,0 +1,14 @@
+---
+- name: Clone grekko/.dotfiles for the remote user
+  git:
+    repo=https://github.com/grekko/.dotfiles
+    dest=/home/{{ ansible_ssh_user }}/.dotfiles
+    update=no
+
+- name: Fix permissions for cloned repository
+  file:
+    path=/home/{{ ansible_ssh_user }}/.dotfiles
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+    recurse=yes
+

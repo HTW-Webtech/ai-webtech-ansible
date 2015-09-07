@@ -1,0 +1,13 @@
+---
+- name: Install basic tools
+  apt: name={{item}} state=installed update_cache=yes
+  with_items:
+    - git-core
+    - htop
+    - tmux
+    - vim
+    - wget
+    - curl
+    - gnupg
+    - build-essential
+

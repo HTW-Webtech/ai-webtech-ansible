@@ -1,0 +1,3 @@
+---
+- include: 10-install-base-packages.yml  tags=apt
+- include: 20-configure-dotfiles.yml     tags=dotfiles
