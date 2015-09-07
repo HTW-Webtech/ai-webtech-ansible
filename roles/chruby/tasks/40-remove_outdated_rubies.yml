@@ -1,0 +1,7 @@
+---
+- name: Remove all outdated_ruby_versions
+  file:
+    name=/opt/rubies/{{ item }}
+    state=absent
+  with_items: chruby_outdated_ruby_versions
+  when: chruby_outdated_ruby_versions is defined

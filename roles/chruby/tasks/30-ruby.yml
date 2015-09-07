@@ -1,0 +1,9 @@
+---
+- name: Find out if ruby_version is already installed
+  stat:
+    path=/opt/rubies/{{ chruby_ruby_version }}
+  register: ruby_version_folder
+
+- name: Install ruby_version if necessary
+  command: '{{chruby_ruby_install_command}} ruby {{chruby_ruby_version|replace("ruby-", "")}}'
+  when: not ruby_version_folder.stat.exists

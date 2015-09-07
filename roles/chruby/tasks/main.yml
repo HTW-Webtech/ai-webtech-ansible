@@ -1,0 +1,6 @@
+---
+- include: 10-chruby.yml                  tags=ansible-chruby
+- include: 20-ruby-install.yml            tags=ansible-chruby
+- include: 30-ruby.yml                    tags=ansible-chruby
+- include: 40-remove_outdated_rubies.yml  tags=ansible-chruby
+- include: 50-configure-system-chruby.yml tags=ansible-chruby

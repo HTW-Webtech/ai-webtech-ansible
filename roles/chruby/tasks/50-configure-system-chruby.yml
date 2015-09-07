@@ -1,0 +1,7 @@
+---
+- name: Configures chruby system wide
+  template:
+    src=chruby.sh.j2
+    dest=/etc/profile.d/chruby.sh
+    mode=u+x
+

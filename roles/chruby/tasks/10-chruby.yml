@@ -1,0 +1,20 @@
+---
+- name: Ensures the /opt/build directory exists
+  file:
+    path=/opt/build
+    state=directory
+
+- name: Downloads chruby from github
+  get_url: url=https://github.com/postmodern/chruby/archive/v{{chruby_chruby_version}}.tar.gz
+           dest=/opt/build/chruby-{{chruby_chruby_version}}.tar.gz
+           sha256sum={{chruby_chruby_checksum}}
+
+- name: Unwraps downloaded chruby archive
+  unarchive: src=/opt/build/chruby-{{chruby_chruby_version}}.tar.gz
+             dest=/opt/build/
+             copy=no
+  register: chruby_unarchive
+
+- name: Runs make for chruby if it has just been unwrapped
+  shell: make install chdir=/opt/build/chruby-{{chruby_chruby_version}}
+  when: chruby_unarchive.changed
