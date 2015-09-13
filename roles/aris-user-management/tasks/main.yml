@@ -1,2 +1,5 @@
 ---
-- include: all.yml tags=aris-user-management
+# FIXME: Either those should be in separate repos or they should be configured
+# so that they cannot be executed all on the same host
+- include: 01-setup.yml        tags=aris-setup
+- include: 02-cron-service.yml tags=aris-cron-service
