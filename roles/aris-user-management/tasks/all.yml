@@ -1,0 +1,157 @@
+---
+- name: Install ansible and postgresql
+  apt:
+    name={{ item }}
+    state=present
+    update_cache=true
+  with_items:
+    - software-properties-common
+    - ansible
+    - python-pip
+    - python-dev
+    - postgresql-9.4
+    - postgresql-server-dev-9.4
+    - postgresql-client-9.4
+
+- name: Install psycopg2 for postgresl modules
+  easy_install:
+    name=psycopg2
+
+# - name: Set a secret password for postgres user
+#   postgresql_user:
+#     login_user=postgres
+#     login_password=
+- name: Ensure aris user exists
+  user:
+    name=aris
+    createhome=yes
+    shell=/bin/bash
+    state=present
+
+- name: Ensure aris app (and config) directory exists
+  file:
+    path={{ item }}
+    state=directory
+    owner=aris
+    mode=u=rw,g=rw,o=r
+  with_items:
+    - /opt/aris/config
+    - /opt/aris/code
+
+# FIXME: This is only for testing purposes
+- name: Copies dummy Usersfile to aris
+  copy:
+    src=Usersfile
+    dest=/opt/aris/config/Usersfile
+
+- name: Copies private key for git access to server
+  copy:
+    src=key
+    dest=/opt/aris/config/key
+    mode=u=r,g=,o=
+
+- name: Checkout the aris ansible repo
+  git:
+    key_file=/opt/aris/config/key
+    accept_hostkey=true
+    repo=git@github.com:grekko/htw.aris-secret.git
+    dest=/opt/aris/code/ansible
+    update=yes
+    version=HEAD
+
+# Replace this w/ a soluction that read the files locally?
+- name: Collect all configured account names
+  shell: cat /etc/user-management/accounts
+  register: account_names
+
+- name: Output all account names
+  debug:
+    msg={{ item }}
+  with_items: "{{ account_names.stdout_lines }}"
+
+- name: Ensure ssh auth login for postgres user
+  file:
+    state=directory
+    path=~postgres/.ssh
+    owner=postgres
+    group=postgres
+    mode=u=r,g=,o=
+
+# FIXME: mode is not correct
+- name: Copy authorized keys file
+  copy:
+    dest=~postgres/.ssh/authorized_keys
+    src=authorized_keys
+    mode=u=r,g=,o=
+
+- name: Create a postgres db for the user
+  sudo: yes
+  postgresql_db:
+    login_user=postgres
+    name={{ item }}
+    owner={{ item }}
+    encoding='UTF-8'
+    state=present
+  with_items: "{{ account_names.stdout_lines }}"
+
+- name: Create a postgres user
+  postgresql_user:
+    login_user=postgres
+    db={{ item }}
+    encrypted=no
+    password={{ item }} # Fetch this also from the contents of the file?!
+  with_items: "{{ account_names.stdout_lines }}"
+
+- name: Ensure debian user exists
+  user:
+    name={{ item }}
+    createhome=yes
+    shell=/bin/bash
+    state=present
+  with_items: "{{ account_names.stdout_lines }}"
+
+# shell=/usr/bin/git-shell
+
+- name: Create .ssh dir for users
+  file:
+    path=~{{ item }}/.ssh
+    state=directory
+    owner={{ item }}
+    group={{ item }}
+    mode=0600
+  with_items: "{{ account_names.stdout_lines }}"
+
+- name: Create users app dir
+  file:
+    state=directory
+    path=/var/apps/{{ item }}
+    owner={{ item }}
+    group=www-data
+    mode=ug+rwx
+  with_items: "{{ account_names.stdout_lines }}"
+
+# Prep user permissions, ssh access
+# Create user without login!!
+# - shell: sudo adduser myappuser
+# - shell: mkdir -p ~myappuser/.ssh
+# - shell: sh -c "cat $HOME/.ssh/authorized_keys >> ~myappuser/.ssh/authorized_keys"
+# - shell: chown -R myappuser: ~myappuser/.ssh
+# - shell: chmod 700 ~myappuser/.ssh
+# - shell: sh -c "chmod 600 ~myappuser/.ssh/*"
+
+# Prep app setup
+# - shell: mkdir -p /var/www/myapp
+# - shell: "chown myappuser: /var/www/myapp"
+# - shell: "sudo -u myappuser -H git clone git://github.com/grekko/bettercooking.git /var/www/myapp/code"
+
+# This has to run after each git push -> git hook
+# - shell: "bundle install --deployment --without development test"
+# - shell: "bundle exec rake assets:precompile db:migrate"
+# - shell: "passenger-config restart-app $(pwd)"
+
+# Secrets are provided by my service which writes to an ENV file ?
+
+# Setup virtual host in nginx
+# See vhost.conf.sample
+
+
