@@ -6,3 +6,4 @@
     - chruby
     - nodejs
     - passenger-nginx
+    - aris-user-management
