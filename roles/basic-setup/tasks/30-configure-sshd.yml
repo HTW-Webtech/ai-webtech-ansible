@@ -1,0 +1,11 @@
+---
+- name: Creates ssh-clients group for ssh access
+  group:
+    name=ssh-clients
+    state=present
+
+- name: Ensure the AllowGroups declarative exists
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    line='AllowGroups ssh-clients'
+
