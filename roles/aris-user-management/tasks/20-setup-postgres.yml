@@ -9,6 +9,14 @@
     - postgresql-server-dev-9.4
     - postgresql-client-9.4
 
+- name: Copy authentication configuration file to /etc/postgresql/9.4/main/pg_hba.conf
+  file:
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.4/main/pg_hba.conf
+    owner=postgres
+    group=postgres
+    mode=u=rw,g=r,o=r
+
 - name: Add postgres user to ssh-clients group for ssh access
   user:
     name=postgres
