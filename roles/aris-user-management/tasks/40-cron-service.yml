@@ -14,7 +14,6 @@
     login_user=aris
     login_password=aris
     user={{ item }}
-    db={{ item }}
     encrypted=no
     password={{ item }}
     role_attr_flags=NOSUPERUSER,NOCREATEROLE,NOCREATEUSER,NOCREATEDB,NOINHERIT,NOREPLICATION
