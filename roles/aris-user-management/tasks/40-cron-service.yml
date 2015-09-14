@@ -10,6 +10,7 @@
 
 - name: Create a postgres db for the user
   postgresql_db:
+    login_user=aris
     name={{ item }}
     owner={{ item }}
     encoding='UTF-8'
@@ -18,6 +19,7 @@
 
 - name: Create a postgres user
   postgresql_user:
+    login_user=aris
     db={{ item }}
     encrypted=no
     password={{ item }} # Fetch this also from the contents of the file?!
