@@ -6,7 +6,7 @@
 
 - name: Add current remote_user to the ssh-clients group
   user:
-    name="{{ ansible_remote_user }}"
+    name="{{ ansible_ssh_user }}"
     append=yes
     groups=ssh-clients
 
