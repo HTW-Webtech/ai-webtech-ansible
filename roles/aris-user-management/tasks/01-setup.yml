@@ -28,12 +28,19 @@
     shell=/bin/bash
     state=present
 
+- name: Ensure aris user has sudoers rights
+  copy:
+    src=aris-sudoers-file
+    dest=/etc/sudoers.d/aris
+    mode=u=rw,g=r,o=
+
 - name: Ensure aris app (and config) directory exists
   file:
     path={{ item }}
     state=directory
     owner=aris
-    mode=u=rw,g=rw,o=r
+    group=aris
+    mode=u=rwx,g=rx,o=r
   with_items:
     - /opt/aris/config
     - /opt/aris/code
@@ -64,14 +71,16 @@
   file:
     path=/opt/aris/code/ansible
     owner=aris
-    mode=u=rw,g=rw,o=r
+    group=aris
+    mode=u=rwx,g=rx,o=r
 
-- name: Setup crontab for aris user-management background service
-  cron:
-    minute=*/2
-    job=
-    user=aris
-    state=present
+# - name: Setup crontab for aris user-management background service
+#   cron:
+#     minute=*/2
+#     job=
+#     user=aris
+#     state=present
+
 # Consider Logging, non-verbose
 # Run each 5 minutes the Setup task
 # - Improvement idea: Run each minute.. check that the Usersfile has been edited since last run
