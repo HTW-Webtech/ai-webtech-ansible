@@ -19,6 +19,12 @@ $enable_wheel = <<SCRIPT
 sed -i -e "s/^# %wheel/%wheel/" /etc/sudoers
 SCRIPT
 
+# Ensure ssh-access
+$enable_ssh_access = <<SCRIPT
+groupadd ssh-clients
+usermod vagrant -G ssh-clients
+SCRIPT
+
 # Set local id_rsa.pub as authorized_key for remote_user
 $add_authorized_key = <<SCRIPT
 rm -f /home/#{remote_user}/.ssh/authorized_keys
@@ -48,6 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision 'shell', privileged: true, run: 'once', inline: $create_user
   config.vm.provision 'shell', privileged: true, run: 'once', inline: $enable_wheel
+  config.vm.provision 'shell', privileged: true, run: 'once', inline: $enable_ssh_access
   config.vm.provision 'shell', privileged: true, run: 'once', inline: $add_authorized_key
   config.vm.provision 'shell', privileged: true, run: 'once', inline: $remove_host_pubkey
 end
