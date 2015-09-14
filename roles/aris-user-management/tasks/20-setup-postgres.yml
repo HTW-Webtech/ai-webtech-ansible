@@ -9,6 +9,10 @@
     - postgresql-server-dev-9.4
     - postgresql-client-9.4
 
+- name: Install pythong module for ansible postgres commands (Depends on postgres headers)
+  easy_install:
+    name=psycopg2
+
 - name: Copy authentication configuration file to /etc/postgresql/9.4/main/pg_hba.conf
   file:
     src=pg_hba.conf
@@ -54,7 +58,3 @@
     name=aris
     password=aris
     priv=ALL
-
-- name: Install pythong module for ansible postgres commands (Depends on postgres headers)
-  easy_install:
-    name=psycopg2
