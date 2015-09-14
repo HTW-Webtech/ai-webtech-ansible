@@ -37,12 +37,14 @@
   postgresql_db:
     name=aris
 
+# FIXME: aris password should never be exposed
 - name: Ensure aris user has access to aris database
   remote_user: postgres
   sudo: no
   postgresql_user:
     db=aris
     name=aris
+    password=aris
     priv=ALL
 
 - name: Install pythong module for ansible postgres commands (Depends on postgres headers)
