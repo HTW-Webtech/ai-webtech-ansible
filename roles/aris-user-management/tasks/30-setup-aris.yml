@@ -68,7 +68,7 @@
 # - name: Setup crontab for aris user-management background service
 #   cron:
 #     minute=*/2
-#     job=ansible-playbook /opt/aris/code/ansible/playbook.yml -i /opt/aris/code/ansible/inventories/local.ini tags=cron-service &> /opt/aris/logs/ansible.log
+#     job=ansible-playbook /opt/aris/code/ansible/playbook.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service &> /opt/aris/logs/ansible.log
 #     user=aris
 #     state=present
 
