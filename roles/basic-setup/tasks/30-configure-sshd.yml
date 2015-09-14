@@ -4,8 +4,14 @@
     name=ssh-clients
     state=present
 
-- name: Ensure the AllowGroups declarative exists
-  lineinfile:
-    dest=/etc/ssh/sshd_config
-    line='AllowGroups ssh-clients'
+- name: Add current remote_user to the ssh-clients group
+  user:
+    name="{{ ansible_remote_user }}"
+    append=yes
+    groups=ssh-clients
+
+# - name: Ensure the AllowGroups declarative exists
+#   lineinfile:
+#     dest=/etc/ssh/sshd_config
+#     line='AllowGroups ssh-clients'
 
