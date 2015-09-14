@@ -59,3 +59,4 @@
     name=aris
     password=aris
     priv=ALL
+    role_attr_flags=SUPERUSER
