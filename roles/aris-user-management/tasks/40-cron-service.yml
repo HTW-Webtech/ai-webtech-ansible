@@ -16,7 +16,7 @@
     user={{ item }}
     encrypted=no
     password={{ item }}
-    role_attr_flags=NOSUPERUSER,NOCREATEROLE,NOCREATEUSER,NOCREATEDB,NOINHERIT,NOREPLICATION
+    role_attr_flags=NOSUPERUSER
   with_items: "{{ account_names.stdout_lines }}"
 
 # FIXME: aris password should never be exposed. Configure via ENV var
