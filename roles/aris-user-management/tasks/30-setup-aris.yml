@@ -65,12 +65,15 @@
     group=aris
     mode=u=rwx,g=rx,o=r
 
-# - name: Setup crontab for aris user-management background service
-#   cron:
-#     minute=*/2
-#     job=ansible-playbook /opt/aris/code/ansible/playbook.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service &> /opt/aris/logs/ansible.log
-#     user=aris
-#     state=present
+    # name="Aris cron-service: Responsible for automatic user configuration via ansible"
+
+- name: Setup crontab for aris user-management background service
+  cron:
+    name="Aris service"
+    minute=2
+    job="ansible-playbook /opt/aris/code/ansible/playbook.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service &> /opt/aris/logs/ansible.log"
+    user=aris
+    state=present
 
 # Consider Logging, non-verbose
 # Run each 5 minutes the Setup task
