@@ -3,5 +3,5 @@
 # so that they cannot be executed all on the same host
 - include: 10-setup-ansible.yml  tags=aris-setup,ansible
 - include: 20-setup-postgres.yml tags=aris-setup,postgres
-- include: 30-setup-aris.yml     tags=aris-setup
+- include: 30-setup-aris.yml     tags=aris-setup,aris
 - include: 40-cron-service.yml   tags=aris-cron-service
