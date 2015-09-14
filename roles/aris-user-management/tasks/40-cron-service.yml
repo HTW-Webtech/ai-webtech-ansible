@@ -8,18 +8,22 @@
     msg={{ item }}
   with_items: "{{ account_names.stdout_lines }}"
 
+# FIXME: aris password should never be exposed. Configure via ENV var
 - name: Create a postgres db for the user
   postgresql_db:
     login_user=aris
+    login_password=aris
     name={{ item }}
     owner={{ item }}
     encoding='UTF-8'
     state=present
   with_items: "{{ account_names.stdout_lines }}"
 
+# FIXME: aris password should never be exposed. Configure via ENV var
 - name: Create a postgres user
   postgresql_user:
     login_user=aris
+    login_password=aris
     db={{ item }}
     encrypted=no
     password={{ item }} # Fetch this also from the contents of the file?!
