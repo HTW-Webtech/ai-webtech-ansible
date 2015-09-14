@@ -37,7 +37,6 @@
     state=present
   with_items: "{{ account_names.stdout_lines }}"
 
-
 - name: Create .ssh dir for users
   file:
     path=~{{ item }}/.ssh
