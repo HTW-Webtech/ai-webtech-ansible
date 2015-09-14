@@ -14,12 +14,13 @@
     name=psycopg2
 
 - name: Copy authentication configuration file to /etc/postgresql/9.4/main/pg_hba.conf
-  file:
+  copy:
     src=pg_hba.conf
     dest=/etc/postgresql/9.4/main/pg_hba.conf
     owner=postgres
     group=postgres
     mode=u=rw,g=r,o=r
+  notify: restart postgresql
 
 - name: Add postgres user to ssh-clients group for ssh access
   user:
