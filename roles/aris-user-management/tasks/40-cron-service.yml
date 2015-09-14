@@ -13,9 +13,11 @@
   postgresql_user:
     login_user=aris
     login_password=aris
+    user={{ item }}
     db={{ item }}
     encrypted=no
     password={{ item }} # Fetch this also from the contents of the file?!
+    role_attr_flags=NOSUPERUSER,NOCREATEROLE,NOCREATEUSER,NOCREATEDB,NOINHERIT,NOREPLICATION
   with_items: "{{ account_names.stdout_lines }}"
 
 # FIXME: aris password should never be exposed. Configure via ENV var
