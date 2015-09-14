@@ -8,25 +8,8 @@
     msg={{ item }}
   with_items: "{{ account_names.stdout_lines }}"
 
-- name: Ensure ssh auth login for postgres user
-  file:
-    state=directory
-    path=~postgres/.ssh
-    owner=postgres
-    group=postgres
-    mode=u=r,g=,o=
-
-# FIXME: mode is not correct
-- name: Copy authorized keys file
-  copy:
-    dest=~postgres/.ssh/authorized_keys
-    src=authorized_keys
-    mode=u=r,g=,o=
-
 - name: Create a postgres db for the user
-  sudo: yes
   postgresql_db:
-    login_user=postgres
     name={{ item }}
     owner={{ item }}
     encoding='UTF-8'
@@ -35,21 +18,19 @@
 
 - name: Create a postgres user
   postgresql_user:
-    login_user=postgres
     db={{ item }}
     encrypted=no
     password={{ item }} # Fetch this also from the contents of the file?!
   with_items: "{{ account_names.stdout_lines }}"
 
-- name: Ensure debian user exists
+- name: Ensure OS user account exists (access to git-shell limited)
   user:
     name={{ item }}
     createhome=yes
-    shell=/bin/bash
+    shell=/usr/bin/git-shell
     state=present
   with_items: "{{ account_names.stdout_lines }}"
 
-# shell=/usr/bin/git-shell
 
 - name: Create .ssh dir for users
   file:
