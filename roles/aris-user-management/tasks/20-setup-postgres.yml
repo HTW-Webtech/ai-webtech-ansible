@@ -1,0 +1,50 @@
+---
+- name: Install postgresql
+  apt:
+    name={{ item }}
+    state=present
+    update_cache=true
+  with_items:
+    - postgresql-9.4
+    - postgresql-server-dev-9.4
+    - postgresql-client-9.4
+
+- name: Add postgres user to ssh-clients group for ssh access
+  user:
+    name=postgres
+    groups=ssh-clients
+    append=yes
+
+- name: Create .ssh dir for postgres user
+  file:
+    path=~postgres/.ssh
+    state=directory
+    owner=postgres
+    group=postgres
+    mode=u=rwx,g=rx,o=
+
+- name: Enable ssh access to postgres user via my pub key
+  copy:
+    src=mykey.pub
+    dest=~postgres/.ssh/authorized_keys
+    owner=postgres
+    group=postgres
+    mode=u=rw,g=r,o=
+
+- name: Ensure aris database exists
+  remote_user: postgres
+  sudo: no
+  postgresql_db:
+    name=aris
+
+- name: Ensure aris user has access to aris database
+  remote_user: postgres
+  sudo: no
+  postgresql_user:
+    db=aris
+    name=aris
+    priv=ALL
+
+- name: Install pythong module for ansible postgres commands (Depends on postgres headers)
+  easy_install:
+    name=psycopg2
