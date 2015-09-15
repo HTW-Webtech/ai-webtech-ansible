@@ -1,1 +1,14 @@
-foo
+---
+aris_users:
+  test:
+    email: foo@bar.com
+    pg_password: abcdef
+  foo:
+    email: foo@bar.com
+    pg_password: abcdef
+    ssh_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClnCVa0h10WxxLmees9ZaRxJhwG4hRMx+h3COx6jIqys99y8MOHxXdwZz5hoW2TSJUi2A5ZgtxpRIidiCz2XNYwFz2Hx9isGTA2wh0E4nyoMvloz4mFnAF3cvdhbamjPDc5Qh1RWkmG3eHOBmhDv7ruCZyfMr/ebamdQZL/g/K0nlyJ9WsQw9u88NpKH9zP6Kb/KIf5WD+Cp4kcSkbpSrc6EmCSKS7THFZeU4sx2tQCFrpoG71D9X8t6iuFPXSZg3k3beDCPfgQdb9Fu9OnskCJz1e9D9lUS3sYvEzfM01LMGb+dKREBSjMDBqULPvur3Ex8RCBI8vo39whd4bMctB gregoryigelmund@grekkos-mbp
+  bar:
+    email: bar@bar.com
+    pg_password: abcdef
+    ssh_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLvqX1gby/dvx28An4E7t0owZsP3iBAPhxvlnT2JfPwhUoKKbt1QkeLf6M3Fc5VCuUTpeDUth7bJIqh+VNpjSOaXVknUrnWeEg2h714VnAVX7ohWac32flnA+mlCFj6y7NPboJHiaL1uPV85XHNRlYrN0+oagdzEps8Y8CSSy11ogcZEpYKy3O3h1zHTVcmcMU6jz45pd92c/hI83lJH4fxU3jMutmVxZUONhcrxGRVUTQoMcSRlX6+fainB/cqb51R6mTaIcnueIZV0u8+o86lfA1gy1kCXc64papbz9VS8LBKOl78yWw0eSquSqYbkwVkJ4IXiocOhYMB+yLGpB/ gregoryigelmund@grekkos-mbp
+
