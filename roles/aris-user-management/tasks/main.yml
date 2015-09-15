@@ -1,7 +1,4 @@
 ---
-# FIXME: Either those should be in separate repos or they should be configured
-# so that they cannot be executed all on the same host
 - include: 10-setup-ansible.yml  tags=aris-setup,ansible
 - include: 20-setup-postgres.yml tags=aris-setup,postgres
-- include: 30-setup-nginx.yml    tags=aris-setup,nginx
-- include: 40-setup-aris.yml     tags=aris-setup,aris
+- include: 30-setup-aris.yml     tags=aris-setup,aris
