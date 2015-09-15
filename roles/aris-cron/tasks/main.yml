@@ -1,60 +1,66 @@
 ---
-- name: Collect all configured account names
-  shell: cat /opt/aris/config/Usersfile
-  register: account_names
+- name: Load user configuration from /opt/aris/config/Usersfile
+  include_vars: /opt/aris/config/Usersfile
 
-- name: Output all account names
-  debug:
-    msg={{ item }}
-  with_items: "{{ account_names.stdout_lines }}"
-
-# FIXME: aris password should never be exposed. Configure via ENV var
 - name: Create a postgres user
   postgresql_user:
     login_user=aris
     login_password=aris
-    user={{ item }}
+    user={{ item.key }}
     encrypted=no
-    password={{ item }}
+    password={{ item.value.pg_password }}
     role_attr_flags=NOSUPERUSER
-  with_items: "{{ account_names.stdout_lines }}"
+  with_dict: "{{ aris_users }}"
 
-# FIXME: aris password should never be exposed. Configure via ENV var
 - name: Create a postgres db for the user
   postgresql_db:
     login_user=aris
     login_password=aris
-    name={{ item }}
-    owner={{ item }}
+    name={{ item.key }}
+    owner={{ item.key }}
     encoding='UTF-8'
     state=present
-  with_items: "{{ account_names.stdout_lines }}"
+  with_dict: "{{ aris_users }}"
 
 - name: Ensure OS user account exists (access to git-shell limited)
   user:
-    name={{ item }}
+    name={{ item.key }}
     createhome=yes
     shell=/usr/bin/git-shell
     state=present
-  with_items: "{{ account_names.stdout_lines }}"
+  with_dict: "{{ aris_users }}"
 
 - name: Create .ssh dir for users
   file:
-    path=~{{ item }}/.ssh
+    path=~{{ item.key }}/.ssh
     state=directory
-    owner={{ item }}
-    group={{ item }}
-    mode=0600
-  with_items: "{{ account_names.stdout_lines }}"
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+  with_dict: "{{ aris_users }}"
+
+- name: Configure public ssh keys appears in users .ssh/authorized-keys
+  lineinfile:
+    line="{{ item.value.ssh_public_key }}"
+    dest=~{{ item }}/.ssh/authorized_keys
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+    state=present
+    create=yes
+  with_dict: "{{ aris_users }}"
 
 - name: Create users app dir
   file:
     state=directory
-    path=/var/apps/{{ item }}
-    owner={{ item }}
+    path=/var/apps/{{ item.key }}/code
+    owner={{ item.key }}
     group=www-data
     mode=ug+rwx
-  with_items: "{{ account_names.stdout_lines }}"
+  with_dict: "{{ aris_users }}"
+
+- name: Create empty git repository if none exists
+  shell: cd /var/apps/{{ item.key}}/code; stat .git || git init
 
 # Prep user permissions, ssh access
 # Create user without login!!
