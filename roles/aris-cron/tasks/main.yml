@@ -62,6 +62,14 @@
 - name: Create empty git repository if none exists
   shell: cd /var/apps/{{ item.key}}/code; stat .git || git init
 
+- name: Configure proper git post-update hook
+  copy:
+    src=git-hooks/post-update
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-update
+
+# - name: Configure virtual host for nginx
+#   shell: cd /var/apps/{{ item.key}}/code; stat .git || git init
+
 # Prep user permissions, ssh access
 # Create user without login!!
 # - shell: sudo adduser myappuser
