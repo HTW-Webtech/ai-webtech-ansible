@@ -37,12 +37,6 @@
     - /opt/aris/code
     - /opt/aris/logs
 
-# FIXME: This is only for testing purposes
-- name: Copies dummy Usersfile to aris
-  copy:
-    src=Usersfile
-    dest=/opt/aris/config/Usersfile
-
 - name: Copies private key for git access to server
   copy:
     src=key
@@ -65,17 +59,16 @@
     group=aris
     mode=u=rwx,g=rx,o=r
 
-    # name="Aris cron-service: Responsible for automatic user configuration via ansible"
-
 - name: Setup crontab for aris user-management background service
   cron:
     name="Aris service"
     minute=*
-    job="/opt/ansible/code/bin/ansible-playbook /opt/aris/code/ansible/playbook.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service > /opt/aris/logs/ansible.log"
+    job="/opt/ansible/code/bin/ansible-playbook /opt/aris/code/ansible/playbooks/aris-cron.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service > /opt/aris/logs/ansible.log"
     user=aris
     state=present
 
-# Consider Logging, non-verbose
-# Run each 5 minutes the Setup task
-# - Improvement idea: Run each minute.. check that the Usersfile has been edited since last run
-# - Keept .last-run file
+# FIXME: This is only for testing purposes
+- name: Copies dummy Usersfile to aris
+  copy:
+    src=Usersfile
+    dest=/opt/aris/config/Usersfile
