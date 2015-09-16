@@ -1,0 +1,12 @@
+---
+aris_users:
+  alice:
+    email: 'alice@htw-berlin.de'
+    pg_password: 'supersecret'
+    ssh_public_key: 'ssh-rsa
+    AAAAB3NzaC1yc2EAAAADAQABAAABAQClnCVa0h10WxxLmees9ZaRxJhwG4hRMx+h3COx6jIqys99y8MOHxXdwZz5hoW2TSJUi2A5ZgtxpRIidiCz2XNYwFz2Hx9isGTA2wh0E4nyoMvloz4mFnAF3cvdhbamjPDc5Qh1RWkmG3eHOBmhDv7ruCZyfMr/ebamdQZL/g/K0nlyJ9WsQw9u88NpKH9zP6Kb/KIf5WD+Cp4kcSkbpSrc6EmCSKS7THFZeU4sx2tQCFrpoG71D9X8t6iuFPXSZg3k3beDCPfgQdb9Fu9OnskCJz1e9D9lUS3sYvEzfM01LMGb+dKREBSjMDBqULPvur3Ex8RCBI8vo39whd4bMctB gregoryigelmund@grekkos-mbp'
+  bob:
+    email: 'alice@htw-berlin.de'
+    pg_password: 'supersecret'
+    ssh_public_key: 'ssh-rsa
+    AAAAB3NzaC1yc2EAAAADAQABAAABAQClnCVa0h10WxxLmees9ZaRxJhwG4hRMx+h3COx6jIqys99y8MOHxXdwZz5hoW2TSJUi2A5ZgtxpRIidiCz2XNYwFz2Hx9isGTA2wh0E4nyoMvloz4mFnAF3cvdhbamjPDc5Qh1RWkmG3eHOBmhDv7ruCZyfMr/ebamdQZL/g/K0nlyJ9WsQw9u88NpKH9zP6Kb/KIf5WD+Cp4kcSkbpSrc6EmCSKS7THFZeU4sx2tQCFrpoG71D9X8t6iuFPXSZg3k3beDCPfgQdb9Fu9OnskCJz1e9D9lUS3sYvEzfM01LMGb+dKREBSjMDBqULPvur3Ex8RCBI8vo39whd4bMctB gregoryigelmund@grekkos-mbp'
