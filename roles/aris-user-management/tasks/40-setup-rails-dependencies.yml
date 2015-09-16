@@ -1,0 +1,7 @@
+---
+- name: Install sqlite header files
+  apt:
+    name=libsqlite3-dev
+    state=installed
+
+# - name: Install bundler
