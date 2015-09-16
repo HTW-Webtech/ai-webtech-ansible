@@ -13,14 +13,7 @@
     dest=/etc/sudoers.d/aris
     mode=u=rw,g=r,o=
 
-- name: Ensure aris ownes the ansible repo
-  file:
-    owner=aris
-    group=aris
-    dest=/opt/ansible
-    recurse=yes
-
-- name: Configure .bashrc for aris user to source /opt/ansible/code/hacking/env-setup
+- name: Configure .bashrc for aris user to source /opt/ansible/code/hacking/env-setup for anible access
   lineinfile:
     dest=/home/aris/.bashrc
     line='source /opt/ansible/code/hacking/env-setup -q'
@@ -37,6 +30,12 @@
     - /opt/aris/code
     - /opt/aris/logs
 
+- name: Copies ansible.cfg to /opt/aris/config/aris.cfg if none exists yet
+  copy:
+    src=aris/aris.cfg
+    dest=/opt/aris/config/aris.cfg
+    force=no
+
 - name: Copies private key for access to aris github repository
   copy:
     src=github-access/key
@@ -52,13 +51,6 @@
     update=yes
     version=HEAD
 
-- name: Ensure aris ansible repo has the correct owner
-  file:
-    path=/opt/aris/code/ansible
-    owner=aris
-    group=aris
-    mode=u=rwx,g=rx,o=r
-
 - name: Setup crontab for aris user-management background service
   cron:
     name="Aris service"
@@ -67,8 +59,13 @@
     user=aris
     state=present
 
-# FIXME: This is only for testing purposes
-- name: Copies dummy Usersfile to aris
-  copy:
-    src=Usersfile
-    dest=/opt/aris/config/Usersfile
+- name: "Ensure {{ item }} and sub-files have the correct permissions and owner"
+  file:
+    path={{ item }}
+    owner=aris
+    group=aris
+    recurse=yes
+    mode=u=rwx,g=rx,o=r
+  with_items:
+    - /opt/aris
+    - /opt/ansible
