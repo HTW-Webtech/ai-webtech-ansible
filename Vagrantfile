@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "jessie" do |box|
     box.vm.box = "jessie"
     box.vm.network :private_network, ip: '192.168.42.31'
+    box.vm.network :forwarded_port, guest: 80, host: 8081
   end
 
   config.vm.provision 'file',
