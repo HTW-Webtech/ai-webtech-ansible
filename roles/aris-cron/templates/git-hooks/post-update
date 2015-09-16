@@ -1,0 +1,14 @@
+#!/bin/bash
+# source ~{{ item.key }}/.bashrc
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+source ~/.bashrc.ruby-version
+env
+# FIXME: Currenyly every user needs to install bundler (which is kind of stupid)
+# Also everybody needs to install rails etc. If I can install it via root it
+# will be available to every user instead.
+which bundle || gem install bundler
+bundle install --deployment --without development test
+bundle exec rake assets:precompile db:migrate
+# FIXME: Configure the app directory as a fact or somehting?
+passenger-config restart-app /var/apps/{{ item.key }}/code

@@ -1,0 +1,2 @@
+# FIXME: This should be consistent with the currently preferred/installed ruby version
+chruby 2.2.2

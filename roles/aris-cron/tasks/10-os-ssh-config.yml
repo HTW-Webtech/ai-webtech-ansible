@@ -1,0 +1,37 @@
+---
+- name: Ensure OS user account exists (access to git-shell limited)
+  user:
+    name={{ item.key }}
+    createhome=yes
+    shell=/bin/bash
+    state=present
+  with_dict: "{{ aris_users }}"
+
+# shell=/usr/bin/git-shell
+
+- name: Add user to the ssh-clients group
+  user:
+    name="{{ item.key }}"
+    append=yes
+    groups=ssh-clients
+  with_dict: "{{ aris_users }}"
+
+- name: Create .ssh dir for users
+  file:
+    path=~{{ item.key }}/.ssh
+    state=directory
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+  with_dict: "{{ aris_users }}"
+
+- name: Configure public ssh keys appears in users .ssh/authorized-keys
+  lineinfile:
+    line="{{ item.value['ssh_key'] }}"
+    dest=~{{ item.key }}/.ssh/authorized_keys
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+    state=present
+    create=yes
+  with_dict: "{{ aris_users }}"

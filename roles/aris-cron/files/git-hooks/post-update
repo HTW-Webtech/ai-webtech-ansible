@@ -1,6 +1,0 @@
-#!/bin/sh
-# Load Environment Vars?
-
-bundle install --deployment --without development test
-# bundle exec rake assets:precompile db:migrate
-passenger-config restart-app $(pwd)

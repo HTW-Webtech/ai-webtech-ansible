@@ -1,0 +1,49 @@
+---
+- name: Create users app dir (git-repo)
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/code
+  with_dict: "{{ aris_users }}"
+
+- name: Create users app public dir (static-files)
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/public
+  with_dict: "{{ aris_users }}"
+
+- name: Create users app logs dir
+  file:
+    state=directory
+    force=yes
+    path=/var/apps/{{ item.key }}/logs
+  with_dict: "{{ aris_users }}"
+
+- name: Initialize empty git repository with basic config if not existant
+  shell: cd /var/apps/{{ item.key}}/code; stat .git || git init && git config receive.denyCurrentBranch ignore
+  with_dict: "{{ aris_users }}"
+
+- name: Configure proper git post-update hook
+  template:
+    src=git-hooks/post-update
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-update
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_users }}"
+
+- name: Configure proper git post-receive hook (which runs `git reset --hard after` after push)
+  template:
+    src=git-hooks/post-receive
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-receive
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_users }}"
+
+- name: Ensure the correct ownership and permissions for the users app dir
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}
+    recurse=yes
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=ug+rwx
+  with_dict: "{{ aris_users }}"

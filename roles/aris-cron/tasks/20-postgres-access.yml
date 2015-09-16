@@ -1,0 +1,21 @@
+---
+- name: Create a postgres user
+  postgresql_user:
+    login_user=aris
+    login_password=aris
+    user={{ item.key }}
+    encrypted=no
+    password={{ item.value.pg_password }}
+    role_attr_flags=NOSUPERUSER
+  with_dict: "{{ aris_users }}"
+
+- name: Create a postgres db for the user
+  postgresql_db:
+    login_user=aris
+    login_password=aris
+    name={{ item.key }}
+    owner={{ item.key }}
+    encoding='UTF-8'
+    state=present
+  with_dict: "{{ aris_users }}"
+
