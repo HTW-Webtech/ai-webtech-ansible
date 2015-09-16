@@ -20,5 +20,14 @@
 
 - name: Remove system default server
   file:
-    path=/etc/nginx/conf.d/default.conf
     state=absent
+    path=/etc/nginx/conf.d/default.conf
+
+# FIXME: Not sure if this even works :-/
+# Symlink seems to persist after deleting it.
+# Though the actual file seems to be deleted in sites-available
+- name: Ensure the default site is not enabled
+  file:
+    state=absent
+    path=/etc/nginx/sites-available/default
+  notify: restart nginx
