@@ -39,6 +39,14 @@
   with_dict: "{{ aris_users }}"
   notify: reload nginx
 
+- name: Symlinks user app in /etc/nginx/sites-enabled
+  file:
+    state=link
+    src=/var/apps/{{ item.key }}/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/{{ item.key}}-app.conf
+  with_dict: "{{ aris_users }}"
+  notify: reload nginx
+
 # Prep user permissions, ssh access
 # Create user without login!!
 # - shell: sudo adduser myappuser
