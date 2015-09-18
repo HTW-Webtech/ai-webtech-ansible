@@ -21,6 +21,7 @@
     dest=/opt/ansible/code
     version=v1.9.2-0.2.rc2
     accept_hostkey=yes
+    force=yes
 
 - name: Install necessary python modules
   easy_install:
