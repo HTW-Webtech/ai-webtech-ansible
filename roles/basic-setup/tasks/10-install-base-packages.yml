@@ -9,5 +9,6 @@
     - wget
     - curl
     - gnupg
+    - tree
     - build-essential
 
