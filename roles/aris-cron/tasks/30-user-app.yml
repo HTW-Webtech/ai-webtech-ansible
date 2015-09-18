@@ -5,10 +5,11 @@
     path=/var/apps/{{ item.key }}/code
   with_dict: "{{ aris_users }}"
 
-- name: Create users app public dir (static-files)
+- name: Create symlink for uses public-dir (expects code/public to exists)
   file:
-    state=directory
-    path=/var/apps/{{ item.key }}/public
+    state=link
+    src=/var/apps/{{ item.key }}/code/public
+    dest=/var/apps/{{ item.key }}/public
   with_dict: "{{ aris_users }}"
 
 - name: Create users app logs dir
@@ -38,6 +39,22 @@
     group={{ item.key }}
   with_dict: "{{ aris_users }}"
 
+- name: Create or update .env file in app-directory
+  template:
+    src=user-app/.env
+    dest=/var/apps/{{ item.key }}/code/.env
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_users }}"
+
+# FIXME: DANGER! This loads env vars into the user account!! is that a problem? Remote code exec?
+- name: Ensure the .env file is loaded in users ~/.bashrc to enable access to ENV vars for rake etc.
+  lineinfile:
+    line='source /var/apps/{{ item.key }}/code/.env'
+    dest="~{{ item.key }}/.bashrc"
+  with_dict: "{{ aris_users }}"
+
+# FIXME: seems like a pretty harsh thing to do
 - name: Ensure the correct ownership and permissions for the users app dir
   file:
     state=directory
