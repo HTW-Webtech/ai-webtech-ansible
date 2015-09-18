@@ -90,6 +90,6 @@
   cron:
     name="Aris service"
     minute=*
-    job="/opt/ansible/code/bin/ansible-playbook /opt/aris/code/ansible/playbooks/aris-cron.yml -i /opt/aris/code/ansible/inventories/local.ini --tags=aris-cron-service > /opt/aris/logs/ansible.log"
+    job="/opt/ansible/code/bin/ansible-playbook /opt/aris/code/ansible/playbooks/aris-cron.yml -i /opt/aris/code/ansible/inventories/local.ini > /opt/aris/logs/ansible.log"
     user=aris
     state=present
