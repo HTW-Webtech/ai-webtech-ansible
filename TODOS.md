@@ -13,6 +13,13 @@
   - aris-user add [name] --email --ssh-key
   - aris-user delete [name]
   - aris-user list
+  # Steps:
+  a) Load config defined in /opt/aris/config/aris.cfg
+  b) Load list from users.yml or create users.yml and empyty list
+  c) Modify list
+  d) Store list (if add or delete)
+  e) Commit changes via ansible (if add or delete)
+  f) Print out current list (in any case)
 [] Web Front End for ssh_key config
 
 ## Nive to have
