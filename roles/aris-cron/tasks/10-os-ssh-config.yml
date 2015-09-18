@@ -27,11 +27,12 @@
 
 - name: Configure public ssh keys appears in users .ssh/authorized-keys
   lineinfile:
-    line="{{ item.value['ssh_key'] }}"
+    line="{{ item.value.ssh_key }}"
     dest=~{{ item.key }}/.ssh/authorized_keys
     owner={{ item.key }}
     group={{ item.key }}
     mode=u=rx,g=,o=
     state=present
     create=yes
+  when: item.value.ssh_key is defined
   with_dict: "{{ aris_users }}"
