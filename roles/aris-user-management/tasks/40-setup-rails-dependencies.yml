@@ -4,4 +4,18 @@
     name=libsqlite3-dev
     state=installed
 
-# - name: Install bundler
+- name: Install system-wide gems
+  gem:
+    name={{ item }}
+    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
+  with_items:
+    - bundler
+    - rails
+    - sqlite3
+    - sass-rails
+    - uglifier
+    - coffee-rails
+    - therubyracer
+    - jquery-rails
+    - turbolinks
+    - web-console
