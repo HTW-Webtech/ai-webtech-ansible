@@ -19,3 +19,10 @@
     - jquery-rails
     - turbolinks
     - web-console
+
+# FIXME: This belongs somewhere else
+- name: Allow read access to rubies and gems in /opt/rubies
+  file:
+    path=/opt/rubies
+    mode=ug=rwx,o=rx
+    recurse=yes
