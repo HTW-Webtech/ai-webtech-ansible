@@ -23,7 +23,7 @@
     accept_hostkey=yes
     force=yes
 
-- name: Install necessary python modules
+- name: Install dependant python modules
   easy_install:
     name={{ item}}
   with_items:
