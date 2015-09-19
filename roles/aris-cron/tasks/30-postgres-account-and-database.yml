@@ -1,4 +1,5 @@
 ---
+# FIXME: Do they really NEED to create a db!? Truncating should be enough, no?
 - name: Create a postgres user
   postgresql_user:
     login_user=aris
