@@ -1,0 +1,44 @@
+---
+- name: Install ansible dependencies
+  apt:
+    name={{ item }}
+    state=present
+    update_cache=true
+  with_items:
+    - software-properties-common
+    - python-pip
+    - python-dev
+
+- name: Ensure directory for ansible exists
+  file:
+    path=/opt/ansible
+    state=directory
+    owner=aris
+    group=aris
+
+- name: Checkout ansible from git repo
+  git:
+    repo=git://github.com/ansible/ansible.git
+    recursive=yes
+    dest=/opt/ansible/code
+    version=v1.9.2-0.2.rc2
+    accept_hostkey=yes
+    force=yes
+
+- name: Fix permissions for cloned repository
+  file:
+    state=directory
+    path=/opt/ansible/code
+    owner=aris
+    group=aris
+    recurse=yes
+
+- name: Install dependant python modules
+  easy_install:
+    name={{ item}}
+  with_items:
+  - paramiko
+  - PyYAML
+  - Jinja2
+  - httplib2
+  - six

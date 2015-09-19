@@ -1,0 +1,50 @@
+# Depends on ansible-setup!
+---
+- name: Ensure aris user exists
+  user:
+    name=aris
+    createhome=yes
+    shell=/bin/bash
+    state=present
+
+- name: Ensure remote_user belongs to the aris group
+  user:
+    name={{ ansible_ssh_user }}
+    append=yes
+    groups=aris
+
+- name: Ensure aris user has sudoers rights
+  copy:
+    src=aris-sudoers-file
+    dest=/etc/sudoers.d/aris
+    mode=u=rw,g=r,o=
+
+- name: Configure .bashrc for aris user to source /opt/ansible/code/hacking/env-setup for anible access
+  lineinfile:
+    dest=/home/aris/.bashrc
+    line='source /opt/ansible/code/hacking/env-setup -q'
+
+- name: Load chruby in ~/.bashrc
+  lineinfile:
+    line='source /usr/local/share/chruby/chruby.sh'
+    dest=~aris/.bashrc
+
+- name: Load chrubys auto.sh in ~/.bashrc
+  lineinfile:
+    line='source /usr/local/share/chruby/auto.sh'
+    dest=~aris/.bashrc
+
+- name: Load default configured ruby version in .bashrc
+  lineinfile:
+    line='source ~/.bashrc.ruby-version'
+    dest=~aris/.bashrc
+
+- name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
+  template:
+    src=aris/.bashrc.ruby-version
+    dest=~aris/.bashrc.ruby-version
+
+- name: Configure .bashrc for ansible access
+  lineinfile:
+    dest=/home/aris/.bashrc
+    line='source /opt/ansible/code/hacking/env-setup -q'
