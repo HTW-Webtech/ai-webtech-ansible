@@ -7,7 +7,7 @@
   shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --ssh-key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSoUnD2zl5fKZlndTi6gABTZOzT8gJ6y6dwbq+TwNuW5TjNTSM8KoBOiiFXPrRbCEGWsk8s+wfZXoD1oATjV2sTfHy8xOQ5ev93LtahKnBZ61A2iORNDd1S+MIs7mU9a/dNEMu9NJmPcLekzXLai5hzBwRDHu9Ny5P+TA9lC+M9V0NMasiIjPuSDmLla1aMWJhtZyrGfCG2AiPeWJjZdvFM0S8dZ8LhNGE7cN6m6GqNBxyqQeS9CFsrca7Dn/2PybJxbGHt0rZMK59lybEB6XKDoI01Xzr3OuyFRwzYdStzIfMP5tJO80JAl/gjPBnleGU3WWOZu7l1DbfcG5rr6fN gregoryigelmund@Gregorys-MacBook-Pro.local'"
 
 - name: Configure postgres and rails app vars
-  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --env-vars pg_db:admin pg_user:admin pg_password:{{ lookup('env','APP_PG_PASSWORD') }} app_secret_key_base:{{ lookup('env','APP_SECRET_KEY_BASE') }} app_admin_email:aris-admin@grekko.de app_admin_password:{{ lookup('env','APP_ADMIN_PASSWORD') }} "
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --env-vars pg_db:admin pg_user:admin pg_password:{{ lookup('env','APP_PG_PASSWORD') }} app_secret_key_base:{{ lookup('env','APP_SECRET_KEY_BASE') }} app_admin_email:{{ lookup('env','APP_ADMIN_EMAIL') }} aris-admin@grekko.de app_admin_password:{{ lookup('env','APP_ADMIN_PASSWORD') }} "
 
 # FIXME: SMELL!
 - name: Fix permissions for apps.yml
