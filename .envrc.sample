@@ -1,3 +1,6 @@
-export ARIS_ADMIN_APP_PG_PASS=secret-password
 export ANSIBLE_REMOTE_USER=`whoami`
 export PATH=./bin:$PATH
+
+export APP_PG_PASSWORD=secret
+export APP_ADMIN_PASSWORD=secret
+export APP_SECRET_KEY_BASE=also-long-secret-hash
