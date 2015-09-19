@@ -51,6 +51,8 @@
     name=aris
 
 # FIXME: aris password should never be exposed
+# FIXME: on Production this uses user `local` instead of `posgres`
+# FIXME: I had to delete AllowUsers on prod aris server to make this work
 - name: Ensure aris user has access to aris database
   remote_user: postgres
   sudo: no
