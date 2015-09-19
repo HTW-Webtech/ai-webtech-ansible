@@ -12,7 +12,7 @@
   [] Do not depend on Vundle but use git submodule for plugins
   [] Install ctrlp-cmatcher via ansible
 [] Install bundler, rails, padrino, sinatra w/ root
-  [] Create a list of gems which should be installed
+  [] Create a list of gems which should be installed.
 
 ## Nive to have
 [] When running something as root I do not get the full PATH/env. Which is
