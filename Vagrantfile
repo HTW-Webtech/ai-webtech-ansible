@@ -31,7 +31,7 @@ rm -f /home/#{remote_user}/.ssh/authorized_keys
 mkdir /home/#{remote_user}/.ssh
 cp /home/vagrant/host_pubkey /home/#{remote_user}/.ssh/authorized_keys
 chown -R #{remote_user}:#{remote_user} /home/#{remote_user}/.ssh
-chmod -R 600 /home/#{remote_user}/.ssh
+chmod -R 700 /home/#{remote_user}/.ssh
 SCRIPT
 
 # Remove local id_rsa.pub from image
