@@ -6,7 +6,7 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create users app logs dir
   file:
@@ -16,7 +16,7 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create an empty default public-dir
   file:
@@ -25,7 +25,7 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create a basic hello world page in the default public dir
   template:
@@ -34,7 +34,7 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Symlink the default-public dir to public if no other public dir exists
   file:
@@ -43,7 +43,7 @@
     dest=/var/apps/{{ item.key }}/public
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create nginx config dir for user app
   file:
@@ -53,7 +53,7 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create nginx extras config dir for user app
   file:
@@ -63,5 +63,5 @@
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 

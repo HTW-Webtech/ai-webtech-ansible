@@ -8,7 +8,7 @@
     password={{ item.key }}
     role_attr_flags=NOSUPERUSER
   # when: item.value.pg_password is defined
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create a postgres db for the user
   postgresql_db:
@@ -19,5 +19,5 @@
     encoding='UTF-8'
     state=present
   # when: item.value.pg_password is defined
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 

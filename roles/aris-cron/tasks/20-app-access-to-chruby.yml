@@ -3,22 +3,22 @@
   lineinfile:
     line='source /usr/local/share/chruby/chruby.sh'
     dest="~{{ item.key }}/.bashrc"
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Load chrubys auto.sh in ~/.bashrc
   lineinfile:
     line='source /usr/local/share/chruby/auto.sh'
     dest="~{{ item.key }}/.bashrc"
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Load default configured ruby version in .bashrc
   lineinfile:
     line='source ~/.bashrc.ruby-version'
     dest="~{{ item.key }}/.bashrc"
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
   template:
     src=user-chruby/.bashrc.ruby-version
     dest="~{{ item.key }}/.bashrc.ruby-version"
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"

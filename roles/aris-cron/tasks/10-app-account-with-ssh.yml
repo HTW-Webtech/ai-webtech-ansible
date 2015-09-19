@@ -5,14 +5,14 @@
     createhome=yes
     shell=/usr/bin/git-shell
     state=present
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Add user to the ssh-clients group
   user:
     name="{{ item.key }}"
     append=yes
     groups=ssh-clients
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Create .ssh dir for users
   file:
@@ -21,7 +21,7 @@
     owner={{ item.key }}
     group={{ item.key }}
     mode=u=rx,g=,o=
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
 
 - name: Configure public ssh keys appears in users .ssh/authorized-keys
   lineinfile:
@@ -33,4 +33,4 @@
     state=present
     create=yes
   when: item.value.ssh_key is defined
-  with_dict: "{{ aris_users }}"
+  with_dict: "{{ aris_apps }}"
