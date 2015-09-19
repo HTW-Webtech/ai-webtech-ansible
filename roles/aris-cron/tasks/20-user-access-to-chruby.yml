@@ -17,7 +17,7 @@
     dest="~{{ item.key }}/.bashrc"
   with_dict: "{{ aris_users }}"
 
-- name: Enable default ruby 2.2.2 via ~/.bashrc.ruby-version file
+- name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
   template:
     src=user-chruby/.bashrc.ruby-version
     dest="~{{ item.key }}/.bashrc.ruby-version"

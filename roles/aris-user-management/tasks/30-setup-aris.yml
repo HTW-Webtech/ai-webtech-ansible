@@ -39,7 +39,7 @@
     line='source ~/.bashrc.ruby-version'
     dest=~aris/.bashrc
 
-- name: Enable default ruby 2.2.2 via ~/.bashrc.ruby-version file
+- name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
   template:
     src=aris/.bashrc.ruby-version
     dest=~aris/.bashrc.ruby-version
