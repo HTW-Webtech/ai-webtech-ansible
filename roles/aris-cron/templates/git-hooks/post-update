@@ -4,9 +4,11 @@ source /usr/local/share/chruby/auto.sh
 source /home/{{ item.key }}/.bashrc.ruby-version
 source /var/apps/{{ item.key }}/code/.env
 
+
 # FIXME: Currenyly every user needs to install bundler (which is kind of stupid)
 # Also everybody needs to install rails etc. If I can install it via root it
 # will be available to every user instead.
+export RAILS_ENV=production
 which bundle || gem install bundler
 bundle install --deployment --without development test
 bundle exec rake assets:precompile db:migrate
