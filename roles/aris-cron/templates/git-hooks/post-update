@@ -2,6 +2,7 @@
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 source /home/{{ item.key }}/.bashrc.ruby-version
+source /var/apps/{{ item.key }}/code/.env
 
 # FIXME: Currenyly every user needs to install bundler (which is kind of stupid)
 # Also everybody needs to install rails etc. If I can install it via root it
@@ -22,6 +23,9 @@ else
 fi
 
 # Symlink code/log/production.log if it exists
-ln -s /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
+if [ -e /var/apps/{{ item.key }}/code/log/production.log ]; then
+  rm /var/apps/{{ item.key }}/logs/rails.log
+  ln -s /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
+fi
 
 passenger-config restart-app /var/apps/{{ item.key }}/code
