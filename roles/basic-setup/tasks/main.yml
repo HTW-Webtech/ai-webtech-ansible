@@ -1,4 +1,3 @@
 ---
 - include: 10-install-base-packages.yml  tags=basic-setup
-- include: 20-configure-dotfiles.yml     tags=basic-setup,dotfiles
-- include: 30-configure-sshd.yml         tags=basic-setup
+- include: 20-configure-sshd.yml         tags=basic-setup
