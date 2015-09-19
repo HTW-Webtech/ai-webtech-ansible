@@ -1,0 +1,39 @@
+---
+- name: Clone grekko/.dotfiles to the remote users home
+  git:
+    repo=https://github.com/grekko/.dotfiles.git
+    dest=/home/{{ ansible_ssh_user }}/.dotfiles
+    update=no
+    # force=yes
+
+- name: Workaround for current ansible/dotfiles bug
+  file:
+    state=directory
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+    path=~{{ ansible_ssh_user }}/.dotfiles/shell/environments
+
+- name: Workaround for current ansible/dotfiles bug #2
+  template:
+    src=dotfiles/environment
+    dest=~{{ ansible_ssh_user }}/.dotfiles/shell/environments/{{ ansible_hostname }}
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+
+- name: Fix permissions for cloned repository
+  file:
+    state=directory
+    path=/home/{{ ansible_ssh_user }}/.dotfiles
+    mode=ug=rwx,o=
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+    recurse=yes
+
+- name: Check wether .dotfiles have been installed already
+  shell: 'stat ~{{ ansible_ssh_user }}/.dotfiles_env'
+  register: dotfiles_env
+  ignore_errors: yes
+
+- name: Install dotfiles for remote-user
+  shell: "sudo su -l -c 'cd ~/.dotfiles && rake install' {{ ansible_ssh_user }}"
+  when: dotfiles_env.rc == 1

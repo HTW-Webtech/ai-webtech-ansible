@@ -1,0 +1,2 @@
+# This is a stub environment created to fix an issue with ansible.
+# Without this file dotfiles echo's to the login shell which breaks ansible
