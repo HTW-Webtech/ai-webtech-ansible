@@ -26,7 +26,7 @@
 - name: Fix permissions for cloned repository
   file:
     state=directory
-    path=/var/apps/admin/code
+    path=/var/apps/admin
     owner=admin
     group=admin
     recurse=yes
