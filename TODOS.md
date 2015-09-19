@@ -8,10 +8,15 @@
 [] Configure SSHd to deny failed logins (exponential back off)
 
 ## Low hanging fruits
+[] Make automatic installation of dotfiles better:
+  [] Do not depend on Vundle but use git submodule for plugins
+  [] Install ctrlp-cmatcher via ansible
 [] Install bundler, rails, padrino, sinatra w/ root
   [] Create a list of gems which should be installed
 
 ## Nive to have
+[] When running something as root I do not get the full PATH/env. Which is
+   why I have do declare the full path to some binaries, e.h. `gem`
 [] Run a simple padrino app
 [] /opt/aris/config/aris.cfg with the most important paths
   # To run ansible after modification
