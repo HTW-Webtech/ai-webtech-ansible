@@ -5,6 +5,13 @@ server {
     # Tell Nginx and Passenger where your app's 'public' directory is
     root /var/apps/{{ item.key }}/public;
 
+    # Enable gzip and proper cache settings for assets
+    location ^~ /assets/ {
+        gzip_static on;
+        expires max;
+        add_header Cache-Control public;
+    }
+
     # Include all user-app-specific conf files
     include /var/apps/{{ item.key }}/nginx/extras/*.conf;
 
