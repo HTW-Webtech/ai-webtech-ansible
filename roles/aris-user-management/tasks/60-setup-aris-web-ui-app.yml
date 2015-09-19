@@ -1,21 +1,20 @@
 ---
 # FIXME: Check before if this is necessary
 - name: Create admin app w/ aris-control
-  shell: aris-control add admin --email aris-admin@grekko.de
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email aris-admin@grekko.de"
 
 - name: Configure admin app ssh key
-  shell: "aris-control add admin --ssh-key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSoUnD2zl5fKZlndTi6gABTZOzT8gJ6y6dwbq+TwNuW5TjNTSM8KoBOiiFXPrRbCEGWsk8s+wfZXoD1oATjV2sTfHy8xOQ5ev93LtahKnBZ61A2iORNDd1S+MIs7mU9a/dNEMu9NJmPcLekzXLai5hzBwRDHu9Ny5P+TA9lC+M9V0NMasiIjPuSDmLla1aMWJhtZyrGfCG2AiPeWJjZdvFM0S8dZ8LhNGE7cN6m6GqNBxyqQeS9CFsrca7Dn/2PybJxbGHt0rZMK59lybEB6XKDoI01Xzr3OuyFRwzYdStzIfMP5tJO80JAl/gjPBnleGU3WWOZu7l1DbfcG5rr6fN gregoryigelmund@Gregorys-MacBook-Pro.local'"
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --ssh-key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSoUnD2zl5fKZlndTi6gABTZOzT8gJ6y6dwbq+TwNuW5TjNTSM8KoBOiiFXPrRbCEGWsk8s+wfZXoD1oATjV2sTfHy8xOQ5ev93LtahKnBZ61A2iORNDd1S+MIs7mU9a/dNEMu9NJmPcLekzXLai5hzBwRDHu9Ny5P+TA9lC+M9V0NMasiIjPuSDmLla1aMWJhtZyrGfCG2AiPeWJjZdvFM0S8dZ8LhNGE7cN6m6GqNBxyqQeS9CFsrca7Dn/2PybJxbGHt0rZMK59lybEB6XKDoI01Xzr3OuyFRwzYdStzIfMP5tJO80JAl/gjPBnleGU3WWOZu7l1DbfcG5rr6fN gregoryigelmund@Gregorys-MacBook-Pro.local'"
 
 - name: Configure postgres credentials
-  shell: "aris-control add admin --pg_role=admin --pg_pass={{ lookup('env','ARIS_ADMIN_APP_PG_PASS') }}"
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --pg_role=admin --pg_pass={{ lookup('env','ARIS_ADMIN_APP_PG_PASS') }}"
 
 # - name: Run ansible to create admin user app
-#   shell: '/opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log"
-#     chdir=/opt/aris/code/ansible
-#
-# - name: Checkout git app to /var/apps/admin/code
-#   git:
-#     repo=https://github.com/grekko/aris-web-ui.git
-#     dest=/var/apps/admin/code
-#     update=yes
-#     version=HEAD
+#   shell: '. ~root/.bashrc && . /opt/ansible/code/hacking/env-setup -q && cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log'
+
+- name: Checkout git app to /var/apps/admin/code
+  git:
+    repo=https://github.com/grekko/aris-web-ui.git
+    dest=/var/apps/admin/code
+    update=yes
+    version=HEAD

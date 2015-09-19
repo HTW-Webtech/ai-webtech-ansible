@@ -42,6 +42,14 @@
     update=yes
     version=HEAD
 
+- name: Fix permissions for cloned repository
+  file:
+    state=directory
+    path=/opt/aris/code/ansible
+    owner=aris
+    group=aris
+    recurse=yes
+
 - name: Setup crontab for aris user-management background service
   cron:
     name="Aris service"
