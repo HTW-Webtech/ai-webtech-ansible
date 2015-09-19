@@ -1,0 +1,20 @@
+---
+- name: Load chruby in ~/.bashrc
+  lineinfile:
+    line='source /usr/local/share/chruby/chruby.sh'
+    dest="~root/.bashrc"
+
+- name: Load chrubys auto.sh in ~/.bashrc
+  lineinfile:
+    line='source /usr/local/share/chruby/auto.sh'
+    dest="~root/.bashrc"
+
+- name: Load default configured ruby version in .bashrc
+  lineinfile:
+    line='source ~/.bashrc.ruby-version'
+    dest="~root/.bashrc"
+
+- name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
+  template:
+    src=.bashrc.ruby-version
+    dest="~root/.bashrc.ruby-version"
