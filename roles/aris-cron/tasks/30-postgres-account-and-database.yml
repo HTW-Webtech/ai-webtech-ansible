@@ -6,7 +6,7 @@
     user={{ item.key }}
     encrypted=no
     password={{ item.value.env_vars['PG_PASSWORD'] }}
-    role_attr_flags=NOSUPERUSER
+    role_attr_flags=NOSUPERUSER,CREATEDB
   when: item.value.env_vars['PG_PASSWORD'] is defined
   with_dict: "{{ aris_apps }}"
 
