@@ -24,12 +24,12 @@
     dest=/home/aris/.bashrc
     line='source /opt/ansible/code/hacking/env-setup -q'
 
-- name: Load chruby in ~/.bash_rc
+- name: Load chruby in ~/.bashrc
   lineinfile:
     line='source /usr/local/share/chruby/chruby.sh'
     dest=~aris/.bashrc
 
-- name: Load chrubys auto.sh in ~/.bash_rc
+- name: Load chrubys auto.sh in ~/.bashrc
   lineinfile:
     line='source /usr/local/share/chruby/auto.sh'
     dest=~aris/.bashrc

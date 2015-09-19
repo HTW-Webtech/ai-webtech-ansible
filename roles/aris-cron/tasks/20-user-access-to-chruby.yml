@@ -1,11 +1,11 @@
 ---
-- name: Load chruby in ~/.bash_rc
+- name: Load chruby in ~/.bashrc
   lineinfile:
     line='source /usr/local/share/chruby/chruby.sh'
     dest="~{{ item.key }}/.bashrc"
   with_dict: "{{ aris_users }}"
 
-- name: Load chrubys auto.sh in ~/.bash_rc
+- name: Load chrubys auto.sh in ~/.bashrc
   lineinfile:
     line='source /usr/local/share/chruby/auto.sh'
     dest="~{{ item.key }}/.bashrc"
