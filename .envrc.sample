@@ -3,4 +3,5 @@ export PATH=./bin:$PATH
 
 export APP_PG_PASSWORD=secret
 export APP_ADMIN_PASSWORD=secret
+export APP_ADMIN_EMAIL=admin@example.com
 export APP_SECRET_KEY_BASE=also-long-secret-hash
