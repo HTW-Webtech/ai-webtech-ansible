@@ -1,0 +1,21 @@
+---
+- name: Initialize empty git repository with basic config if not existant
+  shell: cd /var/apps/{{ item.key}}/code; stat .git || git init && git config receive.denyCurrentBranch ignore
+  with_dict: "{{ aris_users }}"
+
+- name: Configure proper git post-update hook
+  template:
+    src=git-hooks/post-update
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-update
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_users }}"
+
+- name: Configure proper git post-receive hook (which runs `git reset --hard after` after push)
+  template:
+    src=git-hooks/post-receive
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-receive
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_users }}"
+

@@ -1,7 +1,9 @@
 ---
 - include_vars: /opt/aris/config/users.yml
-- include: 10-os-ssh-config.yml
-- include: 10-user-chruby.yml
-- include: 20-postgres-access.yml
-- include: 30-user-app.yml
-- include: 40-nginx-passenger-config.yml
+- include: 10-user-account-with-ssh.yml
+- include: 20-user-access-to-chruby.yml
+- include: 30-postgres-account-and-database.yml
+- include: 40-user-app-skeleton.yml
+- include: 50-user-app-git-config.yml
+- include: 60-user-access-to-env-vars.yml
+- include: 70-nginx-passenger-config.yml

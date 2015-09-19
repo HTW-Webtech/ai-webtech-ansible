@@ -8,8 +8,8 @@ server {
     # Include all user-app-specific conf files
     include /var/apps/{{ item.key }}/nginx/extras/*.conf;
 
-    access_log /var/apps/{{ item.key }}/logs/access.log;
-    error_log  /var/apps/{{ item.key }}/logs/error.log;
+    access_log /var/apps/{{ item.key }}/logs/nginx-access.log;
+    error_log  /var/apps/{{ item.key }}/logs/nginx-error.log;
 
     # Passenger config
     passenger_enabled on;

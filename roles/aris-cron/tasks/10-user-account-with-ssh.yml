@@ -3,10 +3,11 @@
   user:
     name={{ item.key }}
     createhome=yes
-    shell=/bin/bash
+    shell=/usr/bin/git-shell
     state=present
   with_dict: "{{ aris_users }}"
 
+    # shell=/bin/bash
 # shell=/usr/bin/git-shell
 
 - name: Add user to the ssh-clients group

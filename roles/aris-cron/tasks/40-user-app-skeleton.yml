@@ -1,0 +1,53 @@
+---
+- name: Create users app dir (git-repo)
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/code
+  with_dict: "{{ aris_users }}"
+
+- name: Create users app logs dir
+  file:
+    state=directory
+    force=yes
+    path=/var/apps/{{ item.key }}/logs
+  with_dict: "{{ aris_users }}"
+
+- name: Create an empty default public-dir
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/default-public
+  with_dict: "{{ aris_users }}"
+
+- name: Create a basic hello world page in the default public dir
+  template:
+    src=nginx/default-public/index.html.j2
+    dest=/var/apps/{{ item.key }}/default-public/index.html
+  with_dict: "{{ aris_users }}"
+
+- name: Symlink the default-public dir to public if no other public dir exists
+  file:
+    state=link
+    src=/var/apps/{{ item.key }}/default-public/
+    dest=/var/apps/{{ item.key }}/public
+  with_dict: "{{ aris_users }}"
+
+- name: Create nginx config dir for user app
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/nginx
+    recurse=yes
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=ug+rwx,o=
+  with_dict: "{{ aris_users }}"
+
+- name: Create nginx extras config dir for user app
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/nginx/extras
+    recurse=yes
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=ug+rwx
+  with_dict: "{{ aris_users }}"
+
