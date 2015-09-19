@@ -1,5 +1,7 @@
 ---
 - include: 10-setup-ansible.yml             tags=aris-setup,ansible
 - include: 20-setup-postgres.yml            tags=aris-setup,postgres
-- include: 30-setup-aris.yml                tags=aris-setup,aris
-- include: 40-setup-rails-dependencies.yml  tags=aris-setup,rails
+- include: 30-setup-aris-user.yml           tags=aris-setup,aris
+- include: 40-setup-aris-service.yml        tags=aris-setup,aris
+- include: 50-setup-rails-dependencies.yml  tags=aris-setup,rails
+- include: 60-setup-aris-web-ui-app.yml     tags=aris-setup,web-ui

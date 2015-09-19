@@ -7,6 +7,7 @@
 - name: Install system-wide gems
   gem:
     name={{ item }}
+    state=present
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
   with_items:
     - bundler

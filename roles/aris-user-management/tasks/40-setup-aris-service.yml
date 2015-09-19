@@ -1,0 +1,51 @@
+---
+- name: Ensure aris app (and config) directory exists
+  file:
+    path={{ item }}
+    state=directory
+    owner=aris
+    group=aris
+    mode=u=rwx,g=rwx,o=r
+  with_items:
+    - /opt/aris/config
+    - /opt/aris/code
+    - /opt/aris/logs
+
+- name: Install aris-control gem
+  gem:
+    name=aris-control
+    state=latest
+    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
+
+- name: Copies ansible.cfg to /opt/aris/config/aris.cfg if none exists yet
+  copy:
+    src=aris/aris.cfg
+    dest=/opt/aris/config/aris.cfg
+    owner=aris
+    group=aris
+    force=no
+
+- name: Copies private key for access to aris github repository
+  copy:
+    src=github-access/key
+    dest=/opt/aris/config/key
+    owner=aris
+    group=aris
+    mode=u=r,g=,o=
+
+- name: Checkout the aris ansible repo
+  git:
+    key_file=/opt/aris/config/key
+    accept_hostkey=true
+    repo=git@github.com:grekko/htw.aris-secret.git
+    dest=/opt/aris/code/ansible
+    update=yes
+    version=HEAD
+
+- name: Setup crontab for aris user-management background service
+  cron:
+    name="Aris service"
+    minute=*
+    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log"
+    user=aris
+    state=present
