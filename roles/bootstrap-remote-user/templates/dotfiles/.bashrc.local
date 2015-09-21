@@ -6,5 +6,5 @@ chruby {{ chruby_ruby_version }}
 # Switch to a user and set its shell to bash.
 # This works for users with a configured git-shell
 function switch() {
-  sudo su -s /bin/bash $0 && cd /var/apps/$0
+  sudo su -s /bin/bash $1 && cd /var/apps/$1
 }
