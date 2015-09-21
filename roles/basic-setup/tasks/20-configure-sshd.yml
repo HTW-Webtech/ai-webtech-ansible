@@ -11,8 +11,17 @@
     append=yes
     groups=ssh-clients
 
+- name: Ensure there is no AllowUser declarative
+  lineinfile:
+    backup=yes
+    state=absent
+    dest=/etc/ssh/sshd_config
+    regexp='AllowUsers .*'
+  notify: restart sshd
+
 - name: Ensure the AllowGroups declarative exists
   lineinfile:
     dest=/etc/ssh/sshd_config
     line='AllowGroups ssh-clients'
+  notify: restart sshd
 
