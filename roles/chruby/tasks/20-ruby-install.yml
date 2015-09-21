@@ -17,5 +17,6 @@
   register: ruby_install_unarchive
 
 - name: Runs make for chruby if it has just been unwrapped
-  shell: make -j {{ 1 + (ansible_processor_vcpus | int) }} install chdir=/opt/build/ruby-install-{{ chruby_ruby_install_version }}
+  shell: make -j {{ 1 + (ansible_processor_vcpus | int) }} install
+    chdir=/opt/build/ruby-install-{{ chruby_ruby_install_version }}
   when: ruby_install_unarchive.changed

@@ -16,5 +16,6 @@
   register: chruby_unarchive
 
 - name: Runs make for chruby if it has just been unwrapped
-  shell: make install chdir=/opt/build/chruby-{{chruby_chruby_version}}
+  shell: make install
+    chdir=/opt/build/chruby-{{chruby_chruby_version}}
   when: chruby_unarchive.changed
