@@ -5,10 +5,11 @@
     - git-core
     - htop
     - tmux
-    - vim
+    - vim-athena
     - wget
     - curl
     - gnupg
     - tree
+    - silversearcher-ag
     - build-essential
 
