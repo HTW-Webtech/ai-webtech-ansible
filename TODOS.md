@@ -23,6 +23,7 @@
   - ansible_bin_path:
   - aris_ansible_path:
   - aris_userfile_path:
+[] Extend `ssh-tmux` for a cleaner ssh-remote-user solution
 
 ## Done
 [x] PostgresSQL-Access via rails app
