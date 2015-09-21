@@ -1,0 +1,6 @@
+---
+- name: Copy ~/.bashrc.local to the remote users home dir
+  template:
+    src=dotfiles/.bashrc.local
+    dest="~{{ ansible_ssh_user }}/.bashrc.local"
+

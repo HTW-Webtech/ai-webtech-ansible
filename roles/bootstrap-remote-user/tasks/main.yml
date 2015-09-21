@@ -1,2 +1,4 @@
 ---
-- include: 10-setup-dotfiles.yml tags=remote-user
+- include: 10-setup-dotfiles.yml         tags=remote-user
+- include: 20-setup-vim.yml              tags=remote-user
+- include: 30-copy-local-bash-config.yml tags=remote-user

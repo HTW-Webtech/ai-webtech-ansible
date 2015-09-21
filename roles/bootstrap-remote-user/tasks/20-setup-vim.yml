@@ -1,0 +1,27 @@
+---
+# - name: (TBD) Setup VIM submodule
+
+- name: Ensure vim plugins are installed to ~/.vim/bundle (Check for ctrlp-cmatcher)
+  shell: "stat ~{{ ansible_ssh_user }}/.vim/bundle/ctrlp-cmatcher"
+  register: ctrlpc_dir_stat_result
+  ignore_errors: true
+
+- name: Fail when vim plugin ctrlpc is not installed
+  when: ctrlpc_dir_stat_result.rc == 1
+  fail:
+    msg='Run :PluginInstall inside VIM to install plugins!'
+
+- name: Check wether ctrlpc-matcher has been compiled yet
+  shell: "stat ~{{ ansible_ssh_user }}/.vim/bundle/ctrlp-cmatcher/autoload/fuzzycomt.so"
+  register: ctrlpc_fuzzycomt_stat_result
+
+- name: Setup VIM ctrlp-cmatcher
+  when: ctrlpc_fuzzycomt_stat_result.rc == 1
+  shell: ./install.sh
+    chdir="~{{ ansible_ssh_user }}/.vim/bundle/ctrlp-cmatcher"
+
+- name: Install python3 dep for ultisnips
+  apt:
+    name=python3
+    state=present
+    update_cache=yes
