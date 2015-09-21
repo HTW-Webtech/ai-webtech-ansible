@@ -14,6 +14,7 @@ bundle install --deployment --without development test
 bundle exec rake assets:precompile db:migrate
 
 # Replace the apps-public folder with a symlink to the code/public
+rm /var/apps/{{ item.key }}/public
 if [ -e /var/apps/{{ item.key }}/code/public ]; then
   echo "Public dir in .git repo detected. Using it in place of the default public dir"
   ln -sf /var/apps/{{ item.key }}/code/public /var/apps/{{ item.key }}/public
