@@ -5,13 +5,8 @@
     createhome=yes
     shell=/usr/bin/git-shell
     state=present
-  with_dict: "{{ aris_apps }}"
-
-- name: Add user to the ssh-clients group
-  user:
-    name="{{ item.key }}"
-    append=yes
     groups=ssh-clients
+    append=yes
   with_dict: "{{ aris_apps }}"
 
 - name: Create .ssh dir for users
