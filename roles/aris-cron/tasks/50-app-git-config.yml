@@ -4,6 +4,14 @@
     chdir=/var/apps/{{ item.key }}/code
   with_dict: "{{ aris_apps }}"
 
+- name: Fix ownership for git repository
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/code
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_apps }}"
+
 - name: Configure proper git post-update hook
   template:
     src=git-hooks/post-update

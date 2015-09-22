@@ -40,6 +40,13 @@
   shell: 'cd /var/apps/{{ item.key }}; test -e public || ln -sf default-public public'
   with_dict: "{{ aris_apps }}"
 
+- name: Fix ownership for symlink
+  file:
+    path=/var/apps/{{ item.key }}/public
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_apps }}"
+
 - name: Create nginx config dir for user app
   file:
     state=directory
