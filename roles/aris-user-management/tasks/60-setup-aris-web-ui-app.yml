@@ -1,4 +1,13 @@
 ---
+- name: Create admin os user account (with full shell access)
+  user:
+    name=admin
+    createhome=yes
+    shell=/bin/shell
+    append=yes
+    groups=ssh-clients,aris
+    state=present
+
 # FIXME: This should be done as aris user instead!
 - name: Create admin app w/ aris-control
   shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email aris-admin@grekko.de"
