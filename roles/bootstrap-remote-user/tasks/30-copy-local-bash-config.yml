@@ -3,4 +3,6 @@
   template:
     src=dotfiles/.bashrc.local
     dest="~{{ ansible_ssh_user }}/.bashrc.local"
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
 

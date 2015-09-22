@@ -24,6 +24,7 @@
     path=/opt/aris/config/apps.yml
     owner=aris
     group=aris
+    mode=ug=rw,o=
 
 - name: Checkout git app to /var/apps/admin/code
   git:

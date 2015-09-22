@@ -7,6 +7,9 @@
 [] HTTPS-Setup for Web-Server. HTTPs Access only
 [] Configure SSHd to deny failed logins (exponential back off)
 
+## Bugs
+[] switch command does not cd into app folder
+
 ## Low hanging fruits
 [] Make automatic installation of dotfiles better:
   [] Do not depend on Vundle but use git submodule for plugins
