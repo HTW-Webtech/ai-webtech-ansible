@@ -6,14 +6,16 @@
   register: ctrlpc_dir_stat_result
   ignore_errors: true
 
-- name: Fail when vim plugin ctrlpc is not installed
-  when: ctrlpc_dir_stat_result.rc == 1
-  fail:
-    msg='Run :PluginInstall inside VIM to install plugins!'
+- name: Install python headers (python-dev) for ctrlp-cmatcher plugin
+  apt:
+    name=python-dev
+    state=present
+    update_cache=true
 
 - name: Check wether ctrlpc-matcher has been compiled yet
   shell: "stat ~{{ ansible_ssh_user }}/.vim/bundle/ctrlp-cmatcher/autoload/fuzzycomt.so"
   register: ctrlpc_fuzzycomt_stat_result
+  ignore_errors: true
 
 - name: Setup VIM ctrlp-cmatcher
   when: ctrlpc_fuzzycomt_stat_result.rc == 1
