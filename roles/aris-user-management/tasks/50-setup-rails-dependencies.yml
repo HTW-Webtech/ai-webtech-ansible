@@ -4,10 +4,11 @@
     name=libsqlite3-dev
     state=installed
 
-- name: Install system-wide gems
+- name: Install system wide gems
   gem:
     name={{ item }}
     state=present
+    user_install=no
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
   with_items:
     - bundler
@@ -18,7 +19,6 @@
     - coffee-rails
     - therubyracer
     - jquery-rails
-    - turbolinks
     - web-console
 
 # FIXME: This belongs somewhere else

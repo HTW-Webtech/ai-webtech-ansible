@@ -15,6 +15,7 @@
   gem:
     name=aris-control
     state=latest
+    user_install=no
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
 
 - name: Copies ansible.cfg to /opt/aris/config/aris.cfg if none exists yet
