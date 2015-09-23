@@ -4,7 +4,7 @@
     repo=https://github.com/grekko/.dotfiles.git
     dest=/home/{{ ansible_ssh_user }}/.dotfiles
     update=no
-    # force=yes
+    recursive=yes
 
 - name: Workaround for current ansible/dotfiles bug
   file:
