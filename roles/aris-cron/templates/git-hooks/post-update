@@ -25,8 +25,7 @@ fi
 
 # Symlink code/log/production.log if it exists
 if [ -e /var/apps/{{ item.key }}/code/log/production.log ]; then
-  rm /var/apps/{{ item.key }}/logs/rails.log
-  ln -s /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
+  ln -fs /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
 fi
 
 passenger-config restart-app /var/apps/{{ item.key }}/code
