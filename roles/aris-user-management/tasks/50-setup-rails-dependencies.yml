@@ -13,7 +13,11 @@
   with_items:
     - bundler
     - rails
+    - pg
+    - jbuilder
     - sqlite3
+    - slim
+    - rspec
     - sass-rails
     - uglifier
     - coffee-rails
