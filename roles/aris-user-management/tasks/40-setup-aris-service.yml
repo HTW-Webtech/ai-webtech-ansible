@@ -11,15 +11,6 @@
     - /opt/aris/code
     - /opt/aris/logs
 
-- name: Install aris-control gem
-  become_user: aris
-  sudo: no
-  gem:
-    name=aris-control
-    state=latest
-    user_install=no
-    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
-
 - name: Copies ansible.cfg to /opt/aris/config/aris.cfg if none exists yet
   copy:
     src=aris/aris.cfg
@@ -34,11 +25,9 @@
     dest=/opt/aris/config/key
     owner=aris
     group=aris
-    mode=u=r,g=,o=
+    mode=u=r,g=r,o=
 
 - name: Checkout the aris ansible repo
-  become_user: aris
-  sudo: false
   git:
     key_file=/opt/aris/config/key
     accept_hostkey=true
@@ -47,11 +36,9 @@
     update=yes
     version=HEAD
 
-- name: Setup crontab for aris user-management background service
-  cron:
-    name="Aris service"
-    minute=*
-    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log"
-    user=aris
-    state=present
-    backup=yes
+- name: Fix permissions for git repo
+  file:
+    path=/opt/aris/code/ansible
+    owner=aris
+    group=aris
+    recurse=yes

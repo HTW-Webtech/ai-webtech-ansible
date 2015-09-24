@@ -1,4 +1,14 @@
 ---
+- name: Fetch aris-web-ui configuration from env
+  set_fact:
+    app_admin_email: "{{ lookup('env','APP_ADMIN_EMAIL') }}"
+    app_admin_pub_ssh_key: "{{ lookup('env','APP_ADMIN_PUB_SSH_KEY') }}"
+    app_secret_key_base: "{{ lookup('env','APP_SECRET_KEY_BASE') }}"
+    app_pg_database_name: "{{ lookup('env','APP_POSTGRES_DATABASE_NAME') }}"
+    app_pg_login: "{{ lookup('env','APP_POSTGRES_LOGIN') }}"
+    app_pg_password: "{{ lookup('env','APP_POSTGRES_PASSWORD') }}"
+    app_git_ssh_public_host: "{{ lookup('env','APP_GIT_SSH_PUBLIC_HOST') }}"
+
 - name: Create admin os user account (with full shell access)
   user:
     name=admin
@@ -8,26 +18,49 @@
     groups=ssh-clients,aris
     state=present
 
-# FIXME: This should be done as aris user instead!
-- name: Create admin app w/ aris-control
-  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email aris-admin@grekko.de"
+- name: Install aris-control gem
+  sudo: no
+  gem:
+    name=aris-control
+    state=latest
+    user_install=no
+    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
 
-- name: Configure admin app ssh key
-  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --ssh-key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSoUnD2zl5fKZlndTi6gABTZOzT8gJ6y6dwbq+TwNuW5TjNTSM8KoBOiiFXPrRbCEGWsk8s+wfZXoD1oATjV2sTfHy8xOQ5ev93LtahKnBZ61A2iORNDd1S+MIs7mU9a/dNEMu9NJmPcLekzXLai5hzBwRDHu9Ny5P+TA9lC+M9V0NMasiIjPuSDmLla1aMWJhtZyrGfCG2AiPeWJjZdvFM0S8dZ8LhNGE7cN6m6GqNBxyqQeS9CFsrca7Dn/2PybJxbGHt0rZMK59lybEB6XKDoI01Xzr3OuyFRwzYdStzIfMP5tJO80JAl/gjPBnleGU3WWOZu7l1DbfcG5rr6fN gregoryigelmund@Gregorys-MacBook-Pro.local'"
-
-- name: Configure postgres and rails app vars
-  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email --env-vars pg_db:admin pg_user:admin pg_password:{{ lookup('env','APP_PG_PASSWORD') }} app_secret_key_base:{{ lookup('env','APP_SECRET_KEY_BASE') }} app_admin_email:{{ lookup('env','APP_ADMIN_EMAIL') }} app_admin_password:{{ lookup('env','APP_ADMIN_PASSWORD') }} "
+# FIXME: I am always igelmund instead of aris.. wtf
 - name: Create admin app with pub ssh key
-  sudo: false
-  become_user: aris
-  shell: "aris-control add admin --email {{ app_admin_email }} --ssh-key='{{ app_admin_pub_ssh_key }}'"
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email {{ app_admin_email }} --ssh-key='{{ app_admin_pub_ssh_key }}'"
 
+# FIXME: I am always igelmund instead of aris.. wtf
+- name: Configure env-vars for admin app
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control set-env-var admin {{ item.key }}:{{ item.value }}"
+  with_dict:
+    POSTGRES_DATABASE_NAME: "{{ app_pg_database_name }}"
+    POSTGRES_LOGIN: "{{ app_pg_login }}"
+    POSTGRES_PASSWORD: "{{ app_pg_password }}"
+    SECRET_KEY_BASE: "{{ app_secret_key_base }}"
+    ADMIN_EMAIL: "{{ app_admin_email }}"
+    ADMIN_PASSWORD: "{{ app_admin_password }}"
+    ADMIN_PUB_SSH_KEY: "{{ app_admin_pub_ssh_key }}"
+    GIT_SSH_PUBLIC_HOST: "{{ app_git_ssh_public_host }}"
 
+- name: Fix permissions for apps.yml
+  file:
+    path=/opt/aris/config/apps.yml
+    owner=aris
+    group=aris
+
+# FIXME: I am always root instead of aris.. wtf
 - name: Checkout git app to /var/apps/admin/code
-  become_user: admin
-  sudo: false
   git:
     repo=https://github.com/grekko/aris-web-ui.git
     dest=/var/apps/admin/code
     update=yes
     version=HEAD
+
+- name: Fix permissions for /var/apps/admin/code
+  file:
+    path=/var/apps/admin/code
+    owner=aris
+    group=aris
+    recurse=yes
+

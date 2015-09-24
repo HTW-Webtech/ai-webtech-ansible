@@ -39,9 +39,9 @@
     line='source ~/.bashrc.ruby-version'
     dest=~aris/.bashrc
 
-- name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
+- name: Enable current default ruby version via ~/.bashrc.ruby-version file
   template:
-    src=aris/.bashrc.ruby-version
+    src=aris/.bashrc.ruby-version.j2
     dest=~aris/.bashrc.ruby-version
 
 - name: Configure .bashrc for ansible access

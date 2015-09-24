@@ -2,6 +2,9 @@
 export ANSIBLE_REMOTE_USER=`whoami`
 export PATH=./bin:$PATH
 
+# Aris setup config
+export ARIS_SETUP_PUB_SSH_KEY=
+
 # Aris Cron-Service Config
 export ARIS_POSTGRES_LOGIN=aris
 export ARIS_POSTGRES_PASSWORD=

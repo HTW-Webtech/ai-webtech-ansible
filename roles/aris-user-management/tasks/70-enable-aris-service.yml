@@ -1,0 +1,10 @@
+---
+- name: Setup crontab for aris user-management background service
+  cron:
+    name="Aris service"
+    minute=*
+    job="export ARIS_POSTGRES_LOGIN={{ lookup('env','ARIS_POSTGRES_LOGIN')}}; export ARIS_POSTGRES_PASSWORD={{ lookup('env','ARIS_POSTGRES_PASSWORD')}}; cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log"
+    user=aris
+    state=present
+    backup=yes
+
