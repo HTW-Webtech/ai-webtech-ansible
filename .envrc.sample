@@ -1,7 +1,17 @@
+# Ansible Config
 export ANSIBLE_REMOTE_USER=`whoami`
 export PATH=./bin:$PATH
 
-export APP_PG_PASSWORD=secret
-export APP_ADMIN_PASSWORD=secret
-export APP_ADMIN_EMAIL=admin@example.com
-export APP_SECRET_KEY_BASE=also-long-secret-hash
+# Aris Cron-Service Config
+export ARIS_POSTGRES_LOGIN=aris
+export ARIS_POSTGRES_PASSWORD=
+
+# Rails Web-UI Configuration
+export APP_SECRET_KEY_BASE=
+export APP_POSTGRES_DATABASE_NAME=admin
+export APP_POSTGRES_LOGIN=admin
+export APP_POSTGRES_PASSWORD=
+export APP_ADMIN_EMAIL=
+export APP_ADMIN_PASSWORD=
+export APP_ADMIN_PUB_SSH_KEY=
+export APP_GIT_SSH_PUBLIC_HOST=
