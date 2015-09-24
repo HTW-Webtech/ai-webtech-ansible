@@ -1,20 +1,24 @@
 ---
-# FIXME: Do they really NEED to create a db!? Truncating should be enough, no?
+- name: Set facts for aris_pg_login and aris_pg_password
+  set_fact:
+    aris_pg_login: {{ lookup('env','ARIS_POSTGRES_LOGIN') }}"
+    aris_pg_password: {{ lookup('env','ARIS_POSTGRES_PASSWORD') }}"
+
 - name: Create a postgres user
   postgresql_user:
-    login_user=aris
-    login_password=aris
+    login_user={{ aris_pg_login }}
+    login_password={{ aris_pg_password }}
     user={{ item.key }}
     encrypted=no
     password={{ item.value.env_vars['PG_PASSWORD'] }}
-    role_attr_flags=NOSUPERUSER,CREATEDB
+    role_attr_flags=NOSUPERUSER
   when: item.value.env_vars['PG_PASSWORD'] is defined
   with_dict: "{{ aris_apps }}"
 
 - name: Create a postgres db for the user
   postgresql_db:
-    login_user=aris
-    login_password=aris
+    login_user={{ aris_pg_login }}
+    login_password={{ aris_pg_password }}
     name={{ item.key }}
     owner={{ item.key }}
     encoding='UTF-8'
