@@ -17,17 +17,14 @@
 
 - name: Configure postgres and rails app vars
   shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email --env-vars pg_db:admin pg_user:admin pg_password:{{ lookup('env','APP_PG_PASSWORD') }} app_secret_key_base:{{ lookup('env','APP_SECRET_KEY_BASE') }} app_admin_email:{{ lookup('env','APP_ADMIN_EMAIL') }} app_admin_password:{{ lookup('env','APP_ADMIN_PASSWORD') }} "
+- name: Create admin app with pub ssh key
+  sudo: false
+  become_user: aris
+  shell: "aris-control add admin --email {{ app_admin_email }} --ssh-key='{{ app_admin_pub_ssh_key }}'"
 
-# FIXME: SMELL!
-- name: Fix permissions for apps.yml
-  file:
-    path=/opt/aris/config/apps.yml
-    owner=aris
-    group=aris
-    mode=ug=rw,o=
 
 - name: Checkout git app to /var/apps/admin/code
-  become_user: aris
+  become_user: admin
   sudo: false
   git:
     repo=https://github.com/grekko/aris-web-ui.git
