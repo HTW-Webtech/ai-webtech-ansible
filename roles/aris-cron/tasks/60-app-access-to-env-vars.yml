@@ -7,7 +7,6 @@
     group={{ item.key }}
   with_dict: "{{ aris_apps }}"
 
-# FIXME: DANGER! This loads env vars into the user account!! is that a problem? Remote code exec?
 - name: Ensure the .env file is loaded in users ~/.bashrc to enable access to ENV vars for rake etc.
   lineinfile:
     line='source /var/apps/{{ item.key }}/code/.env'
