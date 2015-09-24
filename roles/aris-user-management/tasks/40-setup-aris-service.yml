@@ -12,6 +12,8 @@
     - /opt/aris/logs
 
 - name: Install aris-control gem
+  become_user: aris
+  sudo: no
   gem:
     name=aris-control
     state=latest
@@ -34,8 +36,9 @@
     group=aris
     mode=u=r,g=,o=
 
-# FIXME:...
 - name: Checkout the aris ansible repo
+  become_user: aris
+  sudo: false
   git:
     key_file=/opt/aris/config/key
     accept_hostkey=true
@@ -43,14 +46,6 @@
     dest=/opt/aris/code/ansible
     update=yes
     version=HEAD
-
-- name: Fix permissions for cloned repository
-  file:
-    state=directory
-    path=/opt/aris/code/ansible
-    owner=aris
-    group=aris
-    recurse=yes
 
 - name: Setup crontab for aris user-management background service
   cron:

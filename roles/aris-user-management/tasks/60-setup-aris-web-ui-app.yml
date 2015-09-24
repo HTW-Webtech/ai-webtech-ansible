@@ -27,16 +27,10 @@
     mode=ug=rw,o=
 
 - name: Checkout git app to /var/apps/admin/code
+  become_user: aris
+  sudo: false
   git:
     repo=https://github.com/grekko/aris-web-ui.git
     dest=/var/apps/admin/code
     update=yes
     version=HEAD
-
-- name: Fix permissions for cloned repository
-  file:
-    state=directory
-    path=/var/apps/admin
-    owner=admin
-    group=admin
-    recurse=yes

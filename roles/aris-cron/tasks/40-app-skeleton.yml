@@ -36,9 +36,10 @@
     group={{ item.key }}
   with_dict: "{{ aris_apps }}"
 
-# FIXME: SMELL!!
 - name: Symlink the default-public dir to public if no other public dir exists
-  shell: 'cd /var/apps/{{ item.key }}; test -e public || ln -sf default-public public && chown -R {{ item.key }}:{{ item.key }} public'
+  sudo: false
+  become_user: {{ item.key }}
+  shell: 'cd /var/apps/{{ item.key }}; test -e public || ln -sf default-public public'
   with_dict: "{{ aris_apps }}"
 
 - name: Create nginx config dir for user app
