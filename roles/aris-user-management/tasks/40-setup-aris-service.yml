@@ -34,6 +34,7 @@
     group=aris
     mode=u=r,g=,o=
 
+# FIXME:...
 - name: Checkout the aris ansible repo
   git:
     key_file=/opt/aris/config/key
@@ -58,3 +59,4 @@
     job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/ansible.log"
     user=aris
     state=present
+    backup=yes
