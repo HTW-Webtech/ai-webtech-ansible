@@ -2,6 +2,7 @@
 - name: Fetch aris-web-ui configuration from env
   set_fact:
     app_admin_email: "{{ lookup('env','APP_ADMIN_EMAIL') }}"
+    app_admin_password: "{{ lookup('env','APP_ADMIN_PASSWORD') }}"
     app_admin_pub_ssh_key: "{{ lookup('env','APP_ADMIN_PUB_SSH_KEY') }}"
     app_secret_key_base: "{{ lookup('env','APP_SECRET_KEY_BASE') }}"
     app_pg_database_name: "{{ lookup('env','APP_POSTGRES_DATABASE_NAME') }}"
@@ -19,7 +20,6 @@
     state=present
 
 - name: Install aris-control gem
-  sudo: no
   gem:
     name=aris-control
     state=latest
@@ -32,7 +32,7 @@
 
 # FIXME: I am always igelmund instead of aris.. wtf
 - name: Configure env-vars for admin app
-  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control set-env-var admin {{ item.key }}:{{ item.value }}"
+  shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add-env-vars admin --env-vars '{{ item.key }}:{{ item.value }}'"
   with_dict:
     POSTGRES_DATABASE_NAME: "{{ app_pg_database_name }}"
     POSTGRES_LOGIN: "{{ app_pg_login }}"
@@ -60,7 +60,14 @@
 - name: Fix permissions for /var/apps/admin/code
   file:
     path=/var/apps/admin/code
-    owner=aris
-    group=aris
+    owner=admin
+    group=admin
     recurse=yes
 
+# TODO: Once I got the user-switch working with `become_user`:
+# Execute the post-update hook for the admin app.
+# - name: Run the git post-update command to enable the web-ui app
+#   shell: "sudo su admin; echo $(whoami)"
+
+- name: Run the git post-update command manually now!
+  shell: "echo 'Run the git post-update command manually now!' && exit 1"
