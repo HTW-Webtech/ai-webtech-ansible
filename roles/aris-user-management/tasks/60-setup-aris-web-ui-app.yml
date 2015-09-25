@@ -69,5 +69,5 @@
 # - name: Run the git post-update command to enable the web-ui app
 #   shell: "sudo su admin; echo $(whoami)"
 
-- name: Run the git post-update command manually now!
-  shell: "echo 'Run the git post-update command manually now!' && exit 1"
+# - name: Run the git post-update command manually now!
+#   shell: "echo 'Run the git post-update command manually now!' && exit 1"
