@@ -1,0 +1,7 @@
+---
+# TODO: Can this be extracted so that one role is executed with one user
+# instead of repeating `with_dict` in each task?
+- include_vars: /opt/aris/config/jenkins_jobs.yml
+
+- include: 10-create-job.yml
+

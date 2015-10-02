@@ -1,0 +1,24 @@
+---
+- name: Debug vars
+  debug:
+    msg={{ jenkins_jobs }}
+
+- name: Create job dir
+  file:
+    state=directory
+    path=/var/lib/jenkins/jobs/{{ item.key }}
+    owner=jenkins
+    group=jenkins
+    mode=0755
+  with_dict: '{{ jenkins_jobs }}'
+
+- name: Create config for job
+  template:
+    src=job-config.xml.j2
+    dest=/var/lib/jenkins/jobs/{{ item.key }}/config.xml
+    owner=jenkins
+    group=jenkins
+    mode=0644
+  with_dict: '{{ jenkins_jobs }}'
+  notify: restart jenkins
+
