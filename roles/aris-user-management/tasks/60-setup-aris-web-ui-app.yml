@@ -43,11 +43,15 @@
     ADMIN_PUB_SSH_KEY: "{{ app_admin_pub_ssh_key }}"
     GIT_SSH_PUBLIC_HOST: "{{ app_git_ssh_public_host }}"
 
+# FIXME: Right now EVERY user has read/write permissions to this file.
+# For another solution I need some intermediate service which takes
+# over the responsibility
 - name: Fix permissions for apps.yml
   file:
     path=/opt/aris/config/apps.yml
     owner=aris
     group=aris
+    mode=0777
 
 # FIXME: I am always root instead of aris.. wtf
 - name: Checkout git app to /var/apps/admin/code
