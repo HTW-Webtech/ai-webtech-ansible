@@ -2,15 +2,16 @@
 - name: Set facts for aris_pg_login and aris_pg_password
   set_fact:
     aris_pg_login: "{{ lookup('env', 'ARIS_POSTGRES_LOGIN') }}"
-    aris_pg_password: "{{ lookup('env','ARIS_POSTGRES_PASSWORD') }}"
+    aris_pg_password: "{{ lookup('env', 'ARIS_POSTGRES_PASSWORD') }}"
 
 - name: Create a postgres user
   postgresql_user:
+    state=present
     login_user={{ aris_pg_login }}
     login_password={{ aris_pg_password }}
     user={{ item.key }}
-    encrypted=no
     password={{ item.value.env_vars['POSTGRES_PASSWORD'] }}
+    encrypted=no
     role_attr_flags=NOSUPERUSER
   when: item.value.env_vars['POSTGRES_PASSWORD'] is defined
   with_dict: "{{ aris_apps }}"
