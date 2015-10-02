@@ -1,9 +1,15 @@
 #!/bin/bash
+# Reset all local changes
+test "${PWD%/.git}" != "$PWD" && cd ..
+unset GIT_DIR GIT_WORK_TREE
+
+git reset HEAD --hard
+
+# Install new gems, migrate, restart passenger
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 source /home/{{ item.key }}/.bashrc.ruby-version
 source /var/apps/{{ item.key }}/code/.env
-
 
 # FIXME: Currenyly every user needs to install bundler (which is kind of stupid)
 # Also everybody needs to install rails etc. If I can install it via root it

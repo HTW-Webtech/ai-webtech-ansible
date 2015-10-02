@@ -21,12 +21,3 @@
     mode=ug+rwx,o=xr
   with_dict: "{{ aris_apps }}"
 
-- name: Configure proper git post-receive hook (which runs `git reset --hard after` after push)
-  template:
-    src=git-hooks/pre-receive
-    dest=/var/apps/{{ item.key }}/code/.git/hooks/pre-receive
-    owner={{ item.key }}
-    group={{ item.key }}
-    mode=ug+rwx,o=xr
-  with_dict: "{{ aris_apps }}"
-
