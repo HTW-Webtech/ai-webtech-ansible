@@ -4,33 +4,15 @@
     name=libsqlite3-dev
     state=installed
 
-# FIXME: Gems are not available to users.. somehow.
-# Maybe the `bundle install` should be able te re-use
-# global gems? Needs a Benchmark (with 80+ apps) before
-# I know the payoff of this workaround.
-#
-# - name: Install system wide gems
-#   gem:
-#     name={{ item }}
-#     state=present
-#     user_install=no
-#     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
-#   with_items:
-#     - bundler
-#     - rails
-#     - pg
-#     - jbuilder
-#     - sqlite3
-#     - slim
-#     - rspec
-#     - sass-rails
-#     - uglifier
-#     - coffee-rails
-#     - therubyracer
-#     - jquery-rails
-#     - web-console
+- name: Install system wide gems (used by passenger)
+  gem:
+    name={{ item }}
+    state=present
+    user_install=no
+    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
+  with_items:
+    - bundler
 
-# FIXME: This belongs somewhere else
 - name: Allow read access to rubies and gems in /opt/rubies
   file:
     path=/opt/rubies
