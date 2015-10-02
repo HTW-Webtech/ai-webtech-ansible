@@ -59,7 +59,8 @@
     repo=https://github.com/grekko/aris-web-ui.git
     dest=/var/apps/admin/code
     update=yes
-    version=HEAD
+    version=master
+    force=yes
 
 - name: Fix permissions for /var/apps/admin/code
   file:
