@@ -18,3 +18,8 @@ export APP_ADMIN_EMAIL=
 export APP_ADMIN_PASSWORD=
 export APP_ADMIN_PUB_SSH_KEY=
 export APP_GIT_SSH_PUBLIC_HOST=
+export APP_JENKINS_HOSTNAME=
+
+# Jenkins config
+export JENKINS_URL=
+export JENKINS_USER_PASSWORD= # Login to jenins via unix credentials
