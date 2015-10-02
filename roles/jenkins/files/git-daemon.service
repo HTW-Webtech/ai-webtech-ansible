@@ -1,0 +1,8 @@
+[Unit]
+Description=Git daemon serving local apps
+
+[Service]
+ExecStart=/usr/bin/git daemon --reuseaddr --base-path=/var/apps --export-all --verbose
+
+[Install]
+WantedBy=multi-user.target

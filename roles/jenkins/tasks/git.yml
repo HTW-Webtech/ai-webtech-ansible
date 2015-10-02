@@ -1,0 +1,11 @@
+---
+- name: Create git daemon service via systemd
+  copy:
+    src=git-daemon.service
+    dest=/etc/systemd/system/git-daemon.service
+    mode=0755
+
+- name: Enable git-daemon.service
+  service:
+    name=git-daemon
+    state=started
