@@ -1,0 +1,15 @@
+---
+- name: Ensure aris database exists
+  sudo: no
+  postgresql_db:
+    name=aris
+
+- name: Ensure aris user has access to aris database
+  sudo: no
+  postgresql_user:
+    db=aris
+    name={{ lookup('env','ARIS_POSTGRES_LOGIN') }}
+    password={{ lookup('env','ARIS_POSTGRES_PASSWORD') }}
+    priv=ALL
+    role_attr_flags=SUPERUSER
+

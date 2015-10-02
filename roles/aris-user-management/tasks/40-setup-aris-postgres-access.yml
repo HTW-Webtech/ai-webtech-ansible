@@ -22,20 +22,3 @@
     group=postgres
     mode=u=rw,g=r,o=
 
-- name: Ensure aris database exists
-  remote_user: postgres
-  sudo: no
-  postgresql_db:
-    name=aris
-
-# FIXME: on Production this uses user `local` instead of `posgres`
-- name: Ensure aris user has access to aris database
-  remote_user: postgres
-  sudo: no
-  postgresql_user:
-    db=aris
-    name={{ lookup('env','ARIS_POSTGRES_LOGIN') }}
-    password={{ lookup('env','ARIS_POSTGRES_PASSWORD') }}
-    priv=ALL
-    role_attr_flags=SUPERUSER
-
