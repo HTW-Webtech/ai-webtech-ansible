@@ -1,0 +1,17 @@
+---
+- name: Gather facts for nginx vhost conf
+  set_fact:
+    jenkins_nginx_server_name: "{{ lookup('env', 'JENKINS_NGINX_SERVERNAME') }}"
+
+- name: Create nginx vhost for jenkins
+  template:
+    src=nginx/vhost.conf.j2
+    dest=/var/lib/jenkins/nginx-vhost.conf
+
+- name: Enable jenkins vhost config
+  file:
+    state=link
+    src=/var/lib/jenkins/nginx-vhost.conf
+    dest=/etc/nginx/sites-enabled/jenkins.conf
+  notify: restart nginx
+

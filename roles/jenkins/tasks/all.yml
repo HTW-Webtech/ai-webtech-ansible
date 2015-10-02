@@ -35,8 +35,6 @@
   delay: 5
   changed_when: false
 
-# TODO: Check if cli already exists
-
 - name: Get the jenkins-cli jarfile from the Jenkins server.
   get_url:
     url: 'http://localhost:8080/jnlpJars/jenkins-cli.jar'
