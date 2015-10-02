@@ -2,4 +2,4 @@
 test "${PWD%/.git}" != "$PWD" && cd ..
 unset GIT_DIR GIT_WORK_TREE
 
-git reset --hard
+git reset HEAD --hard
