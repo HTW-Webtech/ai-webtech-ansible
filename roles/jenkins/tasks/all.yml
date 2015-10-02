@@ -1,0 +1,72 @@
+---
+# - name: Install jenkins
+# TODO: Enable Port 8080 via firewall for aris server
+- apt_key:
+    url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+    state=present
+
+- apt_repository:
+    repo='deb http://pkg.jenkins-ci.org/debian binary/'
+    state=present
+    update_cache=yes
+
+- apt:
+    name=jenkins
+    state=present
+
+# Make sure Jenkins starts, then configure Jenkins.
+- name: Ensure Jenkins is started and runs on startup.
+  service:
+    name=jenkins
+    state=started
+    enabled=yes
+
+- name: Ensure the jenkins home dir exists
+  file:
+    state=directory
+    path=/opt/jenkins
+    mode=0755
+
+- name: Wait for Jenkins to start up before proceeding.
+  shell: 'curl -D - --silent http://localhost:8080/cli/'
+  register: result
+  until: (result.stdout.find("200 OK") != -1) and (result.stdout.find("Please wait while") == -1)
+  retries: 10
+  delay: 5
+  changed_when: false
+
+# TODO: Check if cli already exists
+
+- name: Get the jenkins-cli jarfile from the Jenkins server.
+  get_url:
+    url: 'http://localhost:8080/jnlpJars/jenkins-cli.jar'
+    dest: /opt/jenkins/cli.jar
+  register: jarfile_get
+  until: "'OK' in jarfile_get.msg or 'file already exists' in jarfile_get.msg"
+  retries: 10
+  delay: 5
+
+# - name: Update Jenkins tlugin data.
+#   shell: >
+#     curl -L https://updates.jenkins-ci.org/update-center.json | sed '1d;$d' > /var/lib/jenkins/updates/default.json
+#     creates=/var/lib/jenkins/updates/default.json
+#   retries: 10
+#   delay: 5
+
+# - name: Permissions for default.json updates info.
+#   file:
+#     path: /var/lib/jenkins/updates/default.json
+#     owner: jenkins
+#     group: jenkins
+#     mode: 0755
+
+- name: Install Jenkins plugins.
+  command: >
+    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ install-plugin {{ item }}
+    creates=/var/lib/jenkins/plugins/{{ item }}.jpi
+  with_items:
+    - git
+    - ssh
+  notify: restart jenkins
+    # - jQuery+Plugin
+

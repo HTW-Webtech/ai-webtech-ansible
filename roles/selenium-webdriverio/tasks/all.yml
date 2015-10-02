@@ -1,0 +1,67 @@
+---
+- name: Configure selenium-server version
+  set_fact:
+    selenium_version=2.47.1
+
+- name: Create selenium user
+  user:
+    name=selenium
+    createhome=yes
+    shell=/bin/bash
+    state=present
+
+- name: Install java for selenium, node and npm
+  apt:
+    name="{{ item }}"
+    state=present
+    update_cache=yes
+  with_items:
+  - openjdk-7-jre-headless
+  - nodejs
+  - npm
+
+- name: Create selenium directories
+  file:
+    name={{ item }}
+    state=directory
+    owner=selenium
+    group=selenium
+    recurse=yes
+    mode=0755
+  with_items:
+    - /opt/selenium
+    - /var/log/selenium
+
+- name: Download selenium server to /opt/selenium/
+  get_url:
+    url=http://goo.gl/yLJLZg
+    dest=/opt/selenium/selenium-server-{{ selenium_version }}.jar
+
+- name: Create startup script for selenium service
+  template:
+    src=selenium-server/init-script.j2
+    dest=/etc/init.d/selenium
+    mode=0755
+
+# TODO: Service command did not work
+- name: Restart selenium server
+  shell: >
+    sudo /etc/init.d/selenium restart
+
+- name: Create dir for node_modules
+  file:
+    name=/opt/node_modules
+    owner=selenium
+    group=selenium
+    state=directory
+    mode=0755
+
+- name: Install webdriverio and phantomjs
+  npm:
+    name=webdriverio
+    global=no
+    state=present
+    path=/opt/node_modules
+  with_items:
+    - webdriverio
+    - phantomjs

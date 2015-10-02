@@ -8,3 +8,5 @@
     - bootstrap-remote-user
     - passenger-nginx
     - aris-user-management
+    - selenium-webdriverio
+    - jenkins

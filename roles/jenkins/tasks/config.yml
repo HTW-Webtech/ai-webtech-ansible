@@ -1,0 +1,46 @@
+---
+- name: Gather facts for configuration files
+  set_fact:
+    jenkins_url: "{{ lookup('env', 'JENKINS_URL') }}"
+    admin_email: "{{ lookup('env', 'APP_ADMIN_EMAIL') }}"
+
+- name: Add jenkins to shadow group
+  user:
+    name=jenkins
+    append=yes
+    groups=shadow
+  notify: restart jenkins
+
+- name: Copy security configuration file
+  copy:
+    src=config.xml
+    dest=/var/lib/jenkins/config.xml
+    owner=jenkins
+    group=jenkins
+    mode=0644
+    force=yes
+    backup=yes
+  notify: restart jenkins
+
+- name: Create location config
+  template:
+    src=location-config.xml.j2
+    dest=/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+    owner=jenkins
+    group=jenkins
+    mode=0644
+    force=yes
+    backup=yes
+  notify: restart jenkins
+
+- name: Create mailer config file
+  template:
+    src=mailer-config.xml.j2
+    dest=/var/lib/jenkins/hudson.tasks.Mailer.xml
+    owner=jenkins
+    group=jenkins
+    mode=0644
+    force=yes
+    backup=yes
+  notify: restart jenkins
+

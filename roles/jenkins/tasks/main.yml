@@ -1,0 +1,3 @@
+---
+# - include: all.yml    tags=jenkins
+- include: config.yml tags=jenkins
