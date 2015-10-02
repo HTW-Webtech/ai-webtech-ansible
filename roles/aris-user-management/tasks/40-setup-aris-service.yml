@@ -35,6 +35,7 @@
     dest=/opt/aris/code/ansible
     update=yes
     version=HEAD
+    force=yes
 
 - name: Fix permissions for git repo
   file:
