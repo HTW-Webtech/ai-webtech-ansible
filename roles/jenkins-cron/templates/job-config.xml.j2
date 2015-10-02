@@ -39,8 +39,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>npm install
-npm run</command>
+      <command>
+        export EXERCISE_BASE_URL='{{ item.value['exercise_base_url'] }}'
+        export EXERCISE_ID='{{ item.value['exercise_id'] }}'
+        export USER_NAME='{{ item.value['user_name'] }}'
+        export USER_EMAIL='{{ item.value['user_email'] }}'
+        npm run ci
+      </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
