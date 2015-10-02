@@ -6,10 +6,7 @@
 
 - name: Create a postgres user
   postgresql_user:
-  sudo: no
     state=present
-    login_user={{ aris_pg_login }}
-    login_password={{ aris_pg_password }}
     user={{ item.key }}
     password={{ item.value.env_vars['POSTGRES_PASSWORD'] }}
     encrypted=no
@@ -19,7 +16,6 @@
 
 - name: Create a postgres db for the user
   postgresql_db:
-  sudo: no
     login_user={{ aris_pg_login }}
     login_password={{ aris_pg_password }}
     name={{ item.key }}
