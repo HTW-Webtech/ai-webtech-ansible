@@ -2,5 +2,4 @@
 - include: all.yml    tags=jenkins
 - include: config.yml tags=jenkins
 - include: nginx.yml tags=jenkins
-- include: git.yml tags=jenkins
 - include: service.yml tags=jenkins
