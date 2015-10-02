@@ -10,9 +10,9 @@
     login_password={{ aris_pg_password }}
     user={{ item.key }}
     encrypted=no
-    password={{ item.value.env_vars['PG_PASSWORD'] }}
+    password={{ item.value.env_vars['POSTGRES_PASSWORD'] }}
     role_attr_flags=NOSUPERUSER
-  when: item.value.env_vars['PG_PASSWORD'] is defined
+  when: item.value.env_vars['POSTGRES_PASSWORD'] is defined
   with_dict: "{{ aris_apps }}"
 
 - name: Create a postgres db for the user
@@ -23,5 +23,5 @@
     owner={{ item.key }}
     encoding='UTF-8'
     state=present
-  when: item.value.env_vars['PG_PASSWORD'] is defined
+  when: item.value.env_vars['POSTGRES_PASSWORD'] is defined
   with_dict: "{{ aris_apps }}"
