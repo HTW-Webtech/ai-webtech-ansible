@@ -2,7 +2,7 @@
 - name: Setup crontab for jenkins job service (executed with sudo rights)
   cron:
     name="Jenkins service"
-    minute=*
+    minute='*/5'
     job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/jenkins-cron.yml -i ./inventories/local.ini > /opt/aris/logs/jenkins-cron.log"
     user=aris
     state=present
