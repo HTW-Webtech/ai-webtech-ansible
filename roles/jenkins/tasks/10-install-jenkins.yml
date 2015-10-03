@@ -1,20 +1,20 @@
 ---
-# - name: Install jenkins
-# TODO: Enable Port 8080 via firewall for aris server
-- apt_key:
+- name: Install apt key for jenkins pgk repository
+  apt_key:
     url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
     state=present
 
-- apt_repository:
+- name: Add the jenkins pkg repository
+  apt_repository:
     repo='deb http://pkg.jenkins-ci.org/debian binary/'
     state=present
     update_cache=yes
 
-- apt:
+- name: Install the jenkins package
+  apt:
     name=jenkins
     state=present
 
-# Make sure Jenkins starts, then configure Jenkins.
 - name: Ensure Jenkins is started and runs on startup.
   service:
     name=jenkins
@@ -44,20 +44,6 @@
   retries: 10
   delay: 5
 
-# - name: Update Jenkins tlugin data.
-#   shell: >
-#     curl -L https://updates.jenkins-ci.org/update-center.json | sed '1d;$d' > /var/lib/jenkins/updates/default.json
-#     creates=/var/lib/jenkins/updates/default.json
-#   retries: 10
-#   delay: 5
-
-# - name: Permissions for default.json updates info.
-#   file:
-#     path: /var/lib/jenkins/updates/default.json
-#     owner: jenkins
-#     group: jenkins
-#     mode: 0755
-
 - name: Install Jenkins plugins.
   command: >
     java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ install-plugin {{ item }}
@@ -66,5 +52,3 @@
     - git
     - ssh
   notify: restart jenkins
-    # - jQuery+Plugin
-
