@@ -1,0 +1,41 @@
+---
+- name: Gather facts for role
+  set_fact:
+    postfix_relay_host: "{{ lookup('env', 'POSTFIX_RELAY_HOST') }}"
+    postfix_relay_user: "{{ lookup('env', 'POSTFIX_RELAY_USER') }}"
+    postfix_relay_password: "{{ lookup('env', 'POSTFIX_RELAY_PASSWORD') }}"
+
+- name: Install postfix, libsasl and ca-certificates
+  apt:
+    name={{ item }}
+    state=present
+    update_cache=yes
+  with_items:
+  - postfix
+  - libsasl2-2
+  - ca-certificates
+
+- name: Configure gmail
+  template:
+    src=main.cf
+    dest=/etc/postfix/main.cf
+
+- name: Provide sasl authentication
+  lineinfile:
+    dest=/etc/postfix/sasl_passwd
+    line="{{ postfix_relay_host }} {{ postfix_relay_user }}:{{ postfix_relay_password }}"
+    create=yes
+    backup=yes
+    state=present
+  register: sasl_passwd
+
+- name: Fix permissions for sasl authentication file
+  file:
+    path=/etc/postfix/sasl_passwd
+    mode=0400
+
+- name: Update postfix config when sasl authentication changed
+  shell: >
+    sudo postmap /etc/postfix/sasl_passwd
+  when: sasl_passwd.changed == true
+  notify: reload postfix

@@ -4,9 +4,10 @@
   roles:
     - basic-setup
     - chruby
-    - nodejs
     - bootstrap-remote-user
+    - postfix-relay
     - passenger-nginx
+    - nodejs
     - aris-user-management
     - selenium-webdriverio
     - jenkins

@@ -1,0 +1,2 @@
+---
+- include: all.yml tags=postfix-relay
