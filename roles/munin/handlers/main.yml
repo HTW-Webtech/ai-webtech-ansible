@@ -1,0 +1,11 @@
+---
+- name: reload nginx
+  service:
+    name=nginx
+    state=reloaded
+
+- name: restart munin
+  command: 'sudo /etc/init.d/munin restart'
+
+- name: restart munin-node
+  command: 'sudo /etc/init.d/munin-node restart'

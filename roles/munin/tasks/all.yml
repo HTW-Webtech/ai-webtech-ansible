@@ -1,0 +1,34 @@
+---
+- name: Install munin and its dependency packages
+  apt:
+    name={{ item }}
+    state=present
+    update_cache=yes
+  with_items:
+  - munin
+  - munin-node
+
+- name: Copy munin config file
+  copy:
+    src=munin/munin.conf
+    dest=/etc/munin/munin.conf
+  notify: restart munin
+
+- name: Copy munin config file
+  copy:
+    src=munin/munin-node.conf
+    dest=/etc/munin/munin-node.conf
+  notify: restart munin-node
+
+- name: Copy nginx vhost conf to /etc/munin/nginx-vhost.conf
+  copy:
+    src=nginx/vhost.conf
+    dest=/etc/munin/nginx-vhost.conf
+  notify: reload nginx
+
+- name: Symlink nginx vhost conf to sites-enabled
+  file:
+    state=link
+    src=/etc/munin/nginx-vhost.conf
+    dest=/etc/nginx/sites-enabled/munin.conf
+  notify: reload nginx
