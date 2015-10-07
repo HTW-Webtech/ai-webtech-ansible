@@ -37,5 +37,5 @@
 - name: Update postfix config when sasl authentication changed
   shell: >
     sudo postmap /etc/postfix/sasl_passwd
-  when: sasl_passwd.changed == true
+  when: sasl_passwd.changed
   notify: reload postfix
