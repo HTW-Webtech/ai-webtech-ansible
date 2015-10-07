@@ -4,33 +4,37 @@
 # unset GIT_DIR GIT_WORK_TREE
 # git reset --hard
 
-# Install new gems, migrate, restart passenger
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 source /home/{{ item.key }}/.bashrc.ruby-version
 source /var/apps/{{ item.key }}/code/.env
 
-# FIXME: Currenyly every user needs to install bundler (which is kind of stupid)
-# Also everybody needs to install rails etc. If I can install it via root it
-# will be available to every user instead.
-export RAILS_ENV=production
-which bundle || gem install bundler
-bundle install --deployment --without development test
-bundle exec rake assets:precompile db:migrate
+if [ -e config/application.rb ]; then
+  # Rails app support
+  export RAILS_ENV=production
+  which bundle || gem install bundler
+  bundle install --deployment --without development test
+  bundle exec rake assets:precompile db:migrate
 
-# Replace the apps-public folder with a symlink to the code/public
-rm -rf /var/apps/{{ item.key }}/public
-if [ -e /var/apps/{{ item.key }}/code/public ]; then
-  echo "Public dir in .git repo detected. Using it in place of the default public dir"
-  ln -sf /var/apps/{{ item.key }}/code/public /var/apps/{{ item.key }}/
+  rm -rf /var/apps/{{ item.key }}/public
+  if [ -e /var/apps/{{ item.key }}/code/public ]; then
+    echo "Public dir in .git repo detected. Using it in place of the default public dir"
+    ln -sf /var/apps/{{ item.key }}/code/public /var/apps/{{ item.key }}/
+  else
+    echo "No Public dir in .git repo found. Using the default public dir."
+    ln -fs /var/apps/{{ item.key }}/default-public /var/apps/{{ item.key }}/public
+  fi
+
+  # Symlink code/log/production.log if it exists
+  if [ -e /var/apps/{{ item.key }}/code/log/production.log ]; then
+    ln -fs /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
+  fi
+
+  passenger-config restart-app /var/apps/{{ item.key }}/code
 else
-  echo "No Public dir in .git repo found. Using the default public dir."
-  ln -fs /var/apps/{{ item.key }}/default-public /var/apps/{{ item.key }}/public
+  # HTML only app support
+  rm -rf /var/apps/{{ item.key }}/public
+  echo "No rails app detected. Serving files from code repository."
+  ln -sf /var/apps/{{ item.key }}/code /var/apps/{{ item.key }}/public
 fi
 
-# Symlink code/log/production.log if it exists
-if [ -e /var/apps/{{ item.key }}/code/log/production.log ]; then
-  ln -fs /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
-fi
-
-passenger-config restart-app /var/apps/{{ item.key }}/code
