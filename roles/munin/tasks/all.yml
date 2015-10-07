@@ -26,6 +26,12 @@
     dest=/etc/munin/nginx-vhost.conf
   notify: reload nginx
 
+- name: Copy auth file for nginx access
+  copy:
+    src=nginx/basic_auth
+    dest=/etc/munin/basic_auth
+  notify: restart munin-node
+
 - name: Symlink nginx vhost conf to sites-enabled
   file:
     state=link
