@@ -1,9 +1,8 @@
 #!/bin/bash
 # Reset all local changes
-test "${PWD%/.git}" != "$PWD" && cd ..
-unset GIT_DIR GIT_WORK_TREE
-
-git reset --hard
+# test "${PWD%/.git}" != "$PWD" && cd ../..
+# unset GIT_DIR GIT_WORK_TREE
+# git reset --hard
 
 # Install new gems, migrate, restart passenger
 source /usr/local/share/chruby/chruby.sh
