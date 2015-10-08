@@ -1,0 +1,8 @@
+[Unit]
+Description=Reveal.js slide server
+
+[Service]
+ExecStart=/usr/local/bin/node /var/apps/slides/code/plugin/notes-server
+
+[Install]
+WantedBy=multi-user.target
