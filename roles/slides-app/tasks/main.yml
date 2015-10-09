@@ -1,2 +1,3 @@
 ---
-- include: all.yml tags=slides-app
+- include: 10-setup-revealjs.yml tags=slides-app
+- include: 20-setup-slides.yml   tags=slides-app

@@ -1,0 +1,22 @@
+---
+- file:
+    state=directory
+    path={{ item }}
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+  with_items:
+    - /var/apps/slides/public
+    - /var/apps/slides/logs
+    - /var/apps/slides/nginx
+
+- copy:
+    src=slides/nginx.conf
+    dest=/var/apps/slides/nginx/vhost.conf
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+
+- file:
+    state=link
+    src=/var/apps/slides/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/slides.conf
+  notify: reload nginx

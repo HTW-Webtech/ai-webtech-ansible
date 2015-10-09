@@ -1,0 +1,54 @@
+---
+- file:
+    state=directory
+    path={{ item }}
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+  with_items:
+    - /var/apps/revealjs/code
+    - /var/apps/revealjs/logs
+    - /var/apps/revealjs/nginx
+
+- git:
+    repo=https://github.com/grekko/reveal.js.git
+    dest=/var/apps/revealjs/code
+    update=yes
+    version=htw-bootloader
+
+- npm:
+    path=/var/apps/revealjs/code
+
+- file:
+    path=/var/apps/revealjs
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+    recurse=yes
+
+- copy:
+    src=revealjs/nginx.conf
+    dest=/var/apps/revealjs/nginx/vhost.conf
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+
+- file:
+    state=link
+    src=/var/apps/revealjs/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/revealjs.conf
+  notify: reload nginx
+
+- copy:
+    src=revealjs/revealjs.service
+    dest=/var/apps/revealjs/revealjs.service
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+
+- file:
+    state=link
+    src=/var/apps/revealjs/revealjs.service
+    dest=/etc/systemd/system/revealjs.service
+  register: revealjs_service
+
+- shell: >
+    systemctl start revealjs && systemctl daemon-reload
+  when: revealjs_service.changed
+
