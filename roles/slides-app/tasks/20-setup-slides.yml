@@ -14,6 +14,7 @@
     dest=/var/apps/slides/nginx/vhost.conf
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
+  notify: reload nginx
 
 - file:
     state=link
