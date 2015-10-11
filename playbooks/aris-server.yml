@@ -9,7 +9,7 @@
     - passenger-nginx
     - nodejs
     - aris-user-management
-    - selenium-webdriverio
     - jenkins
     - munin
     - slides-app
+    - capybara-poltergeist
