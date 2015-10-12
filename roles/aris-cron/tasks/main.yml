@@ -5,7 +5,7 @@
 
 - include: 10-app-account-with-ssh.yml
 - include: 20-app-access-to-chruby.yml
-- include: 30-postgres-account-and-database.yml
+# - include: 30-postgres-account-and-database.yml
 - include: 40-app-skeleton.yml
 - include: 50-app-git-config.yml
 - include: 60-app-access-to-env-vars.yml
