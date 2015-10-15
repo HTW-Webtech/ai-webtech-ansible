@@ -1,6 +1,12 @@
 ---
-- shell: >
-    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/config/apps.processing.yml; true
+- name: Copy the updated apps.yml to host_vars/localhost where it can be used by the playbook
+  shell: >
+    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/code/ansible/inventories/host_vars/localhost; true
+
+- stat:
+    path=/opt/aris/config/apps.processing.yml
+  register: apps_file
 
 - include_vars: /opt/aris/config/apps.processing.yml
+  when: apps_file.stat.exists
 
