@@ -36,17 +36,3 @@
     owner=admin
     group=admin
 
-- name: Ensure admin database exists
-  sudo: no
-  postgresql_db:
-    name={{ app_pg_database }}
-
-- name: Ensure aris user has access to aris database
-  sudo: no
-  postgresql_user:
-    db={{ app_pg_database }}
-    name={{ app_pg_login }}
-    password={{ app_pg_password }}
-    priv=ALL
-    role_attr_flags=SUPERUSER
-
