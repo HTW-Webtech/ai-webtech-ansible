@@ -1,6 +1,6 @@
 ---
 - shell: >
-    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/config/apps.processing.yml
+    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/config/apps.processing.yml; true
 
 - include_vars: /opt/aris/config/apps.processing.yml
 
