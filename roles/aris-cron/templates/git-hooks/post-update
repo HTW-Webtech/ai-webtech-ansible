@@ -1,8 +1,9 @@
 #!/bin/bash
 # Reset all local changes
-# test "${PWD%/.git}" != "$PWD" && cd ../..
-# unset GIT_DIR GIT_WORK_TREE
-# git reset --hard
+cd ../..
+unset GIT_DIR GIT_WORK_TREE
+git reset --hard
+git checkout .
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
