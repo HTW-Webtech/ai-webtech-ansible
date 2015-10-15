@@ -28,8 +28,14 @@
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
 
 - template:
-    src=aris/nginx-env-vars.conf.j2
+    src=aris/nginx/default_env_vars.conf.j2
     dest=/var/apps/admin/nginx/extras/default_env_vars.conf
+    owner=admin
+    group=admin
+
+- template:
+    src=aris/rails/.env.j2
+    dest=/var/apps/admin/code/.env
     owner=admin
     group=admin
 
