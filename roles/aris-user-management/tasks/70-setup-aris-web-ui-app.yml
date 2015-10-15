@@ -1,11 +1,8 @@
 ---
 - name: Fetch aris-web-ui configuration from env
   set_fact:
-    app_admin_email: "{{ lookup('env','APP_ADMIN_EMAIL') }}"
     app_admin_password: "{{ lookup('env','APP_ADMIN_PASSWORD') }}"
-    app_admin_pub_ssh_key: "{{ lookup('env','APP_ADMIN_PUB_SSH_KEY') }}"
     app_secret_key_base: "{{ lookup('env','APP_SECRET_KEY_BASE') }}"
-    app_pg_host: "{{ lookup('env','APP_POSTGRES_HOST') }}"
     app_pg_database: "{{ lookup('env','APP_POSTGRES_DATABASE') }}"
     app_pg_login: "{{ lookup('env','APP_POSTGRES_LOGIN') }}"
     app_pg_password: "{{ lookup('env','APP_POSTGRES_PASSWORD') }}"
@@ -39,53 +36,17 @@
     owner=admin
     group=admin
 
-# FIXME: I am always igelmund instead of aris.. wtf
-# - name: Create admin app with pub ssh key
-# shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add admin --email {{ app_admin_email }} --ssh-key='{{ app_admin_pub_ssh_key }}'"
+- name: Ensure admin database exists
+  sudo: no
+  postgresql_db:
+    name={{ app_pg_database }}
 
-# FIXME: I am always igelmund instead of aris.. wtf
-# - name: Configure env-vars for admin app
-  # shell: "/opt/rubies/{{ chruby_ruby_version }}/bin/aris-control add-env-vars admin --env-vars '{{ item.key }}:{{ item.value }}'"
-  # with_dict:
-  #   POSTGRES_DATABASE_NAME: "{{ app_pg_database_name }}"
-  #   POSTGRES_LOGIN: "{{ app_pg_login }}"
-  #   POSTGRES_PASSWORD: "{{ app_pg_password }}"
-  #   SECRET_KEY_BASE: "{{ app_secret_key_base }}"
-  #   ADMIN_EMAIL: "{{ app_admin_email }}"
-  #   ADMIN_PASSWORD: "{{ app_admin_password }}"
-  #   ADMIN_PUB_SSH_KEY: "{{ app_admin_pub_ssh_key }}"
-  #   GIT_SSH_PUBLIC_HOST: "{{ app_git_ssh_public_host }}"
+- name: Ensure aris user has access to aris database
+  sudo: no
+  postgresql_user:
+    db={{ app_pg_database }}
+    name={{ app_pg_login }}
+    password={{ app_pg_password }}
+    priv=ALL
+    role_attr_flags=SUPERUSER
 
-# FIXME: Right now EVERY user has read/write permissions to this file.
-# For another solution I need some intermediate service which takes
-# over the responsibility
-# - name: Fix permissions for apps.yml
-#   file:
-#     path=/opt/aris/config/apps.yml
-#     owner=aris
-#     group=aris
-#     mode=0777
-
-# FIXME: I am always root instead of aris.. wtf
-# - name: Checkout git app to /var/apps/admin/code
-#   git:
-#     repo=https://github.com/grekko/aris-web-ui.git
-#     dest=/var/apps/admin/code
-#     update=yes
-#     version=master
-#     force=yes
-
-# - name: Fix permissions for /var/apps/admin/code
-#   file:
-#     path=/var/apps/admin/code
-#     owner=admin
-#     group=admin
-#     recurse=yes
-
-# TODO: Once I got the user-switch working with `become_user`:
-# Execute the post-update hook for the admin app.
-# - name: Run the git post-update command to enable the web-ui app
-#   shell: "sudo su admin; echo $(whoami)"
-
-# - name: Run the git post-update command manually now!
-#   shell: "echo 'Run the git post-update command manually now!' && exit 1"
