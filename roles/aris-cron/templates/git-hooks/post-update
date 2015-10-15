@@ -10,6 +10,9 @@ source /home/{{ item.key }}/.bashrc.ruby-version
 source /var/apps/{{ item.key }}/code/.env
 
 if [ -e config/application.rb ]; then
+  echo "Detected config/application.rb.."
+  echo "I guess you are running a Rails app"
+
   # Rails app support
   export RAILS_ENV=production
   which bundle || gem install bundler
@@ -32,9 +35,10 @@ if [ -e config/application.rb ]; then
 
   passenger-config restart-app /var/apps/{{ item.key }}/code
 else
+  echo "No configurations detected."
+  echo "Serving files from code repository."
   # HTML only app support
   rm -rf /var/apps/{{ item.key }}/public
-  echo "No rails app detected. Serving files from code repository."
   ln -sf /var/apps/{{ item.key }}/code /var/apps/{{ item.key }}/public
 fi
 
