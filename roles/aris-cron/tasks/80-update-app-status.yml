@@ -1,0 +1,4 @@
+- file:
+    state=absent
+    path=/var/apps/admin/code/tmp/{{ item.key }}-reloading
+  with_dict: "{{ aris_apps }}"
