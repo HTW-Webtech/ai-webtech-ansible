@@ -1,10 +1,13 @@
 ---
-- name: Setup crontab for aris user-management background service (executed with sudo rights)
-  cron:
+- cron:
     name="Aris service"
     minute='*/5'
-    job="export ARIS_POSTGRES_LOGIN={{ lookup('env','ARIS_POSTGRES_LOGIN')}}; export ARIS_POSTGRES_PASSWORD={{ lookup('env','ARIS_POSTGRES_PASSWORD')}}; cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/aris-cron.log"
+    job="export ARIS_POSTGRES_LOGIN={{ lookup('env','ARIS_POSTGRES_LOGIN')}}; export ARIS_POSTGRES_PASSWORD={{ lookup('env','ARIS_POSTGRES_PASSWORD')}}; cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini"
     user=aris
     state=present
     backup=yes
 
+- lineinfile:
+    dest=/var/spool/cron/crontabs/aris
+    line='MAILTO=crontab-aris@grekko.de'
+    insertbefore=BOF
