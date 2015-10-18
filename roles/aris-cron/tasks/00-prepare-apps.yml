@@ -1,7 +1,7 @@
 ---
-- name: Copy the updated apps.yml to host_vars/localhost where it can be used by the playbook
+- name: Rename latest apps.yml to apps.processing.yml
   shell: >
-    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/code/ansible/inventories/host_vars/localhost; true
+    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/config/apps.processing.yml; true
 
 - stat:
     path=/opt/aris/config/apps.processing.yml
