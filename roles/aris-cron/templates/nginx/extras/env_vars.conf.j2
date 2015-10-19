@@ -1,5 +1,7 @@
 {% if item.value.has_key('env_vars') and item.value['env_vars'] != None %}
   {% for(k, v) in item.value['env_vars'].items() %}
+    {% if k %}
 passenger_env_var {{ k | upper }} '{{ v }}';
+    {% endif %}
   {% endfor %}
 {% endif %}
