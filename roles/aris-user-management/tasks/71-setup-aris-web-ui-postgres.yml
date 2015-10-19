@@ -1,14 +1,12 @@
 ---
-- name: Ensure admin database exists
-  sudo: no
+- sudo: no
   postgresql_db:
-    name={{ app_pg_database }}
+    name=admin
 
-- name: Ensure admin user has access to admin database
-  sudo: no
+- sudo: no
   postgresql_user:
-    db={{ app_pg_database }}
-    name={{ app_pg_login }}
+    db=admin
+    name=admin
     password={{ app_pg_password }}
     priv=ALL
     role_attr_flags=SUPERUSER
