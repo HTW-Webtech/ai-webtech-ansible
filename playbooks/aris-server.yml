@@ -9,7 +9,7 @@
     - postfix-relay
     - passenger-nginx
     - nodejs
-    - aris-user-management
+    - aris-server
     - jenkins
     - munin
     - slides-app
