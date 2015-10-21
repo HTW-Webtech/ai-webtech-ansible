@@ -4,8 +4,7 @@
     name=nodejs
     state=present
 
-- name: Symlink nodejs binary to
-  file:
+- file:
     src=/usr/bin/nodejs
     dest=/usr/local/bin/node
     state=link

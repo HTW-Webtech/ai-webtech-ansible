@@ -1,2 +1,10 @@
 ---
-- git:
+- apt:
+    name=nodejs
+    state=present
+
+- npm:
+    state=present
+    name=phantomjs
+    global=yes
+
