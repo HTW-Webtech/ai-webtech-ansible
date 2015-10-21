@@ -12,5 +12,6 @@
     - aris-server
     - jenkins
     - munin
+    - file-hosting
     - slides-app
     - capybara-poltergeist

@@ -1,0 +1,9 @@
+---
+- file:
+    state=directory
+    path=/var/www/files
+
+- copy:
+    src=nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/file-hosting.conf
+  notify: reload nginx
