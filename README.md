@@ -1,8 +1,12 @@
 # HTW Aristoteles Ansible-Repo
 
 # TODOS
+[] Re-Use aris-cron for setting up the admin app
+   Create the necessary aris_apps variable and include the aris-cron task
 [] Fix issues with lots of users
 [] Finish capybara-poltergeist setup
+[] Aris-Cron MAILTO does not work yet
+[] Use ansible.bootstrap-remote-user repo instead of custom code
 
 ## Essential
 [] HTTPS-Setup for Web-Server. HTTPs Access only
