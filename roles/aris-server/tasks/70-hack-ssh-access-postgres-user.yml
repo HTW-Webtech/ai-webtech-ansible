@@ -1,5 +1,4 @@
 ---
-# FIXME: What a crazy effort to create the aris user and database!
 - name: Add postgres user to ssh-clients group for ssh access
   user:
     name=postgres

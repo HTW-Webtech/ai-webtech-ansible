@@ -1,10 +1,5 @@
 ---
-- name: Ensure aris database exists
-  sudo: no
-  postgresql_db:
-    name=aris
-
-- name: Ensure aris user has access to aris database
+- name: Ensure aris user exists and is allowed to create new user and databases
   sudo: no
   postgresql_user:
     db=aris
