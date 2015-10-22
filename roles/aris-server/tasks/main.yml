@@ -1,15 +1,15 @@
 ---
-- include: 10-setup-aris-user.yml              tags=aris-setup,aris
-- include: 20-setup-ansible.yml                tags=aris-setup,ansible
-- include: 30-setup-postgres.yml               tags=aris-setup,postgres
-- include: 40-setup-aris-postgres-access.yml   tags=aris-setup,aris-postgres
-- include: 41-setup-aris-postgres-database.yml tags=aris-setup,aris-postgres
+- include: 10-setup-aris-user.yml               tags=aris-setup,aris
+- include: 20-setup-ansible.yml                 tags=aris-setup,ansible
+- include: 30-setup-postgres.yml                tags=aris-setup,postgres
+- include: 40-setup-aris-postgres-access.yml    tags=aris-setup,aris-postgres
+- include: 41-setup-aris-postgres-database.yml  tags=aris-setup,aris-postgres
   vars:
     ansible_ssh_user: postgres
-- include: 50-setup-aris-service.yml           tags=aris-setup,aris-service
-- include: 60-setup-rails-dependencies.yml     tags=aris-setup,rails
-- include: 70-setup-aris-web-ui-app.yml        tags=aris-setup,web-ui
-- include: 71-setup-aris-web-ui-postgres.yml   tags=aris-setup,aris-postgres
+- include: 50-setup-aris-service.yml            tags=aris-setup,aris-service
+- include: 60-setup-rails-dependencies.yml      tags=aris-setup,rails
+- include: 70-setup-aris-admin-app.yml          tags=aris-setup,admin-app
+- include: 71-setup-aris-admin-app-postgres.yml tags=aris-setup,admin-app
   vars:
     ansible_ssh_user: postgres
 - include: 80-enable-aris-service-crontab.yml  tags=aris-setup,aris-service

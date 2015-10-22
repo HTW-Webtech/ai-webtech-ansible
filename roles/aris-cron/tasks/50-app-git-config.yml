@@ -10,6 +10,7 @@
     path=/var/apps/{{ item.key }}/code
     owner={{ item.key }}
     group={{ item.key }}
+    recurse=yes
   with_dict: "{{ aris_apps }}"
 
 - name: Configure proper git post-update hook
