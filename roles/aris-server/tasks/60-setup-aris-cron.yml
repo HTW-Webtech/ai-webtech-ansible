@@ -8,6 +8,7 @@
     mode=u=rwx,g=rwx,o=r
   with_items:
     - /opt/aris/config
+    - /opt/aris/config/archive
     - /opt/aris/code
     - /opt/aris/logs
 
