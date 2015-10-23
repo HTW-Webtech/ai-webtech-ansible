@@ -7,9 +7,9 @@
     path=/opt/aris/config/apps.processing.yml
   register: apps_file
 
-- debug:
-    var=apps_file
+- fail:
+    msg="No new apps found"
+  when: apps_file.stat.exists == false
 
 - include_vars: /opt/aris/config/apps.processing.yml
-  when: apps_file.stat.exists
 
