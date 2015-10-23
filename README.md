@@ -1,6 +1,9 @@
 # HTW Aristoteles Ansible-Repo
 
 # TODOS
+[] Rakefile to update aris-cron on dev and prod
+  - git push
+  - ansible-playbook for dev|prod
 [] Re-Use aris-cron for setting up the admin app
    Create the necessary aris_apps variable and include the aris-cron task
 [] Fix issues with lots of users
