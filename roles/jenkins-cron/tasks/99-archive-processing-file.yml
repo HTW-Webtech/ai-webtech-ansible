@@ -1,0 +1,2 @@
+- shell: >
+    mv /opt/aris/config/jenkins_jobs.processing.yml /opt/aris/config/archive/jenkins_jobs.processed-at-$(date +"%Y-%m-%d-%H-%M-%S").yml

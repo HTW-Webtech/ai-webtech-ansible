@@ -4,9 +4,9 @@
 - include: 30-setup-postgres.yml                tags=aris-setup,postgres
 - include: 40-setup-rails-dependencies.yml      tags=aris-setup,rails
 - include: 50-setup-admin-app.yml               tags=aris-setup,admin-app
-- include: 60-setup-aris-cron.yml               tags=aris-setup,aris-cron
+- include: 60-setup-ansible-cron.yml            tags=aris-setup,ansible-cron
 - include: 70-hack-ssh-access-postgres-user.yml tags=aris-setup,aris-postgres
-- include: 71-aris-cron-postgres-access.yml     tags=aris-setup,aris-cron
+- include: 71-aris-cron-postgres-access.yml     tags=aris-setup,ansible-cron
   vars:
     ansible_ssh_user: postgres
-- include: 80-enable-aris-cron.yml              tags=aris-setup,aris-cron
+- include: 80-enable-aris-cron.yml              tags=aris-setup,ansible-cron

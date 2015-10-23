@@ -9,5 +9,5 @@
 
 - lineinfile:
     dest=/var/spool/cron/crontabs/aris
-    line='MAILTO=crontab-aris@grekko.de'
+    line='MAILTO=aris-cron@grekko.de'
     insertbefore=BOF

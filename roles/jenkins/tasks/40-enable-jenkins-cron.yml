@@ -1,0 +1,13 @@
+---
+- cron:
+    name="Jenkins service"
+    minute='*/5'
+    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/jenkins-cron.yml -i ./inventories/local.ini"
+    user=aris
+    state=present
+    backup=yes
+
+- lineinfile:
+    dest=/var/spool/cron/crontabs/aris
+    line='MAILTO=aris-cron@grekko.de'
+    insertbefore=BOF
