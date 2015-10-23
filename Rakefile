@@ -1,7 +1,11 @@
-desc 'Updates the aris-cron code for development'
-task :update_cron do
-  env = ENV.fetch('TARGET_ENV', 'development')
+desc 'Push changes to github'
+task :push do
   sh "git push origin master"
+end
+
+desc 'Updates the aris-cron code for development'
+task update_cron: [:push] do
+  env = ENV.fetch('TARGET_ENV', 'development')
   cmd = "ansible-playbook playbooks/aris-server.yml -i inventories/#{env}.ini --tags=aris-cron"
   puts "Running: #{cmd}"
   sh cmd
@@ -14,3 +18,5 @@ namespace :prod do
     Rake::Task['update_cron'].invoke
   end
 end
+
+task default: :push
