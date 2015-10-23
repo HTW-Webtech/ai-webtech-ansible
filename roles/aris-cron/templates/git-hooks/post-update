@@ -34,7 +34,9 @@ if [ -e config/application.rb ]; then
     ln -fs /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
   fi
 
-  passenger-config restart-app /var/apps/{{ item.key }}/code
+  # Currently not working without sudo
+  # passenger-config restart-app /var/apps/{{ item.key }}/code
+  touch /var/apps/{{ item.key }}/code/tmp/restart.txt
 else
   echo "No configurations detected."
   echo "Serving files from code repository."

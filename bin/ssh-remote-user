@@ -3,7 +3,7 @@ if hash ssh-tmux 2>/dev/null; then
   # HACKY! currently the ssh-tmux does not accept ssh-args, e.g. `-p`.
   # A nice solution may be to tunnel it through via a leading double-dash, e.g.
   # `ssh-tmux user@host -- -p 2222 -o StrictHostKeyChecking=no`
-  ssh-tmux $SSH_REMOTE_USER@vagrant-aris
+  ssh-tmux $SSH_REMOTE_USER@htw-aris-vagrant
 else
   ssh $SSH_REMOTE_USER@127.0.0.1 -p 2222 -o StrictHostKeyChecking=no
 fi
