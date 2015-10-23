@@ -10,5 +10,5 @@
     msg="No new jenkins jobs found"
   when: jenkins_file.stat.exists == false
 
-- include_vars: /opt/aris/config/jenkings_jobs.processing.yml
+- include_vars: /opt/aris/config/jenkins_jobs.processing.yml
 
