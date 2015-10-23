@@ -45,7 +45,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "jessie" do |box|
     box.vm.box = "jessie"
     box.vm.network :forwarded_port, guest: 80,   host: 8081
-    box.vm.network :forwarded_port, guest: 22,   host: 8023
     box.vm.network :forwarded_port, guest: 8080, host: 8082
     box.vm.network :forwarded_port, guest: 5432, host: 8432
   end
