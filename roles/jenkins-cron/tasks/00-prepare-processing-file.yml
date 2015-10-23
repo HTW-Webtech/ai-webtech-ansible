@@ -3,7 +3,7 @@
     test -e /opt/aris/config/jenkins_jobs.yml && mv /opt/aris/config/jenkins_jobs.yml /opt/aris/config/jenkins_jobs.processing.yml; true
 
 - stat:
-    path=/opt/aris/config/jenkings_jobs.processing.yml
+    path=/opt/aris/config/jenkins_jobs.processing.yml
   register: jenkins_file
 
 - fail:
