@@ -1,4 +1,4 @@
-desc 'Updates the aris-cron code on the target machine'
+desc 'Updates the aris-cron code for development'
 task :update_cron do
   env = ENV.fetch('TARGET_ENV', 'development')
   sh "git push origin master"
@@ -7,6 +7,7 @@ task :update_cron do
   sh cmd
 end
 
+desc 'Updates the aris-cron code for production'
 namespace :prod do
   task :update_cron do
     ENV['TARGET_ENV'] = 'production'
