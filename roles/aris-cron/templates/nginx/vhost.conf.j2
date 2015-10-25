@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name {{ item.key }}.htw-webtech.igelmund.info {{ item.key }}.htw-webtech.dev {{ item.key }}.htw-webtech.com;
+  server_name {{ item.key }}.htw-webtech.dev {{ item.key }}.htw-webtech.com;
 
   # Tell Nginx and Passenger where your app's 'public' directory is
   root /var/apps/{{ item.key }}/public;
