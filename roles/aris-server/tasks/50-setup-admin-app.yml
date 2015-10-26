@@ -1,12 +1,11 @@
 ---
-- name: Fetch aris-web-ui configuration from env
-  set_fact:
+- set_fact:
     app_admin_password: "{{ lookup('env','APP_ADMIN_PASSWORD') }}"
     app_secret_key_base: "{{ lookup('env','APP_SECRET_KEY_BASE') }}"
     app_pg_password: "{{ lookup('env','APP_POSTGRES_PASSWORD') }}"
+    app_rails_env: "{{ rails_env }}"
 
-- name: Create admin os user account (with full shell access)
-  user:
+- user:
     name=admin
     createhome=yes
     shell=/bin/bash
@@ -14,21 +13,39 @@
     groups=ssh-clients,aris
     state=present
 
-- name: Install aris-control gem
-  gem:
+- file:
+    path=~admin/.ssh
+    state=directory
+    owner=admin
+    group=admin
+    mode=u=rwx,g=rx,o=
+
+- template:
+    src=ssh/authorized_keys.j2
+    dest=~admin/.ssh/authorized_keys
+    owner=admin
+    group=admin
+    mode=u=rw,g=r,o=
+
+- gem:
     name=aris-control
-    state=latest
+    state=present
     user_install=no
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
 
+# Fact is used for app create process
 - set_fact:
     aris_apps:
       admin:
-        ssh_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSoUnD2zl5fKZlndTi6gABTZOzT8gJ6y6dwbq+TwNuW5TjNTSM8KoBOiiFXPrRbCEGWsk8s+wfZXoD1oATjV2sTfHy8xOQ5ev93LtahKnBZ61A2iORNDd1S+MIs7mU9a/dNEMu9NJmPcLekzXLai5hzBwRDHu9Ny5P+TA9lC+M9V0NMasiIjPuSDmLla1aMWJhtZyrGfCG2AiPeWJjZdvFM0S8dZ8LhNGE7cN6m6GqNBxyqQeS9CFsrca7Dn/2PybJxbGHt0rZMK59lybEB6XKDoI01Xzr3OuyFRwzYdStzIfMP5tJO80JAl/gjPBnleGU3WWOZu7l1DbfcG5rr6fN gregoryigelmund@Gregorys-MacBook-Pro.local'
         env_vars:
-          rails_env: "{{ rails_env }}"
 
-- include: ../../aris-cron/tasks/01-create-user-apps.yml
+- include: ../../aris-cron/tasks/20-app-access-to-chruby.yml
+- include: ../../aris-cron/tasks/40-app-skeleton.yml
+- include: ../../aris-cron/tasks/30-postgres-account-and-database.yml
+- include: ../../aris-cron/tasks/50-app-git-config.yml
+- include: ../../aris-cron/tasks/60-app-access-to-env-vars.yml
+- include: ../../aris-cron/tasks/70-nginx-passenger-config.yml
+- include: ../../aris-cron/tasks/80-update-app-status.yml
 
 - template:
     src=aris/nginx/default_env_vars.conf.j2
