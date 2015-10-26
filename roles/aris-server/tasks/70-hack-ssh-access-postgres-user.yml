@@ -15,7 +15,7 @@
 
 - name: Enable ssh access to postgres user via public ssh key
   template:
-    src=ssh/postgres-user.authorized_keys.j2
+    src=ssh/authorized_keys.j2
     dest=~postgres/.ssh/authorized_keys
     owner=postgres
     group=postgres
