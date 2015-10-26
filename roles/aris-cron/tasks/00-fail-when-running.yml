@@ -1,0 +1,6 @@
+---
+- stat: path={{ apps_processing_file_path }}
+  register: processing_file
+
+- fail: msg="There seems to be another job running"
+  when: processing_file.stat.exists

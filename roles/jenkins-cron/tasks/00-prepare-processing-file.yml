@@ -1,14 +1,12 @@
 ---
 - shell: >
-    test -e /opt/aris/config/jenkins_jobs.yml && mv /opt/aris/config/jenkins_jobs.yml /opt/aris/config/jenkins_jobs.processing.yml; true
+    test -e {{ jenkins_file_path }} && mv {{ jenkins_file_path }} {{ jenkins_processing_file_path }}; true
 
-- stat:
-    path=/opt/aris/config/jenkins_jobs.processing.yml
+- stat: path={{ jenkins_processing_file_path }}
   register: jenkins_file
 
-- fail:
-    msg="No new jenkins jobs found"
+- fail: msg="No new jenkins jobs found"
   when: jenkins_file.stat.exists == false
 
-- include_vars: /opt/aris/config/jenkins_jobs.processing.yml
+- include_vars: "{{ jenkins_processing_file_path }}"
 

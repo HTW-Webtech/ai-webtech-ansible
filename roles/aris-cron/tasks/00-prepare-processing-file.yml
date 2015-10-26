@@ -1,15 +1,13 @@
 ---
 - name: Rename latest apps.yml to apps.processing.yml
   shell: >
-    test -e /opt/aris/config/apps.yml && mv /opt/aris/config/apps.yml /opt/aris/config/apps.processing.yml; true
+    test -e {{ apps_file_path }} && mv {{ apps_file_path }} {{ apps_processing_file_path }}; true
 
-- stat:
-    path=/opt/aris/config/apps.processing.yml
+- stat: path={{ apps_processing_file_path }}
   register: apps_file
 
-- fail:
-    msg="No new apps found"
+- fail: msg="No new apps found"
   when: apps_file.stat.exists == false
 
-- include_vars: /opt/aris/config/apps.processing.yml
+- include_vars: {{ apps_processing_file_path }}
 

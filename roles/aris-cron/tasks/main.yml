@@ -1,4 +1,9 @@
 ---
+- set_fact:
+    apps_file_path: /opt/aris/config/jenkins_jobs.yml
+    apps_processing_file_path: /opt/aris/config/jenkins_jobs.processing.yml
+
+- include: 00-fail-when-running.yml
 - include: 00-prepare-processing-file.yml
 - include: 01-create-user-apps.yml
 - include: 99-archive-processing-file.yml

@@ -1,7 +1,6 @@
 ---
 - name: Debug vars
-  debug:
-    msg={{ jenkins_jobs }}
+  debug: msg={{ jenkins_jobs }}
 
 - name: Create job dir
   file:
@@ -20,5 +19,5 @@
     group=jenkins
     mode=0644
   with_dict: '{{ jenkins_jobs }}'
-  notify: restart jenkins
+  notify: reload jenkins
 
