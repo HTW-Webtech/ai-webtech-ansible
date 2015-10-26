@@ -9,5 +9,5 @@
 - fail: msg="No new apps found"
   when: apps_file.stat.exists == false
 
-- include_vars: {{ apps_processing_file_path }}
+- include_vars: "{{ apps_processing_file_path }}"
 
