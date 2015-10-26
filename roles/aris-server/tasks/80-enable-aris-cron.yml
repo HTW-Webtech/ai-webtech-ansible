@@ -7,7 +7,7 @@
 - cron:
     name="Aris service"
     minute='*/1'
-    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini"
+    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini > /opt/aris/logs/aris-cron.log"
     user=aris
     state=present
     backup=yes

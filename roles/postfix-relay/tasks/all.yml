@@ -2,6 +2,7 @@
 - name: Gather facts for role
   set_fact:
     postfix_relay_host: "{{ lookup('env', 'POSTFIX_RELAY_HOST') }}"
+    postfix_relay_port: "{{ lookup('env', 'POSTFIX_RELAY_PORT') }}"
     postfix_relay_user: "{{ lookup('env', 'POSTFIX_RELAY_USER') }}"
     postfix_relay_password: "{{ lookup('env', 'POSTFIX_RELAY_PASSWORD') }}"
 
@@ -19,11 +20,12 @@
   template:
     src=main.cf
     dest=/etc/postfix/main.cf
+  notify: reload postfix
 
 - name: Provide sasl authentication
   lineinfile:
     dest=/etc/postfix/sasl_passwd
-    line="{{ postfix_relay_host }} {{ postfix_relay_user }}:{{ postfix_relay_password }}"
+    line="[{{ postfix_relay_host }}]:{{ postfix_relay_port }} {{ postfix_relay_user }}:{{ postfix_relay_password }}"
     create=yes
     backup=yes
     state=present
@@ -39,3 +41,15 @@
     sudo postmap /etc/postfix/sasl_passwd
   when: sasl_passwd.changed
   notify: reload postfix
+
+- name: Configure outgoing traffic via firewall.sh
+  lineinfile:
+    line="iptables -A OUTPUT -p tcp --dport {{ postfix_relay_port }} -j ACCEPT"
+    dest=/root/firewall.sh
+    insertafter='iptables -P OUTPUT ACCEPT'
+    backup=yes
+  register: firewall_update
+
+- name: Apply firewall configuration
+  shell: sh /root/firewall.sh
+  when: firewall_update.changed

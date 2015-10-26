@@ -2,7 +2,7 @@
 - cron:
     name="Jenkins service"
     minute='*/1'
-    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/jenkins-cron.yml -i ./inventories/local.ini"
+    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/jenkins-cron.yml -i ./inventories/local.ini > /opt/aris/logs/jenkins-cron.log"
     user=aris
     state=present
     backup=yes

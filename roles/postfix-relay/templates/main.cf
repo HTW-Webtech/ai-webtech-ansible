@@ -27,12 +27,12 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # information on enabling SSL in the smtp client.
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-myhostname = Debian-jessie-amd64-netboot.vagrantup.com
+myhostname = admin.htw-webtech.com
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 myorigin = /etc/mailname
-mydestination = Debian-jessie-amd64-netboot.vagrantup.com, localhost.vagrantup.com, localhost
-relayhost = {{ postfix_relay_host }}
+mydestination = localhost
+relayhost = [{{ postfix_relay_host }}]:{{ postfix_relay_port }}
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
@@ -43,3 +43,4 @@ mailbox_command = procmail -a "$EXTENSION"
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
+inet_protocols = ipv4
