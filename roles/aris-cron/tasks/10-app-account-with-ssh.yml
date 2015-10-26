@@ -18,7 +18,7 @@
     mode=u=rx,g=,o=
   with_dict: "{{ aris_apps }}"
 
-- name: Configure public ssh keys appears in users .ssh/authorized-keys
+- name: Configure public ssh keys .ssh/authorized-keys
   lineinfile:
     line="{{ item.value.ssh_key }}"
     dest=~{{ item.key }}/.ssh/authorized_keys
