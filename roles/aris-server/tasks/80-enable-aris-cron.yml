@@ -1,8 +1,13 @@
 ---
+- template:
+    src=aris/postgres/.pgpass.j2
+    dest=/home/aris/.pgpass
+    mode=0600
+
 - cron:
     name="Aris service"
     minute='*/5'
-    job="export ARIS_POSTGRES_LOGIN={{ lookup('env','ARIS_POSTGRES_LOGIN')}}; export ARIS_POSTGRES_PASSWORD={{ lookup('env','ARIS_POSTGRES_PASSWORD')}}; cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini"
+    job="cd /opt/aris/code/ansible && /opt/ansible/code/bin/ansible-playbook ./playbooks/aris-cron.yml -i ./inventories/local.ini"
     user=aris
     state=present
     backup=yes
