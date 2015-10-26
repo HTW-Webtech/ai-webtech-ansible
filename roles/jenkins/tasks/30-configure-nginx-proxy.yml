@@ -9,5 +9,5 @@
     state=link
     src=/var/lib/jenkins/nginx-vhost.conf
     dest=/etc/nginx/sites-enabled/jenkins.conf
-  notify: restart nginx
+  notify: reload nginx
 
