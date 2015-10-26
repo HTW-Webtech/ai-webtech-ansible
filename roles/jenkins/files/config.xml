@@ -30,6 +30,7 @@
     <permission>hudson.model.Item.Delete:igelmund</permission>
     <permission>hudson.model.Item.Discover:igelmund</permission>
     <permission>hudson.model.Item.Read:igelmund</permission>
+    <permission>hudson.model.Item.Read:anonymous</permission>
     <permission>hudson.model.Item.Workspace:igelmund</permission>
     <permission>hudson.model.Run.Delete:igelmund</permission>
     <permission>hudson.model.Run.Update:igelmund</permission>
