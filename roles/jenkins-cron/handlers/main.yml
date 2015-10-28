@@ -1,5 +1,5 @@
 ---
-- name: restart jenkins
+- name: reload jenkins
   service:
     name=jenkins
-    state=restarted
+    state=reloaded
