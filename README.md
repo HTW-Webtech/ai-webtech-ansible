@@ -20,6 +20,8 @@ Ensure `ansible`, `vagrant` and `ruby` are available to your shell.
 # TODOS
 - [ ] Use ansible.bootstrap-remote-user repo instead of custom code
 - [ ] Add description
+- [ ] Jenkins Cron: Currently I enforce a jenkins restart after each job modifaction.
+      A much better approach would be to just reload the job configuration files.
 
 ## Essential
 - [ ] HTTPS-Setup for Web-Server. HTTPs Access only
