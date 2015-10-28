@@ -1,5 +1,13 @@
 # HTW Aristoteles Ansible-Repo
-TODO desc
+This repo contains ansible playbooks and roles to bootstrap and configure an ecosystem
+I juse for teaching "Web technologies". The ecosystem includes three main components:
+- A rails-based admin-app to allowing students to manage their applications (TODO: add link to repo)
+- Jenkins-CI to enable an automated test-environment to run against students applications (TODO: add schematic desc)
+- A simple app-hosting service accessible via git-ssh (pub key auth) served via passenger/nginx
+
+## Warning
+This ecosystem is built for a *customized* debian 8 (jessie) and wont work on any
+other system without extensive modifications.
 
 # Getting started
 Ensure `ansible`, `vagrant` and `ruby` are available to your shell.
