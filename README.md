@@ -1,6 +1,14 @@
 # HTW Aristoteles Ansible-Repo
 TODO desc
 
+# Getting started
+Ensure `ansible`, `vagrant` and `ruby` are available to your shell.
+- [Virtualbox](https://www.virtualbox.org/) Version 4+
+- [Vagrant](https://www.vagrantup.com/) ([github](https://github.com/mitchellh/vagrant)), Version 1.7+
+- [Ansible](http://www.ansible.com/) ([github](https://github.com/ansible/ansible)), Version 1.9+
+- [Ruby](https://www.ruby-lang.org/en/) ([github](https://github.com/ruby/ruby)), Version 2.1+
+
+
 # TODOS
 - [ ] Use ansible.bootstrap-remote-user repo instead of custom code
 - [ ] Add description
@@ -9,7 +17,7 @@ TODO desc
 - [ ] HTTPS-Setup for Web-Server. HTTPs Access only
 
 ## Bugs
-Waiting for them ;)
+waiting for them ;)
 
 ## Done
 - [x] Fix issues with lots of users (Performance improved by introducing a processing file for all app/jenkins jobs)
