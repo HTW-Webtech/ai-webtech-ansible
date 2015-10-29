@@ -25,7 +25,7 @@
     recurse=yes
 
 - copy:
-    src=revealjs/nginx.conf
+    src=nginx/revealjs-vhost.conf
     dest=/var/apps/revealjs/nginx/vhost.conf
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}

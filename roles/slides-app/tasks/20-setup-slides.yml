@@ -10,7 +10,7 @@
     - /var/apps/slides/nginx
 
 - copy:
-    src=slides/nginx.conf
+    src=nginx/slides-vhost.conf
     dest=/var/apps/slides/nginx/vhost.conf
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
