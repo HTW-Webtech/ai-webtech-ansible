@@ -10,4 +10,5 @@
     - ansicolor
     - console-tail
     - simple-theme-plugin
+    - gravatar
   notify: restart jenkins
