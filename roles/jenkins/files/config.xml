@@ -1,45 +1,44 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.631</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
-    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:igelmund</permission>
-    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:igelmund</permission>
-    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:igelmund</permission>
-    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:igelmund</permission>
-    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:igelmund</permission>
-    <permission>hudson.model.Computer.Build:igelmund</permission>
-    <permission>hudson.model.Computer.Configure:igelmund</permission>
-    <permission>hudson.model.Computer.Connect:igelmund</permission>
-    <permission>hudson.model.Computer.Create:igelmund</permission>
-    <permission>hudson.model.Computer.Delete:igelmund</permission>
-    <permission>hudson.model.Computer.Disconnect:igelmund</permission>
-    <permission>hudson.model.Hudson.Administer:igelmund</permission>
-    <permission>hudson.model.Hudson.ConfigureUpdateCenter:igelmund</permission>
-    <permission>hudson.model.Hudson.Read:igelmund</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:jenkins</permission>
+    <permission>hudson.model.Computer.Build:jenkins</permission>
+    <permission>hudson.model.Computer.Configure:jenkins</permission>
+    <permission>hudson.model.Computer.Connect:jenkins</permission>
+    <permission>hudson.model.Computer.Create:jenkins</permission>
+    <permission>hudson.model.Computer.Delete:jenkins</permission>
+    <permission>hudson.model.Computer.Disconnect:jenkins</permission>
+    <permission>hudson.model.Hudson.Administer:jenkins</permission>
+    <permission>hudson.model.Hudson.ConfigureUpdateCenter:jenkins</permission>
+    <permission>hudson.model.Hudson.Read:jenkins</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
-    <permission>hudson.model.Hudson.RunScripts:igelmund</permission>
-    <permission>hudson.model.Hudson.UploadPlugins:igelmund</permission>
+    <permission>hudson.model.Hudson.RunScripts:jenkins</permission>
+    <permission>hudson.model.Hudson.UploadPlugins:jenkins</permission>
     <permission>hudson.model.Item.Build:anonymous</permission>
-    <permission>hudson.model.Item.Build:igelmund</permission>
-    <permission>hudson.model.Item.Cancel:igelmund</permission>
-    <permission>hudson.model.Item.Configure:igelmund</permission>
-    <permission>hudson.model.Item.Create:igelmund</permission>
-    <permission>hudson.model.Item.Delete:igelmund</permission>
-    <permission>hudson.model.Item.Discover:igelmund</permission>
-    <permission>hudson.model.Item.Read:igelmund</permission>
+    <permission>hudson.model.Item.Build:jenkins</permission>
+    <permission>hudson.model.Item.Cancel:jenkins</permission>
+    <permission>hudson.model.Item.Configure:jenkins</permission>
+    <permission>hudson.model.Item.Create:jenkins</permission>
+    <permission>hudson.model.Item.Delete:jenkins</permission>
+    <permission>hudson.model.Item.Discover:jenkins</permission>
+    <permission>hudson.model.Item.Read:jenkins</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
-    <permission>hudson.model.Item.Workspace:igelmund</permission>
-    <permission>hudson.model.Run.Delete:igelmund</permission>
-    <permission>hudson.model.Run.Update:igelmund</permission>
-    <permission>hudson.model.View.Configure:igelmund</permission>
-    <permission>hudson.model.View.Create:igelmund</permission>
-    <permission>hudson.model.View.Delete:igelmund</permission>
-    <permission>hudson.model.View.Read:igelmund</permission>
-    <permission>hudson.scm.SCM.Tag:igelmund</permission>
+    <permission>hudson.model.Item.Workspace:jenkins</permission>
+    <permission>hudson.model.Run.Delete:jenkins</permission>
+    <permission>hudson.model.Run.Update:jenkins</permission>
+    <permission>hudson.model.View.Configure:jenkins</permission>
+    <permission>hudson.model.View.Create:jenkins</permission>
+    <permission>hudson.model.View.Delete:jenkins</permission>
+    <permission>hudson.model.View.Read:jenkins</permission>
+    <permission>hudson.scm.SCM.Tag:jenkins</permission>
   </authorizationStrategy>
   <securityRealm class="hudson.security.PAMSecurityRealm" plugin="pam-auth@1.1">
     <serviceName>jenkins</serviceName>

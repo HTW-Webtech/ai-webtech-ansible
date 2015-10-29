@@ -1,0 +1,14 @@
+---
+- name: Install Jenkins plugins.
+  remote_user: jenkins
+  sudo: no
+  command: >
+    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ install-plugin {{ item }}
+    creates=/var/lib/jenkins/plugins/{{ item }}.jpi
+  with_items:
+    - git
+    - ssh
+    - ansicolor
+    - console-tail
+    - simple-theme-plugin
+  notify: restart jenkins

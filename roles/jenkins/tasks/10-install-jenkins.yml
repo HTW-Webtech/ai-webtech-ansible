@@ -34,21 +34,3 @@
   retries: 10
   delay: 5
   changed_when: false
-
-- name: Get the jenkins-cli jarfile from the Jenkins server.
-  get_url:
-    url: 'http://localhost:8080/jnlpJars/jenkins-cli.jar'
-    dest: /opt/jenkins/cli.jar
-  register: jarfile_get
-  until: "'OK' in jarfile_get.msg or 'file already exists' in jarfile_get.msg"
-  retries: 10
-  delay: 5
-
-- name: Install Jenkins plugins.
-  command: >
-    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ install-plugin {{ item }}
-    creates=/var/lib/jenkins/plugins/{{ item }}.jpi
-  with_items:
-    - git
-    - ssh
-  notify: restart jenkins

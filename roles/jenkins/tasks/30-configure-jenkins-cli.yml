@@ -1,0 +1,59 @@
+---
+- name: Get the jenkins-cli jarfile from the Jenkins server.
+  get_url:
+    url: 'http://localhost:8080/jnlpJars/jenkins-cli.jar'
+    dest: /opt/jenkins/cli.jar
+  register: jarfile_get
+  until: "'OK' in jarfile_get.msg or 'file already exists' in jarfile_get.msg"
+  retries: 10
+  delay: 5
+
+- user:
+    name=jenkins
+    shell=/bin/bash
+    groups=ssh-clients
+    append=yes
+    generate_ssh_key=yes
+# TODO: password change did not work. So do it manually for now
+# password="{{ lookup('ENV', 'JENKINS_USER_PASSWORD' | password_hash('sha512') }}"
+
+- shell: >
+    cat /var/lib/jenkins/.ssh/id_rsa.pub
+  register: cat_jenkins_pub_ssh_key
+
+- set_fact:
+    jenkins_pub_ssh_key: "{{ cat_jenkins_pub_ssh_key.stdout }}"
+
+- file:
+    state=directory
+    path=/var/lib/jenkins/users/jenkins
+    owner=jenkins
+    group=jenkins
+
+- name: Configure jenkins user "jenkins"
+  template:
+    src=users/jenkins/config.xml
+    dest=/var/lib/jenkins/users/jenkins/config.xml
+    force=yes
+    owner=jenkins
+    group=jenkins
+  register: jenkins_user
+
+- service: name=jenkins state=restarted
+  when: jenkins_user.changed
+
+- name: Wait untils Jenkins web API is available
+  shell: curl --head --silent http://localhost:8080/cli/
+  register: result
+  until: result.stdout.find("200 OK") != -1
+  retries: 12
+  delay: 5
+
+- template:
+    src=ssh/authorized_keys.j2
+    dest=~jenkins/.ssh/authorized_keys
+    owner=jenkins
+    group=jenkins
+    force=yes
+    mode=u=rw,g=r,o=
+

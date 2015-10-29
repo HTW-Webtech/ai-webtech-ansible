@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>jenkins</fullName>
+  <description>jenkins admin account</description>
+  <properties>
+    <org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
+      <authorizedKeys>{{ jenkins_pub_ssh_key }}</authorizedKeys>
+    </org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
+  </properties>
+</user>
