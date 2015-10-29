@@ -1,1 +1,3 @@
+---
 rails_env: staging
+jenkins_url: http://jenkins.htw-webtech.dev:8081

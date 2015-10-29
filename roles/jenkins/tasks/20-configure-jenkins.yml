@@ -1,8 +1,11 @@
 ---
 - name: Gather facts for configuration files
   set_fact:
-    jenkins_url: "{{ lookup('env', 'JENKINS_URL') }}"
     admin_email: "{{ lookup('env', 'JENKINS_ADMIN_EMAIL') }}"
+    jenkins_mailer_smtp_host: "{{ lookup('env', 'JENKINS_MAILER_SMTP_HOST') }}"
+    jenkins_mailer_smtp_auth_username: "{{ lookup('env', 'JENKINS_MAILER_SMTP_AUTH_USERNAME') }}"
+    jenkins_mailer_smtp_auth_password: "{{ lookup('env', 'JENKINS_MAILER_SMTP_AUTH_PASSWORD') }}"
+    jenkins_mailer_reply_to: "{{ lookup('env', 'JENKINS_MAILER_REPLY_TO') }}"
 
 - name: Add jenkins to shadow group
   user:
