@@ -1,6 +1,5 @@
 ---
-- name: Install Jenkins plugins.
-  remote_user: jenkins
+- name: Install Jenkins plugins
   sudo: no
   command: >
     java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ install-plugin {{ item }}
