@@ -18,6 +18,7 @@ Ensure `ansible`, `vagrant` and `ruby` are available to your shell.
 
 
 # TODOS
+- [ ] Jenkins job: bundle install > /dev/null 2>&1
 - [ ] Use ansible.bootstrap-remote-user repo instead of custom code
 - [ ] Add description
 - [ ] Jenkins Cron: Currently I enforce a jenkins restart after each job modifaction.
