@@ -11,4 +11,5 @@
     - console-tail
     - simple-theme-plugin
     - gravatar
+    - jquery
   notify: restart jenkins
