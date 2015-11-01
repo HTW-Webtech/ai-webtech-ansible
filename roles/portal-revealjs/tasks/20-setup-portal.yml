@@ -5,19 +5,19 @@
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
   with_items:
-    - /var/apps/slides/public
-    - /var/apps/slides/logs
-    - /var/apps/slides/nginx
+    - /var/apps/portal/public
+    - /var/apps/portal/logs
+    - /var/apps/portal/nginx
 
 - copy:
-    src=nginx/slides-vhost.conf
-    dest=/var/apps/slides/nginx/vhost.conf
+    src=nginx/portal-vhost.conf
+    dest=/var/apps/portal/nginx/vhost.conf
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
   notify: reload nginx
 
 - file:
     state=link
-    src=/var/apps/slides/nginx/vhost.conf
-    dest=/etc/nginx/sites-enabled/slides.conf
+    src=/var/apps/portal/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/portal.conf
   notify: reload nginx

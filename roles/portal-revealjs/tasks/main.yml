@@ -1,0 +1,3 @@
+---
+- include: 10-setup-revealjs.yml tags=portal
+- include: 20-setup-portal.yml   tags=portal

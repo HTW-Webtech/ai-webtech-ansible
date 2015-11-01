@@ -13,5 +13,5 @@
     - jenkins
     - munin
     - file-hosting
-    - slides-app
+    - portal-revealjs
     - capybara-poltergeist
