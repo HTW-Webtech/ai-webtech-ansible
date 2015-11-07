@@ -12,7 +12,7 @@ task update_cron: [:push] do
 end
 
 desc 'Updates the aris-cron code for production'
-namespace :prod do
+namespace :prd do
   task :update_cron do
     ENV['TARGET_ENV'] = 'production'
     Rake::Task['update_cron'].invoke
