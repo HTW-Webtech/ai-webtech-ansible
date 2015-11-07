@@ -34,8 +34,8 @@
         export EXERCISE_ID='{{ item.value['exercise_id'] }}'
         export USER_NAME='{{ item.value['user_name'] }}'
         export USER_EMAIL='{{ item.value['user_email'] }}'
-        bundle install
-        bundle exec rake exercise:prod
+        bundle install > /dev/null
+        bundle exec rake exercise:prd
       </command>
     </hudson.tasks.Shell>
   </builders>
