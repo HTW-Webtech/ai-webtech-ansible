@@ -7,3 +7,4 @@
     state=link
     src=/var/apps/{{ item.key }}/code/.git
     dest=/var/git/{{ item.key }}.git
+  with_dict: "{{ aris_apps }}"
