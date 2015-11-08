@@ -37,7 +37,7 @@
   notify: reload nginx
 
 - copy:
-    src=revealjs/revealjs.service
+    src=systemd/revealjs.service
     dest=/var/apps/revealjs/revealjs.service
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
