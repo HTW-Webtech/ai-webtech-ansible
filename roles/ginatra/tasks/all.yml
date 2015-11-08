@@ -6,9 +6,12 @@
     - cmake
     - pkg-config
 
+# FIXME: Insallation does not provide ginatra bin in GEM_PATH
+# Installed manually now.
 - gem:
     name=ginatra
     state=present
+    user_install=no
     version=4.1.0
     executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
 
