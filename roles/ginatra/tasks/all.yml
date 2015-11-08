@@ -1,0 +1,40 @@
+---
+- apt:
+    name={{ item }}
+    state=installed
+  with_items:
+    - cmake
+    - pkg-config
+
+- gem:
+    name=ginatra
+    state=present
+    version=4.1.0
+    executable=/opt/rubies/{{ chruby_ruby_version }}/bin/gem
+
+- file:
+    state=directory
+    path=/var/apps/ginatra/nginx/logs
+    recurse=yes
+
+- file:
+    state=directory
+    dest=/root/.ginatra
+
+- copy:
+    src=ginatra/config.yml
+    dest=/root/.ginatra/config.yml
+
+# - copy:
+#     src=systemd/ginatra.service
+#     dest=/var/apps/ginatra/ginatra.service
+
+# - file:
+#     state=link
+#     src=/var/apps/ginatra/ginatra.service
+#     dest=/etc/systemd/system/ginatra.service
+#   register: ginatra_service
+#
+# - shell: >
+#     systemctl start ginatra && systemctl daemon-reload
+#   when: ginatra_service.changed
