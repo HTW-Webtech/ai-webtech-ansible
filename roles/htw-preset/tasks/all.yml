@@ -1,0 +1,5 @@
+---
+- copy:
+    src=firewall.sh
+    dest=/root/firewall.sh
+
