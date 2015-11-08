@@ -17,8 +17,12 @@
 
 - file:
     state=directory
-    path=/var/apps/ginatra/nginx/logs
+    path={{ item }}
     recurse=yes
+  with_items:
+    - /var/apps/ginatra/
+    - /var/apps/ginatra/nginx
+    - /var/apps/ginatra/logs
 
 - file:
     state=directory
