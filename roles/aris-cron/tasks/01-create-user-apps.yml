@@ -6,3 +6,4 @@
 - include: 60-app-access-to-env-vars.yml
 - include: 70-nginx-passenger-config.yml
 - include: 80-update-app-status.yml
+- include: 90-symlink-git-for-ginatra.yml

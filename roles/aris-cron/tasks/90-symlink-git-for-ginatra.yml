@@ -1,0 +1,9 @@
+---
+- file:
+    state=directory
+    path=/var/git
+
+- file:
+    state=link
+    src=/var/apps/{{ item.key }}/code/.git
+    dest=/var/git/{{ item.key }}.git
