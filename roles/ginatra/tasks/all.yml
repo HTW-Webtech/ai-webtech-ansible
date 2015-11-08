@@ -41,3 +41,15 @@
 # - shell: >
 #     systemctl start ginatra && systemctl daemon-reload
 #   when: ginatra_service.changed
+
+- copy:
+    src=nginx/ginatra-vhost.conf
+    dest=/var/apps/ginatra/nginx/vhost.conf
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+
+- file:
+    state=link
+    src=/var/apps/ginatra/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/ginatra.conf
+  notify: reload nginx
