@@ -12,14 +12,6 @@
     - /opt/aris/code
     - /opt/aris/logs
 
-- name: Copies ansible.cfg to /opt/aris/config/aris.cfg if none exists yet
-  copy:
-    src=aris/aris.cfg
-    dest=/opt/aris/config/aris.cfg
-    owner=aris
-    group=aris
-    force=no
-
 - name: Checkout the aris ansible repo
   git:
     accept_hostkey=true
