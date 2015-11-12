@@ -30,8 +30,9 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-        export EXERCISE_BASE_URL='{{ item.value['exercise_base_url'] }}'
-        export EXERCISE_ID='{{ item.value['exercise_id'] }}'
+        export EXERCISE_BASE_URL={{ item.value['exercise_base_url'] }}
+        export EXERCISE_ID={{ item.value['exercise_id'] }}
+        export APP_NAME={{ item.value['app_name'] }}
         export USER_NAME='{{ item.value['user_name'] }}'
         export USER_EMAIL='{{ item.value['user_email'] }}'
         bundle install > /dev/null
