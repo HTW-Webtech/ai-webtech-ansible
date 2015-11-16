@@ -12,7 +12,7 @@
 
 - name: Install the jenkins package
   apt:
-    name=jenkins
+    name=jenkins=1.638
     state=present
 
 - name: Ensure Jenkins is started and runs on startup.
