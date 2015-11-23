@@ -12,4 +12,5 @@
     - simple-theme-plugin
     - gravatar
     - jquery
+    - bulk-builder
   notify: restart jenkins
