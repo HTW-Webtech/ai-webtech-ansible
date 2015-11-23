@@ -4,19 +4,23 @@ task :push do
 end
 
 desc 'Updates the aris-cron code for development'
-task update_cron: [:push] do
-  env = ENV.fetch('TARGET_ENV', 'development')
-  cmd = "ansible-playbook playbooks/aris-server.yml -i inventories/#{env}.ini --tags=ansible-cron"
-  puts "Running: #{cmd}"
-  sh cmd
-end
+namespace :update_cron do
+  task run: [:push] do
+    env = ENV.fetch('TARGET_ENV')
+    cmd = "ansible-playbook playbooks/aris-server.yml -i inventories/#{env}.ini --tags=ansible-cron"
+    puts "Running: #{cmd}"
+    sh cmd
+  end
 
-desc 'Updates the aris-cron code for production'
-namespace :prd do
-  task :update_cron do
+  task :dev do
+    ENV['TARGET_ENV'] = 'development'
+    Rake::Task['update_cron:run'].invoke
+  end
+
+  task :prd do
     ENV['TARGET_ENV'] = 'production'
-    Rake::Task['update_cron'].invoke
+    Rake::Task['update_cron:run'].invoke
   end
 end
 
-task default: :push
+task default: 'update_cron:dev'
