@@ -1,9 +1,0 @@
-git_dirs:
-  - /var/git/*
-sitename: HTW-Webtech
-description: "Code Review"
-port: 9797
-host: localhost
-prefix: "/"
-git_clone_enabled?: false
-log_file: "/var/apps/ginatra/logs/ginatra.log"
