@@ -3,6 +3,9 @@ Description=Reveal.js slide server
 
 [Service]
 ExecStart=/usr/local/bin/node /var/apps/revealjs/code/plugin/notes-server
+Restart=always
+User=root
+Group=root
 
 [Install]
 WantedBy=multi-user.target
