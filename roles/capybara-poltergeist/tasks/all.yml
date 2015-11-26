@@ -1,4 +1,6 @@
 ---
+- set_fact:
+    tidy_version: 5.1.25
 - apt:
     name=nodejs
     state=present
@@ -8,3 +10,11 @@
     name=phantomjs
     global=yes
 
+- file: state=directory path=/opt/build/tidy
+- get_url:
+    url=http://binaries.html-tidy.org/binaries/tidy-{{ tidy_version }}/tidy-{{ tidy_version }}-64bit.deb
+    dest=/opt/build/tidy/tidy-{{ tidy_version }}-64bit.deb
+
+- apt:
+    deb=/opt/build/tidy/tidy-{{ tidy_version }}-64bit.deb
+    state=installed
