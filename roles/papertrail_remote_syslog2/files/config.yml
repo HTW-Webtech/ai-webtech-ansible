@@ -1,0 +1,9 @@
+files:
+  - /var/log/syslog
+  - /var/log/auth.log
+  - /var/apps/admin/logs/*.log
+destination:
+  host: logs3.papertrailapp.com
+  port: 33585
+  protocol: tls
+

@@ -1,0 +1,51 @@
+---
+- set_fact:
+    remote_syslog_version: 0.15
+    remote_syslog_port: 33585
+
+- file: state=directory path=/opt/build/papertrail
+
+- get_url:
+    url=https://github.com/papertrail/remote_syslog2/releases/download/v{{ remote_syslog_version }}/remote_syslog_linux_amd64.tar.gz
+    dest=/opt/build/papertrail/remote-syslog2-{{ remote_syslog_version }}.tar.gz
+  register: remote_syslog_download
+
+- service:
+    name=remote_syslog2
+    state=stopped
+  when: remote_syslog_download.changed
+
+- shell: >
+    cd /opt/build/papertrail && rm -rf ./remote_syslog*; tar xzf ./remote-syslog2-*.tar.gz && cd remote_syslog && cp ./remote_syslog /usr/local/bin
+  when: remote_syslog_download.changed
+
+- copy:
+    src=config.yml
+    dest=/etc/remote_syslog2.yml
+  register: remote_syslog2_config
+
+- copy:
+    src=remote_syslog2.service
+    dest=/etc/systemd/system/remote_syslog2.service
+  register: remote_syslog2_service
+
+- service:
+    name=remote_syslog2
+    state=started
+  when: remote_syslog_download.changed
+
+- shell: >
+    systemctl daemon-reload
+  when: remote_syslog2_service.changed or remote_syslog2_config.changed
+
+- name: Configure outgoing traffic via firewall.sh
+  lineinfile:
+    line="iptables -A OUTPUT -p tcp --dport {{ remote_syslog_port }} -j ACCEPT"
+    dest=/root/firewall.sh
+    insertafter='iptables -P OUTPUT ACCEPT'
+    backup=yes
+  register: firewall_update
+
+- name: Apply firewall configuration
+  shell: sh /root/firewall.sh
+  when: firewall_update.changed

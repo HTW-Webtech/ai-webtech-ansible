@@ -1,0 +1,5 @@
+---
+- name: restart remote_syslog2
+  service:
+   name=remote_syslog2
+   state=restarted
