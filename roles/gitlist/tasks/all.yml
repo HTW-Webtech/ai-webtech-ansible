@@ -2,6 +2,7 @@
 - apt:
     name=php5-fpm
     state=installed
+    update_cache=yes
   register: php5_installed
 
 - service:
