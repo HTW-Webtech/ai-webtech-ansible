@@ -70,8 +70,8 @@
     dest=/etc/nginx/sites-enabled/gitlist.conf
   notify: reload nginx
 
-# Symlink all apps once
-- shell: ls /var/apps
+# Symlink all apps once. Exludes apps without a dash in its name
+- shell: ls /var/apps | grep -
   register: apps
 
 - file:
