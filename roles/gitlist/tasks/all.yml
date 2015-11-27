@@ -69,3 +69,14 @@
     src=/var/apps/gitlist/nginx/vhost.conf
     dest=/etc/nginx/sites-enabled/gitlist.conf
   notify: reload nginx
+
+# Symlink all apps once
+- shell: ls /var/apps
+  register: apps
+
+- file:
+    state=link
+    src=/var/apps/{{ item }}/code
+    dest=/var/apps/gitlist/git-repos/{{ item }}
+  with_items: apps.stdout_lines
+
