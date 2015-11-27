@@ -1,0 +1,71 @@
+---
+- apt:
+    name=php5-fpm
+    state=installed
+  register: php5_installed
+
+- service:
+    name=php5-fpm
+    state=started
+  when: php5_installed.changed
+
+- set_fact:
+    gitlist_version: 0.5.0
+
+- file: state=directory path=/opt/build/gitlist
+
+- get_url:
+    url=https://s3.amazonaws.com/gitlist/gitlist-{{ gitlist_version }}.tar.gz
+    dest=/opt/build/gitlist
+
+- shell: >
+    cd /opt/build/gitlist && test -e ./gitlist || tar xzf ./gitlist-{{ gitlist_version }}.tar.gz
+
+- file:
+    state=directory
+    path=/opt/build/gitlist/gitlist/cache
+    mode=0777
+
+- file:
+    state=directory
+    path={{ item }}
+  with_items:
+    - /var/apps/gitlist
+    - /var/apps/gitlist/nginx
+    - /var/apps/gitlist/logs
+    - /var/apps/gitlist/git-repos
+
+- file:
+    state=link
+    src=/opt/build/gitlist/gitlist
+    dest=/var/apps/gitlist/code
+
+- copy:
+    src=config.ini
+    dest=/opt/build/gitlist/gitlist/config.ini
+
+- file:
+    state=absent
+    path=/opt/build/gitlist/gitlist/config.ini-example
+
+- copy:
+    src=nginx/vhost.conf
+    dest=/var/apps/gitlist/nginx/vhost.conf
+  register: vhost_conf
+
+- service:
+    name=nginx
+    state=reloaded
+  when: vhost_conf.changed
+
+# Setup git repos
+- file:
+    state=link
+    src=/var/apps/admin/code
+    dest=/var/apps/gitlist/git-repos/admin-app
+
+- file:
+    state=link
+    src=/var/apps/gitlist/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/gitlist.conf
+  notify: reload nginx

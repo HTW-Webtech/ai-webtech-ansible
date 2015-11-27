@@ -13,6 +13,7 @@
     - jenkins
     - munin
     - file-hosting
+    - gitlist
     - portal-revealjs
     - capybara-poltergeist
     - papertrail_remote_syslog2
