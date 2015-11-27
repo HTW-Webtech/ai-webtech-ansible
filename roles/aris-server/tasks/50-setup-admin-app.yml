@@ -48,8 +48,8 @@
 - include: ../../aris-cron/tasks/80-update-app-status.yml
 
 - template:
-    src=aris/nginx/default_env_vars.conf.j2
-    dest=/var/apps/admin/nginx/extras/default_env_vars.conf
+    src=aris/nginx/ssl.conf.j2
+    dest=/var/apps/admin/nginx/extras/ssl.conf
     owner=admin
     group=admin
 
