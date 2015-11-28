@@ -18,19 +18,13 @@ Ensure `ansible`, `vagrant` and `ruby` are available to your shell.
 
 
 # TODOS
-- [ ] Jenkins job: bundle install > /dev/null 2>&1
 - [ ] Use ansible.bootstrap-remote-user repo instead of custom code
-- [ ] Add description
 - [ ] Jenkins Cron: Currently I enforce a jenkins restart after each job modifaction.
       A much better approach would be to just reload the job configuration files.
 
-## Essential
-- [ ] HTTPS-Setup for Web-Server. HTTPs Access only
-
-## Bugs
-waiting for them ;)
-
 ## Done
+- [x] Jenkins job: bundle install > /dev/null 2>&1
+- [x] HTTPS-Setup for Web-Server. HTTPs Access only
 - [x] Fix issues with lots of users (Performance improved by introducing a processing file for all app/jenkins jobs)
 - [x] Rakefile to update aris-cron on dev and prod (New command: `rake update_cron` and `rake prod:update_cron`
 - [x] Finish capybara-poltergeist setup
