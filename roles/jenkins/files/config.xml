@@ -1,46 +1,78 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
+  <version>1.0</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:aris</permission>
     <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:aris</permission>
     <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:aris</permission>
     <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:aris</permission>
     <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:jenkins</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:aris</permission>
     <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:jenkins</permission>
+    <permission>hudson.model.Computer.Build:aris</permission>
     <permission>hudson.model.Computer.Build:jenkins</permission>
+    <permission>hudson.model.Computer.Configure:aris</permission>
     <permission>hudson.model.Computer.Configure:jenkins</permission>
+    <permission>hudson.model.Computer.Connect:aris</permission>
     <permission>hudson.model.Computer.Connect:jenkins</permission>
+    <permission>hudson.model.Computer.Create:aris</permission>
     <permission>hudson.model.Computer.Create:jenkins</permission>
+    <permission>hudson.model.Computer.Delete:aris</permission>
     <permission>hudson.model.Computer.Delete:jenkins</permission>
+    <permission>hudson.model.Computer.Disconnect:aris</permission>
     <permission>hudson.model.Computer.Disconnect:jenkins</permission>
+    <permission>hudson.model.Hudson.Administer:aris</permission>
     <permission>hudson.model.Hudson.Administer:jenkins</permission>
+    <permission>hudson.model.Hudson.ConfigureUpdateCenter:aris</permission>
     <permission>hudson.model.Hudson.ConfigureUpdateCenter:jenkins</permission>
-    <permission>hudson.model.Hudson.Read:jenkins</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Hudson.Read:aris</permission>
+    <permission>hudson.model.Hudson.Read:jenkins</permission>
+    <permission>hudson.model.Hudson.RunScripts:aris</permission>
     <permission>hudson.model.Hudson.RunScripts:jenkins</permission>
+    <permission>hudson.model.Hudson.UploadPlugins:aris</permission>
     <permission>hudson.model.Hudson.UploadPlugins:jenkins</permission>
     <permission>hudson.model.Item.Build:anonymous</permission>
+    <permission>hudson.model.Item.Build:aris</permission>
     <permission>hudson.model.Item.Build:jenkins</permission>
+    <permission>hudson.model.Item.Cancel:aris</permission>
     <permission>hudson.model.Item.Cancel:jenkins</permission>
+    <permission>hudson.model.Item.Configure:aris</permission>
     <permission>hudson.model.Item.Configure:jenkins</permission>
+    <permission>hudson.model.Item.Create:aris</permission>
     <permission>hudson.model.Item.Create:jenkins</permission>
+    <permission>hudson.model.Item.Delete:aris</permission>
     <permission>hudson.model.Item.Delete:jenkins</permission>
+    <permission>hudson.model.Item.Discover:aris</permission>
     <permission>hudson.model.Item.Discover:jenkins</permission>
-    <permission>hudson.model.Item.Read:jenkins</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.Read:aris</permission>
+    <permission>hudson.model.Item.Read:jenkins</permission>
+    <permission>hudson.model.Item.Workspace:aris</permission>
     <permission>hudson.model.Item.Workspace:jenkins</permission>
+    <permission>hudson.model.Run.Delete:aris</permission>
     <permission>hudson.model.Run.Delete:jenkins</permission>
+    <permission>hudson.model.Run.Update:aris</permission>
     <permission>hudson.model.Run.Update:jenkins</permission>
+    <permission>hudson.model.View.Configure:aris</permission>
     <permission>hudson.model.View.Configure:jenkins</permission>
+    <permission>hudson.model.View.Create:aris</permission>
     <permission>hudson.model.View.Create:jenkins</permission>
+    <permission>hudson.model.View.Delete:aris</permission>
     <permission>hudson.model.View.Delete:jenkins</permission>
+    <permission>hudson.model.View.Read:aris</permission>
     <permission>hudson.model.View.Read:jenkins</permission>
+    <permission>hudson.scm.SCM.Tag:aris</permission>
     <permission>hudson.scm.SCM.Tag:jenkins</permission>
   </authorizationStrategy>
-  <securityRealm class="hudson.security.PAMSecurityRealm" plugin="pam-auth@1.1">
+  <securityRealm class="hudson.security.PAMSecurityRealm" plugin="pam-auth@1.2">
     <serviceName>jenkins</serviceName>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
