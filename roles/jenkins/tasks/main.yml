@@ -1,10 +1,11 @@
 ---
-- include: 10-install-jenkins.yml        tags=jenkins,install
-- include: 20-configure-jenkins.yml      tags=jenkins,configuration
-- include: 30-configure-jenkins-cli.yml  tags=jenkins,jenkins-plugins
-- include: 40-install-plugins.yml        tags=jenkins,jenkins-plugins
+- include: 10-install-jenkins.yml                 tags=jenkins,install
+- include: 20-configure-jenkins.yml               tags=jenkins,configuration
+- include: 30-configure-jenkins-cli.yml           tags=jenkins,jenkins-plugins
+- include: 40-install-plugins.yml                 tags=jenkins,jenkins-plugins
   vars:
     ansible_ssh_user: jenkins
-- include: 50-configure-nginx-proxy.yml  tags=jenkins,nginx
-- include: 60-enable-chruby-access.yml   tags=jenkins,ansible-cron
-- include: 70-enable-jenkins-cron.yml    tags=jenkins,ansible-cron
+- include: 50-configure-nginx-proxy.yml           tags=jenkins,nginx
+- include: 60-enable-chruby-access.yml            tags=jenkins,ansible-cron
+- include: 70-enable-jenkins-cron.yml             tags=jenkins,ansible-cron
+- include: 80-enable-jenkins-config-reloading.yml tags=jenkins,ansible-cron

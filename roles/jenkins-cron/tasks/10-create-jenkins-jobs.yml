@@ -18,9 +18,10 @@
     force=yes
   with_dict: '{{ jenkins_jobs }}'
 
-- name: Reload jenkins configuration
-  sudo: no
-  become_user: jenkins
-  command: >
-    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-configuration
+- name: Trigger jenkins configuration reload
+  file:
+    state=touch
+    dest=/var/lib/jenkins/.reload-configuration
+    owner=jenkins
+    group=jenkins
 
