@@ -49,6 +49,12 @@
     state=absent
     path=/opt/build/gitlist/gitlist/config.ini-example
 
+- include_vars: passwd.yml
+
+- template:
+    src=nginx/passwd.j2
+    dest=/var/apps/gitlist/nginx/passwd
+
 - copy:
     src=nginx/vhost.conf
     dest=/var/apps/gitlist/nginx/vhost.conf
@@ -72,12 +78,12 @@
   notify: reload nginx
 
 # Symlink all apps once. Exludes apps without a dash in its name
-- shell: ls /var/apps | grep -
-  register: apps
-
-- file:
-    state=link
-    src=/var/apps/{{ item }}/code
-    dest=/var/apps/gitlist/git-repos/{{ item }}
-  with_items: apps.stdout_lines
+# - shell: ls /var/apps | grep -
+#   register: apps
+#
+# - file:
+#     state=link
+#     src=/var/apps/{{ item }}/code
+#     dest=/var/apps/gitlist/git-repos/{{ item }}
+#   with_items: apps.stdout_lines
 

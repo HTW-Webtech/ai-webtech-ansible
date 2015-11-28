@@ -3,3 +3,6 @@
 
 # Ignore all temp vagrant files
 .vagrant
+
+# Ignore .vault-password
+.vault-password
