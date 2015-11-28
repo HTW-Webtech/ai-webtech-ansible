@@ -1,7 +1,4 @@
 ---
-- name: Debug vars
-  debug: msg={{ jenkins_jobs }}
-
 - name: Create job dir
   file:
     state=directory
@@ -9,7 +6,7 @@
     owner=jenkins
     group=jenkins
     mode=0755
-  with_dict: '{{ jenkins_jobs }}'
+  with_dict: jenkins_jobs
 
 - name: Create config for job
   template:
@@ -19,12 +16,12 @@
     group=jenkins
     mode=0644
     force=yes
-  with_dict: '{{ jenkins_jobs }}'
+  with_dict: jenkins_jobs
 
-- name: Reload job with CLI
+- name: Reload jenkins configuration
   sudo: no
   become_user: jenkins
   command: >
-    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-job {{ item.key }}
-  with_dict: '{{ jenkins_jobs }}'
+    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-configuration
+  with_dict: jenkins_jobs
 
