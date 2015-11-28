@@ -35,3 +35,10 @@
     owner=aris
     group=aris
     recurse=yes
+
+- name: Create fake .vault-password file
+  copy:
+    src=aris/.vault-password
+    dest=/opt/aris/code/ansible/.vault-password
+    owner=aris
+    group=aris
