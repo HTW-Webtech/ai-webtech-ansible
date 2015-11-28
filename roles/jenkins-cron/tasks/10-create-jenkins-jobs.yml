@@ -23,5 +23,4 @@
   become_user: jenkins
   command: >
     java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-configuration
-  with_dict: jenkins_jobs
 
