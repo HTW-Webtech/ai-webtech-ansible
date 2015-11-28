@@ -20,5 +20,12 @@
     mode=0644
     force=yes
   with_dict: '{{ jenkins_jobs }}'
-  notify: restart jenkins
+  # notify: reload jenkins
+
+- name: Reload job with CLI
+  sudo: no
+  become_user: jenkins
+  command: >
+    java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-job {{ item.key }}
+  with_dict: '{{ jenkins_jobs }}'
 
