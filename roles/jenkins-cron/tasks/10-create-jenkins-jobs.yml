@@ -20,7 +20,6 @@
     mode=0644
     force=yes
   with_dict: '{{ jenkins_jobs }}'
-  # notify: reload jenkins
 
 - name: Reload job with CLI
   sudo: no
