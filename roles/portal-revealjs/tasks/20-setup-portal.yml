@@ -8,6 +8,7 @@
     - /var/apps/portal/public
     - /var/apps/portal/logs
     - /var/apps/portal/nginx
+    - /var/apps/portal/nginx/extras
 
 - copy:
     src=nginx/portal-vhost.conf
@@ -15,6 +16,28 @@
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
   notify: reload nginx
+
+- file:
+    state=link
+    src=/etc/letsencrypt/live/portal.htw-webtech.com
+    dest=/var/apps/portal/nginx/letsencrypt
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+  register: letsencrypt_files
+  ignore_errors: yes
+
+- copy:
+    src=nginx/portal-vhost-ssl.conf
+    dest=/var/apps/portal/nginx/extras/ssl.conf
+    owner={{ ansible_ssh_user }}
+    group={{ ansible_ssh_user }}
+  when: letsencrypt_files.msg is not defined
+  notify: reload nginx
+
+- file:
+    state=absent
+    path=/var/apps/portal/nginx/extras/ssl.conf
+  when: letsencrypt_files.msg is defined
 
 - file:
     state=link
