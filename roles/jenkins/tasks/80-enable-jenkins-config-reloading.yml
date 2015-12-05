@@ -2,7 +2,7 @@
 - cron:
     name="Jenkins config reloading"
     minute='*/1'
-    job="cd /var/lib/jenkins && test -e .reload-configuration && java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-configuration && rm .reload-configuration"
+    job="cd /var/lib/jenkins && test -e .reload-configuration && /usr/bin/java -jar /opt/jenkins/cli.jar -s http://localhost:8080/ reload-configuration && rm .reload-configuration"
     user=jenkins
     state=present
     backup=yes
