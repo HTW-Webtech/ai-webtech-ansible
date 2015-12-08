@@ -12,7 +12,10 @@ server {
     add_header Cache-Control public;
   }
 
+  # TODO: Disable all caching since it seem to lead to issues with. Need to
+  # investigate further.
   location / {
+    etag off;
     add_header Cache-Control no-cache;
   }
 
