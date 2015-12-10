@@ -41,14 +41,9 @@
     dest=/var/apps/revealjs/revealjs.service
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}
-
-- file:
-    state=link
-    src=/var/apps/revealjs/revealjs.service
-    dest=/etc/systemd/system/revealjs.service
   register: revealjs_service
 
 - shell: >
-    systemctl start revealjs && systemctl daemon-reload
+    systemctl enable /var/apps/revealjs/revealjs.service && systemctl start revealjs && systemctl daemon-reload
   when: revealjs_service.changed
 
