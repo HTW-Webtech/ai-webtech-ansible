@@ -5,6 +5,7 @@
     app_pg_password: "{{ lookup('env','APP_POSTGRES_PASSWORD') }}"
     app_sendgrid_user: "{{ lookup('env','APP_SENDGRID_USER') }}"
     app_sendgrid_password: "{{ lookup('env','APP_SENDGRID_PASSWORD') }}"
+    app_skylight_authentication: "{{ lookup('env','APP_SKYLIGHT_AUTHENTICATION') }}"
     app_rails_env: "{{ rails_env }}"
 
 - user:
