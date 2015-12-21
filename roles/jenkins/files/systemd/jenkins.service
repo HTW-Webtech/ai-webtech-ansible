@@ -1,0 +1,20 @@
+# Source: https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Unix+daemon
+[Unit]
+Description=Jenkins Service
+After=network.target
+Requires=network.target
+
+[Service]
+Environment=JENKINS_HOME=/var/lib/jenkins
+# TODO: Fix ruby access for jenkins user
+Environment=GEM_PATH=/var/lib/jenkins/.gem/ruby/2.2.2:/opt/rubies/ruby-2.2.2/lib/ruby/gems/2.2.0
+Environment=GEM_ROOT=/opt/rubies/ruby-2.2.2/lib/ruby/gems/2.2.0
+Environment=PATH=/var/lib/jenkins/.gem/ruby/2.2.2/bin:/opt/rubies/ruby-2.2.2/lib/ruby/gems/2.2.0/bin:/opt/rubies/ruby-2.2.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+ExecStart=/usr/bin/java -Djava.awt.headless=true -jar /usr/share/jenkins/jenkins.war --webroot=/var/cache/jenkins/war --httpPort=8080
+User=jenkins
+Restart=always
+RestartSec=20
+
+[Install]
+WantedBy=multi-user.target
