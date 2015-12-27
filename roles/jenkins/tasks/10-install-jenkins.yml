@@ -12,7 +12,7 @@
 
 - name: Install the jenkins package
   apt:
-    name=jenkins=1.638
+    name=jenkins=1.643
     state=present
 
 - copy:
