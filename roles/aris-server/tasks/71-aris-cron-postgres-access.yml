@@ -1,10 +1,6 @@
 ---
-- name: Ensure aris user exists and is allowed to create new user and databases
-  sudo: no
+- sudo: no
   postgresql_user:
-    db=aris
     name={{ lookup('env','ARIS_POSTGRES_LOGIN') }}
     password={{ lookup('env','ARIS_POSTGRES_PASSWORD') }}
-    priv=ALL
     role_attr_flags=SUPERUSER
-
