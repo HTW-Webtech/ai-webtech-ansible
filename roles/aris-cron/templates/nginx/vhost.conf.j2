@@ -28,5 +28,6 @@ server {
   # Passenger config
   passenger_enabled on;
   passenger_app_root /var/apps/{{ item.key }}/code;
+  passenger_app_env {{ rails_env }};
   passenger_ruby /opt/rubies/{{ chruby_ruby_version }}/bin/ruby;
 }
