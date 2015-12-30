@@ -9,8 +9,8 @@
     - /var/apps/portal/logs
     - /var/apps/portal/nginx
 
-- copy:
-    src=nginx/portal-vhost.conf
+- template:
+    src=nginx/portal-vhost.conf.j2
     dest=/var/apps/portal/nginx/vhost.conf
     owner={{ ansible_ssh_user }}
     group={{ ansible_ssh_user }}

@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name revealjs.htw-webtech.dev revealjs.htw-webtech.com;
+  server_name revealjs.{{ base_domain }};
 
   access_log /var/apps/revealjs/logs/nginx-access.log;
   error_log  /var/apps/revealjs/logs/nginx-error.log;

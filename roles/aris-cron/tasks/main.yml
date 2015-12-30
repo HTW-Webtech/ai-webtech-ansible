@@ -3,7 +3,7 @@
     apps_file_path: /opt/aris/config/apps.yml
     apps_processing_file_path: /opt/aris/config/apps.processing.yml
 
-- include: 00-fail-when-running.yml
-- include: 00-prepare-processing-file.yml
-- include: 01-create-user-apps.yml
-- include: 99-archive-processing-file.yml
+- include: fail-when-running.yml
+- include: prepare-processing-file.yml
+- include: create-user-apps.yml
+- include: archive-processing-file.yml

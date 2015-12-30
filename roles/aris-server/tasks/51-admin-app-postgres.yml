@@ -1,0 +1,11 @@
+---
+- sudo: no
+  postgresql_db: name=admin
+
+- sudo: no
+  postgresql_user:
+    name=admin
+    db=admin
+    password={{ lookup('env','APP_POSTGRES_PASSWORD') }}
+    priv=ALL
+    role_attr_flags=SUPERUSER

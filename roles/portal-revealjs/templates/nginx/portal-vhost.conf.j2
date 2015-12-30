@@ -1,0 +1,12 @@
+server {
+  listen 80;
+  server_name portal.{{ base_domain }};
+  access_log /var/apps/portal/logs/nginx-access.log;
+  error_log /var/apps/portal/logs/nginx-error.log;
+
+  location / {
+    gzip on;
+    add_header Access-Control-Allow-Origin *;
+    alias /var/apps/portal/public/;
+  }
+}

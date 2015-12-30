@@ -19,6 +19,6 @@
 
 - name: Enable default ruby {{ chruby_ruby_version }} via ~/.bashrc.ruby-version file
   template:
-    src=user-chruby/.bashrc.ruby-version
+    src=user-chruby/.bashrc.ruby-version.j2
     dest="~{{ item.key }}/.bashrc.ruby-version"
   with_dict: "{{ aris_apps }}"

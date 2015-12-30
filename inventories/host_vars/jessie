@@ -1,3 +1,5 @@
 ---
 rails_env: staging
-jenkins_url: http://jenkins.htw-webtech.dev:8081
+base_domain: jessie
+jenkins_url: http://jenkins.jessie
+ssl_enabled: false

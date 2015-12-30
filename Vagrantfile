@@ -7,6 +7,13 @@ remote_user = ENV['ANSIBLE_REMOTE_USER'] or raise("You need to set ANSIBLE_REMOT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'jessie'
+  config.hostsupdater.aliases = %w(
+    portal.jessie
+    jenkins.jessie
+    admin.jessie
+    files.jessie
+    gitlist.jessie
+  )
   config.vm.box = 'jessie'
 
   config.vm.network :private_network, ip: '192.168.3.10'

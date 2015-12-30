@@ -15,7 +15,7 @@
 
 - name: Configure proper git post-update hook
   template:
-    src=git-hooks/post-update
+    src=git-hooks/post-update.j2
     dest=/var/apps/{{ item.key }}/code/.git/hooks/post-update
     owner={{ item.key }}
     group={{ item.key }}

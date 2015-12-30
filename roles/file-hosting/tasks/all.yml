@@ -3,7 +3,7 @@
     state=directory
     path=/var/www/files
 
-- copy:
-    src=nginx/vhost.conf
+- template:
+    src=nginx/vhost.conf.j2
     dest=/etc/nginx/sites-enabled/file-hosting.conf
   notify: reload nginx

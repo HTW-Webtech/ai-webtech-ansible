@@ -55,8 +55,8 @@
     src=nginx/passwd.j2
     dest=/var/apps/gitlist/nginx/passwd
 
-- copy:
-    src=nginx/vhost.conf
+- template:
+    src=nginx/vhost.conf.j2
     dest=/var/apps/gitlist/nginx/vhost.conf
   register: vhost_conf
 

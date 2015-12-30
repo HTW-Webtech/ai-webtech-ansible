@@ -21,7 +21,7 @@
   notify: restart munin-node
 
 - name: Copy nginx vhost conf to /etc/munin/nginx-vhost.conf
-  copy:
+  template:
     src=nginx/vhost.conf
     dest=/etc/munin/nginx-vhost.conf
   notify: reload nginx

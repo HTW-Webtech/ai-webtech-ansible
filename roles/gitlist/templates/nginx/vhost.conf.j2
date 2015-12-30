@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name gitlist.htw-webtech.dev gitlist.htw-webtech.com;
+  server_name gitlist.{{ base_domain }};
 
   access_log /var/apps/gitlist/logs/nginx-access.log;
   error_log /var/apps/gitlist/logs/nginx-error.log;

@@ -1,7 +1,7 @@
 ---
 - name: Create or update .env file in app-directory
   template:
-    src=user-app/.env
+    src=user-app/.env.j2
     dest=/var/apps/{{ item.key }}/code/.env
     owner={{ item.key }}
     group={{ item.key }}

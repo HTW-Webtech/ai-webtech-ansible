@@ -1,6 +1,6 @@
 ---
 - name: Create nginx vhost for jenkins
-  copy:
+  template:
     src=nginx/vhost.conf
     dest=/var/lib/jenkins/nginx-vhost.conf
 
