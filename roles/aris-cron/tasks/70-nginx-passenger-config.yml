@@ -1,4 +1,7 @@
 ---
+- set_fact:
+    base_domain: "{{ base_domain }}"
+
 - name: Create nginx-vhost-config for user app
   template:
     src=nginx/vhost.conf.j2
