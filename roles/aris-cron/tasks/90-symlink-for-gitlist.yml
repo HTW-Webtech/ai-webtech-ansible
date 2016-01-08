@@ -1,0 +1,5 @@
+- file:
+	  state=link
+	  src=/var/apps/{{ item.key }}/code
+	  dest=/var/apps/gitlist/git-repos/{{ item.key }}
+  with_dict: "{{ aris_apps }}"
