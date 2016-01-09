@@ -2,6 +2,12 @@
 export ANSIBLE_REMOTE_USER=`whoami`
 export PATH=./bin:$PATH
 
+# Postfix Relay config
+export POSTFIX_RELAY_HOST=
+export POSTFIX_RELAY_PORT=
+export POSTFIX_RELAY_USER=
+export POSTFIX_RELAY_PASSWORD=
+
 # Aris setup config
 export ARIS_SETUP_PUB_SSH_KEY=
 
@@ -11,15 +17,20 @@ export ARIS_POSTGRES_PASSWORD=
 
 # Rails Web-UI Configuration
 export APP_SECRET_KEY_BASE=
-export APP_POSTGRES_DATABASE_NAME=admin
-export APP_POSTGRES_LOGIN=admin
 export APP_POSTGRES_PASSWORD=
-export APP_ADMIN_EMAIL=
 export APP_ADMIN_PASSWORD=
-export APP_ADMIN_PUB_SSH_KEY=
-export APP_GIT_SSH_PUBLIC_HOST=
-export APP_JENKINS_HOSTNAME=
+export APP_SENDGRID_USER=
+export APP_SENDGRID_PASSWORD=
+export APP_SKYLIGHT_AUTHENTICATION=
+
+# Papertrail config
+export PAPERTRAIL_HOST=
+export PAPERTRAIL_PORT=
 
 # Jenkins config
-export JENKINS_URL=
-export JENKINS_USER_PASSWORD= # Login to jenins via unix credentials
+export JENKINS_USER_PASSWORD=
+export JENKINS_ADMIN_EMAIL=
+export JENKINS_MAILER_SMTP_AUTH_USERNAME=
+export JENKINS_MAILER_SMTP_AUTH_PASSWORD=
+export JENKINS_MAILER_REPLY_TO=
+export JENKINS_MAILER_SMTP_HOST=
