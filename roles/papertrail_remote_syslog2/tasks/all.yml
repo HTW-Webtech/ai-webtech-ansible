@@ -1,7 +1,8 @@
 ---
 - set_fact:
     remote_syslog_version: 0.15
-    remote_syslog_port: 33585
+    remote_syslog_host: "{{ lookup('env', 'PAPERTRAIL_HOST' }}"
+    remote_syslog_port: "{{ lookup('env', 'PAPERTRAIL_PORT' }}"
 
 - file: state=directory path=/opt/build/papertrail
 
@@ -19,8 +20,8 @@
     cd /opt/build/papertrail && rm -rf ./remote_syslog*; tar xzf ./remote-syslog2-*.tar.gz && cd remote_syslog && cp ./remote_syslog /usr/local/bin
   when: remote_syslog_download.changed
 
-- copy:
-    src=config.yml
+- template:
+    src=config.yml.j2
     dest=/etc/remote_syslog2.yml
   register: remote_syslog2_config
 

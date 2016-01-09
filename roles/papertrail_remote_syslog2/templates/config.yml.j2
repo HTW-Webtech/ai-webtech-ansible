@@ -4,7 +4,7 @@ files:
   - /var/apps/admin/logs/*.log
   - /opt/aris/logs/*.log
 destination:
-  host: logs3.papertrailapp.com
-  port: 33585
+  host: {{ remote_syslog_host }}
+  port: {{ remote_syslog_port }}
   protocol: tls
 
