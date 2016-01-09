@@ -36,7 +36,7 @@
   when: remote_syslog_download.changed
 
 - shell: >
-    systemctl daemon-reload
+    systemctl restart remote_syslog2
   when: remote_syslog2_service.changed or remote_syslog2_config.changed
 
 - name: Configure outgoing traffic via firewall.sh
