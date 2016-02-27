@@ -2,4 +2,3 @@
 rails_env: staging
 base_domain: jessie
 jenkins_url: http://jenkins.jessie
-ssl_enabled: false

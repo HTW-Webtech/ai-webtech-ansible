@@ -50,15 +50,6 @@
 - include: ../../aris-cron/tasks/70-nginx-passenger-config.yml
 - include: ../../aris-cron/tasks/80-update-app-status.yml
 
-# TODO: Disabled for local dev. Another approach would be
-# to enable SSL and provide default cert/pem files.
-- copy:
-    src=aris/nginx/ssl.conf
-    dest=/var/apps/admin/nginx/extras/ssl.conf
-    owner=admin
-    group=admin
-  when: ssl_enabled
-
 - template:
     src=aris/rails/.env.j2
     dest=/var/apps/admin/code/.env

@@ -2,4 +2,3 @@
 rails_env: production
 base_domain: htw-webtech.com
 jenkins_url: http://jenkins.htw-webtech.com
-ssl_enabled: true
