@@ -1,0 +1,25 @@
+server {
+  listen 80;
+  server_name admin.{{ base_domain }};
+
+  # Tell Nginx and Passenger where your app's 'public' directory is
+  root /var/apps/admin/public;
+
+  # Enable gzip and proper cache settings for assets
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  include /var/apps/admin/nginx/extras/*.conf;
+
+  access_log /var/apps/admin/logs/nginx-access.log;
+  error_log  /var/apps/admin/logs/nginx-error.log;
+
+  # Passenger config
+  passenger_enabled on;
+  passenger_app_root /var/apps/admin/code;
+  passenger_app_env {{ rails_env }};
+  passenger_ruby /opt/rubies/{{ chruby_ruby_version }}/bin/ruby;
+}

@@ -1,0 +1,31 @@
+---
+- user:
+    name=admin
+    createhome=yes
+    shell=/bin/bash
+    append=yes
+    groups=ssh-clients,aris
+    state=present
+
+- name: Chruby access
+  template:
+    src=user/.bashrc.j2
+    dest=~admin/.bashrc
+    owner=admin
+    group=admin
+    mode=u=rw,g=r,o=
+
+- file:
+    path=~admin/.ssh
+    state=directory
+    owner=admin
+    group=admin
+    mode=u=rwx,g=rx,o=
+
+- template:
+    src=ssh/authorized_keys.j2
+    dest=~admin/.ssh/authorized_keys
+    owner=admin
+    group=admin
+    mode=u=rw,g=r,o=
+

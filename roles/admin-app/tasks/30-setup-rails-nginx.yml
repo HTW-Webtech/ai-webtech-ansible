@@ -1,0 +1,46 @@
+---
+- set_fact:
+    app_secret_key_base: "{{ lookup('env','APP_SECRET_KEY_BASE') }}"
+    app_admin_password: "{{ lookup('env','APP_ADMIN_PASSWORD') }}"
+    app_pg_password: "{{ lookup('env','APP_POSTGRES_PASSWORD') }}"
+    app_sendgrid_user: "{{ lookup('env','APP_SENDGRID_USER') }}"
+    app_sendgrid_password: "{{ lookup('env','APP_SENDGRID_PASSWORD') }}"
+    app_skylight_authentication: "{{ lookup('env','APP_SKYLIGHT_AUTHENTICATION') }}"
+    app_rails_env: "{{ rails_env }}"
+
+- name: Create users app directory structure
+  file:
+    state=directory
+    path={{ item }}
+    mode=ug+rwx,o=rx
+    owner=admin
+    group=admin
+  with_items:
+    - /var/apps/admin
+    - /var/apps/admin/code
+    - /var/apps/admin/logs
+    - /var/apps/admin/nginx
+    - /var/apps/admin/nginx/extras
+
+- name: Write .env for rails app
+  template:
+    src=rails/.env.j2
+    dest=/var/apps/admin/code/.env
+    owner=admin
+    group=admin
+
+- name: Create nginx vhost-config for user app
+  template:
+    src=nginx/vhost.conf.j2
+    dest=/var/apps/admin/nginx/vhost.conf
+    owner=admin
+    group=admin
+    mode=ug+rwx
+  notify: reload nginx
+
+- name: Symlink app in /etc/nginx/sites-enabled
+  file:
+    state=link
+    src=/var/apps/admin/nginx/vhost.conf
+    dest=/etc/nginx/sites-enabled/admin-app.conf
+  notify: reload nginx

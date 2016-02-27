@@ -1,0 +1,6 @@
+---
+- include: 10-setup-base.yml              tags=admin-app
+- include: 20-setup-postgres-access.yml   tags=admin-app
+  vars:
+    ansible_ssh_user: postgres
+- include: 30-setup-rails-nginx.yml       tags=admin-app

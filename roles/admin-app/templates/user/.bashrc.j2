@@ -1,0 +1,9 @@
+# Load chruby
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+chruby {{ chruby_ruby_version }}
+
+# Load apps .env if existant
+if [ -e /var/apps/admin/code/.env ]; then
+  source /var/apps/admin/code/.env
+fi
