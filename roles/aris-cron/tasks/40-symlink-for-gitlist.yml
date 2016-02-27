@@ -1,3 +1,4 @@
+---
 - file:
     state=link
     src=/var/apps/{{ item.key }}/code

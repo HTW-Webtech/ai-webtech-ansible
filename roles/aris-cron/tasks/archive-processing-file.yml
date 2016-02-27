@@ -1,2 +1,3 @@
+---
 - shell: >
     mv {{ apps_processing_file_path }} /opt/aris/config/archive/apps.processed-at-$(date +"%Y-%m-%d-%H-%M-%S").yml

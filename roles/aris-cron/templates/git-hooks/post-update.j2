@@ -1,57 +1,11 @@
 #!/bin/bash
-# Reset all local changes
+# Reset local changes
 cd ..
 unset GIT_DIR GIT_WORK_TREE
 git reset --hard
 git checkout .
 
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-source /home/{{ item.key }}/.bashrc.ruby-version
-source /var/apps/{{ item.key }}/code/.env
-
-if [ -e config/application.rb ]; then
-  echo "Detected config/application.rb.."
-  echo "I guess you are running a Rails app"
-
-  # Rails app support
-  export RAILS_ENV=production
-  which bundle || gem install bundler
-
-  if [ -e Gemfile.lock ]; then
-    echo "Found your Gemfile.lock. Installing gems (excluding development and test)"
-    bundle install --deployment --without development test
-  else
-    echo "---- !WARNING! ----"
-    echo "You DO NOT have a Gemfile.lock in your git-repo. This is highly problematic and"
-    echo "should be fixed, unless you are a windows user.. Then this is your only chance"
-    echo "to deploy rails apps to aris :'("
-    echo "---- !WARNING! ----"
-    bundle install --no-deployment
-  fi
-
-  bundle exec rake assets:precompile db:migrate
-
-  rm -rf /var/apps/{{ item.key }}/public
-  if [ -e /var/apps/{{ item.key }}/code/public ]; then
-    echo "Public dir in .git repo detected. Using it in place of the default public dir"
-    ln -sf /var/apps/{{ item.key }}/code/public /var/apps/{{ item.key }}/
-  else
-    echo "No Public dir in .git repo found. Using the default public dir."
-    ln -fs /var/apps/{{ item.key }}/default-public /var/apps/{{ item.key }}/public
-  fi
-
-  # Symlink code/log/production.log if it exists
-  if [ -e /var/apps/{{ item.key }}/code/log/production.log ]; then
-    ln -fs /var/apps/{{ item.key }}/code/log/production.log /var/apps/{{ item.key }}/logs/rails.log
-  fi
-
-  passenger-config restart-app /var/apps/{{ item.key }}/code
-else
-  echo "No configurations detected."
-  echo "Serving files from code repository."
-  # HTML only app support
-  rm -rf /var/apps/{{ item.key }}/public
-  ln -sf /var/apps/{{ item.key }}/code /var/apps/{{ item.key }}/public
-fi
+# HTML only app support
+rm -rf /var/apps/{{ item.key }}/public
+ln -sf /var/apps/{{ item.key }}/code /var/apps/{{ item.key }}/public
 

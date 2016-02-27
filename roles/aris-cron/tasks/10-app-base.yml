@@ -1,4 +1,35 @@
 ---
+- name: Ensure OS user account exists (access to git-shell limited)
+  user:
+    name={{ item.key }}
+    createhome=yes
+    shell=/usr/bin/git-shell
+    state=present
+    groups=ssh-clients
+    append=yes
+  with_dict: "{{ aris_apps }}"
+
+- name: Create .ssh dir for users
+  file:
+    path=~{{ item.key }}/.ssh
+    state=directory
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+  with_dict: "{{ aris_apps }}"
+
+- name: Configure public ssh keys .ssh/authorized-keys
+  lineinfile:
+    line={{ item.value.ssh_key }}
+    dest=~{{ item.key }}/.ssh/authorized_keys
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=u=rx,g=,o=
+    state=present
+    create=yes
+  when: item.value.ssh_key is defined
+  with_dict: "{{ aris_apps }}"
+
 - name: Create users app dir (git-repo)
   file:
     state=directory
@@ -30,7 +61,7 @@
 - name: Create an empty default public-dir
   file:
     state=directory
-    path=/var/apps/{{ item.key }}/default-public
+    path=/var/apps/{{ item.key }}/default
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
@@ -38,8 +69,8 @@
 
 - name: Create a basic hello world page in the default public dir
   template:
-    src=nginx/default-public/index.html.j2
-    dest=/var/apps/{{ item.key }}/default-public/index.html
+    src=nginx/default/index.html.j2
+    dest=/var/apps/{{ item.key }}/default/index.html
     mode=ug+rwx,o=rx
     owner={{ item.key }}
     group={{ item.key }}
@@ -50,23 +81,26 @@
   shell: 'cd /var/apps/{{ item.key }}; test -e public || ln -sf default-public public && chown -R {{ item.key }}:{{ item.key }} public'
   with_dict: "{{ aris_apps }}"
 
-- name: Create nginx config dir for user app
-  file:
-    state=directory
-    path=/var/apps/{{ item.key }}/nginx
-    recurse=yes
-    mode=ug+rwx,o=rx
-    owner={{ item.key }}
-    group={{ item.key }}
+- name: Initialize empty git repository with basic config if not existant
+  shell: stat .git || git init && git config receive.denyCurrentBranch ignore
+    chdir=/var/apps/{{ item.key }}/code
   with_dict: "{{ aris_apps }}"
 
-- name: Create nginx extras config dir for user app
+- name: Fix ownership for git repository
   file:
     state=directory
-    path=/var/apps/{{ item.key }}/nginx/extras
-    recurse=yes
-    mode=ug+rwx,o=rx
+    path=/var/apps/{{ item.key }}/code
     owner={{ item.key }}
     group={{ item.key }}
+    recurse=yes
+  with_dict: "{{ aris_apps }}"
+
+- name: Configure proper git post-update hook
+  template:
+    src=git-hooks/post-update.j2
+    dest=/var/apps/{{ item.key }}/code/.git/hooks/post-update
+    owner={{ item.key }}
+    group={{ item.key }}
+    mode=ug+rwx,o=xr
   with_dict: "{{ aris_apps }}"
 

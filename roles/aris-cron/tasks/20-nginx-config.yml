@@ -1,4 +1,14 @@
 ---
+- name: Create nginx extras config dir for user app
+  file:
+    state=directory
+    path=/var/apps/{{ item.key }}/nginx/extras
+    recurse=yes
+    mode=ug+rwx,o=rx
+    owner={{ item.key }}
+    group={{ item.key }}
+  with_dict: "{{ aris_apps }}"
+
 - name: Create nginx-vhost-config for user app
   template:
     src=nginx/vhost.conf.j2

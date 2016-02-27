@@ -2,32 +2,25 @@ server {
   listen 80;
   server_name {{ item.key }}.{{ base_domain }};
 
-  # Tell Nginx and Passenger where your app's 'public' directory is
-  root /var/apps/{{ item.key }}/public;
+  root /var/apps/{{ item.key }}/code;
 
-  # Enable gzip and proper cache settings for assets
-  location ^~ /assets/ {
-    gzip_static on;
-    expires max;
-    add_header Cache-Control public;
-  }
-
-  # TODO: Disable all caching since it seem to lead to issues with. Need to
-  # investigate further.
   location / {
+    # TODO: Disable all caching since it seem to lead to issues with. Need to
+    # investigate further.
     etag off;
     add_header Cache-Control no-cache;
   }
 
-  # Include all user-app-specific conf files
-  include /var/apps/{{ item.key }}/nginx/extras/*.conf;
+  # Serve default/index.html if no index.html is present in /code
+  location = / {
+    root /var/apps/{{ item.key }};
+    try_files /code/$uri/index.html /default/index.html =404;
+  }
+
+  location / {
+    try_files $uri $uri/index.html $uri.html =404;
+  }
 
   access_log /var/apps/{{ item.key }}/logs/nginx-access.log;
   error_log  /var/apps/{{ item.key }}/logs/nginx-error.log;
-
-  # Passenger config
-  passenger_enabled on;
-  passenger_app_root /var/apps/{{ item.key }}/code;
-  passenger_app_env {{ rails_env }};
-  passenger_ruby /opt/rubies/{{ chruby_ruby_version }}/bin/ruby;
 }
