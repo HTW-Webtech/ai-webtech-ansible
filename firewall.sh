@@ -1,3 +1,4 @@
+# Datei im Original von Eudemus
 #!/bin/sh
 # mb 04.04.2008 (mb@fhtw-berlin.de)
 # richter 19.5.2008 (richter@fhtw-berlin.de)
@@ -25,7 +26,6 @@
 #
 # Alle Regeln aller Chains in Tabelle Filter loeschen
 #
-# GIG: EDITED. Need a fresh copy from that file
 iptables -F
 #
 # Standart Policy fuer alle Chains DROP
@@ -33,7 +33,6 @@ iptables -F
 iptables -P INPUT ACCEPT
 iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
-iptables -A OUTPUT -p tcp --dport 587 -j ACCEPT
 
 #
 # auf bestehenden und zugehoerigen verbindungen alles erlauben
@@ -51,22 +50,18 @@ iptables -A OUTPUT -p tcp --dport 80 -d 212.211.132.32 -j ACCEPT
 # kommentar wegnehmen: SSH INPUT OUTPUT zulassen
 # (bitte kein ftp, sondern sftp (ueber ssh))
 #
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
+#iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 #
 # kommentare wegnehmen: HTTPS INPUT OUTPUT zulassen
 #
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+#iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 #
 # kommentare wegnehmen: HTTP INPUT OUTPUT zulassen
 #
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+#iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-#
-# kommentare wegnehmen: GIT (github) zulassen
-#
-# iptables -A OUTPUT -p tcp --dport 9418 -j ACCEPT
 #
 # kommentare wegnehmen: HTTP alternativ INPUT OUTPUT zulassen
 #
@@ -87,10 +82,6 @@ iptables -A OUTPUT ! -d 141.45.0.0/16 -j DROP
 #
 iptables -A INPUT -p icmp -j ACCEPT
 iptables -A OUTPUT -p icmp -j ACCEPT
-#
-# GIT Output zulassen
-#
-# iptables -A OUTPUT -p tcp --dport 9418 -j ACCEPT
 #
 # SSH INPUT OUTPUT zulassen
 #
