@@ -4,21 +4,10 @@ server {
 
   root /var/apps/{{ item.key }}/code;
 
-  location / {
-    # TODO: Disable all caching since it seem to lead to issues with. Need to
-    # investigate further.
-    etag off;
-    add_header Cache-Control no-cache;
-  }
-
   # Serve default/index.html if no index.html is present in /code
   location = / {
     root /var/apps/{{ item.key }};
     try_files /code/$uri/index.html /default/index.html =404;
-  }
-
-  location / {
-    try_files $uri $uri/index.html $uri.html =404;
   }
 
   access_log /var/apps/{{ item.key }}/logs/nginx-access.log;
