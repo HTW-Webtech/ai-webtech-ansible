@@ -19,16 +19,6 @@
   with_dict: "{{ aris_apps }}"
   notify: reload nginx
 
-- name: Create nginx-env-vars for user app
-  template:
-    src=nginx/extras/env_vars.conf.j2
-    dest=/var/apps/{{ item.key }}/nginx/extras/env_vars.conf
-    owner={{ item.key }}
-    group={{ item.key }}
-    mode=ug+rwx
-  with_dict: "{{ aris_apps }}"
-  notify: reload nginx
-
 - name: Symlinks user app in /etc/nginx/sites-enabled
   file:
     state=link
