@@ -20,7 +20,7 @@
 
 - name: Configure public ssh keys .ssh/authorized-keys
   lineinfile:
-    line={{ item.value.ssh_key }}
+    line="{{ item.value.ssh_key }}"
     dest=~{{ item.key }}/.ssh/authorized_keys
     owner={{ item.key }}
     group={{ item.key }}
