@@ -6,3 +6,6 @@
 
 # Ignore .vault-password
 .vault-password
+
+# Ignore .retry file
+*.retry
