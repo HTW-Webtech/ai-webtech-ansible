@@ -6,6 +6,7 @@ server {
 
   # Serve default/index.html if no index.html is present in /code
   location = / {
+    expires -1; # No cache
     root /var/apps/{{ item.key }};
     try_files /code/$uri/index.html /default/index.html =404;
   }
