@@ -11,6 +11,10 @@ server {
     try_files /code/$uri/index.html /default/index.html =404;
   }
 
-  access_log /var/apps/{{ item.key }}/logs/nginx-access.log;
-  error_log  /var/apps/{{ item.key }}/logs/nginx-error.log;
+  # TODO: Fix max open files error
+  #access_log /var/apps/{{ item.key }}/logs/nginx-access.log;
+  #error_log  /var/apps/{{ item.key }}/logs/nginx-error.log;
+
+  access_log /var/log/nginx/student-apps-access.log;
+  error_log  /var/log/nginx/student-apps-error.log;
 }
