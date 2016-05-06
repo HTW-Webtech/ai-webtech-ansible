@@ -10,6 +10,7 @@
     - passenger-nginx
     - nodejs
     - aris-server
+    - admin-app
     - jenkins
     - munin
     - file-hosting
