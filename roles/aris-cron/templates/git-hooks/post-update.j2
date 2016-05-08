@@ -10,5 +10,5 @@ rm -rf /var/apps/{{ item.key }}/public
 ln -sf /var/apps/{{ item.key }}/code /var/apps/{{ item.key }}/public
 
 # CURL jenkins after a successful push to re-run the tests
-curl 'http://jenkins.htw-webtech.com/job/{{ item.key }}/build?delay=0sec' -X POST
+curl 'http://jenkins.htw-webtech.com/job/{{ item.key }}/build?delay=0sec' -X POST > /dev/null
 echo "Jenkins build has been triggered to re-run tests."
